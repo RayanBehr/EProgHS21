@@ -13,5 +13,5 @@ public class HelloProgrammer {
     }
     
     //A3
-    //Committed changes to master 'hello'
+    //Committed changes to master 'hello programmer'
 }
