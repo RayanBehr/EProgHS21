@@ -1,22 +1,38 @@
-1.
+Aufgabe 4: EBNF
 
-<geradezahl>     <= ...
+a)
+
+<geradeziffer> <= 0 | 2 | 4 | 6 | 8
+<ziffer> <= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+<vorzeichen> <= [ + | - ]
+
+<geradezahl>     <= <vorzeichen>{<ziffer>}<geradeziffer>
 
 
-2.
+b) Zu beweisen: 28 ist ein legales Symbol.
+													Regel:
+													
+<geradezahl> 											
+<vorzeichen>{<ziffer>}<geradeziffer>		
+			
+[ + | - ]{<ziffer>}<geradeziffer>					option not taken	
+{<ziffer>}<geradeziffer>							repeat once
+{0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}				 	
+<geradeziffer>											
+0 | 2 | 4 | 6 | 									select "2"			
 
-...
 
 
-3.
+
+c)
 
 <x2ygemisch> <= ...
 
-4.
+d)
 
 ...
 
 
-5.
+e)
 
 <doppelt> <= ...
