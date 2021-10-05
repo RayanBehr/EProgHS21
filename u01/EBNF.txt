@@ -1,5 +1,6 @@
 Aufgabe 4: EBNF
 
+---------------------------------------------------------------
 a)
 
 <geradeziffer> <= 0 | 2 | 4 | 6 | 8
@@ -8,31 +9,82 @@ a)
 
 <geradezahl>     <= <vorzeichen>{<ziffer>}<geradeziffer>
 
-
+---------------------------------------------------------------
 b) Zu beweisen: 28 ist ein legales Symbol.
-													Regel:
-													
-<geradezahl> 											
-<vorzeichen>{<ziffer>}<geradeziffer>		
-			
-[ + | - ]{<ziffer>}<geradeziffer>					option not taken	
-{<ziffer>}<geradeziffer>							repeat once
-{0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}				 	
-<geradeziffer>											
-0 | 2 | 4 | 6 | 									select "2"			
+Regel: <geradezahl> 
+	
+//replace with definition											
+<vorzeichen>{<ziffer>}<geradeziffer>
 
+//replace with definition		
+[ + | - ]{<ziffer>}<geradeziffer>		
 
+//option not taken	
+{<ziffer>}<geradeziffer>	
 
+//repeat once
+<ziffer><geradeziffer>
 
+//replace with definition	
+( 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 )<geradeziffer>	
+
+//select "2"	
+2<geradeziffer>	
+
+//replace with definition
+2( 0 | 2 | 4 | 6 | 8 )
+
+//select "8"
+28
+
+---------------------------------------------------------------
 c)
+Tools:
+	[] option
+	| selection
+	{} repetition repeat 0 to n times. 
 
-<x2ygemisch> <= ...
+	()braces 
+	recursion
+	
+ <a> <=  X [<a> | <b> | <c>] Y [<a> | <b> | <c>] Y 
+ <b> <=  Y [<a> | <b> | <c>] Y [<a> | <b> | <c>] X
+ <c> <=  Y [<a> | <b> | <c>] X [<a> | <b> | <c>] Y
 
-d)
+<x2ygemisch> <= a | b | c
 
-...
+//proof my intimidation
+ <x2ygemisch> <=
+ 	   ([<x2ygemisch>] X  [<x2ygemisch>] Y  [<x2ygemisch>] Y  [<x2ygemisch>]) 
+ 	|  ([<x2ygemisch>] Y  [<x2ygemisch>] Y  [<x2ygemisch>] X  [<x2ygemisch>])   
+ 	|  ([<x2ygemisch>] Y  [<x2ygemisch>] X  [<x2ygemisch>] Y  [<x2ygemisch>])
+
+---------------------------------------------------------------
+d) EBNF-Beschreibung: <beispiel1> <= [A][B]
+   EBNF-Beschreibung: <beispiel2> <= [A[B]]
+
+Zu beweisen: B ist ein legales Symbol.
+Regel: <beispiel1>
+
+//replace with definition
+[A][B]
+
+//option not taken
+[B]
+
+//option taken
+B
+
+Regel: <beispiel2>
+
+//replace with definition
+[A[B]]
+
+//option taken, und wenn ich 'oprion not taken' genommen haette -> keine Möglichkeit auf B zu stossen
+A[B]
+
+-> keine Möglichkeit auf B zu stossen
 
 
-e)
-
-<doppelt> <= ...
+---------------------------------------------------------------
+e) <doppelt> <= X [<doppelt>] YY
