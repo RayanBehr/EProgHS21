@@ -59,6 +59,17 @@ Tools:
  	|  ([<x2ygemisch>] Y  [<x2ygemisch>] Y  [<x2ygemisch>] X  [<x2ygemisch>])   
  	|  ([<x2ygemisch>] Y  [<x2ygemisch>] X  [<x2ygemisch>] Y  [<x2ygemisch>])
 
+input student
+---------------
+<y_to_x> <= X [<y_to_x> | <x_to_Y>] YY
+<x_to_Y> <= YY  [<y_to_x> | <x_to_Y>] X
+
+ <x2ygemisch> <= <y_to_x> | <x_to_Y>
+ 
+ official solution
+ -------------------
+ <g> <= [<g> X <g> YY <g> | <g> YY <g> x <g>]
+ 
 ---------------------------------------------------------------
 d) EBNF-Beschreibung: <beispiel1> <= [A][B]
    EBNF-Beschreibung: <beispiel2> <= [A[B]]
@@ -83,8 +94,13 @@ Regel: <beispiel2>
 //option taken, und wenn ich 'oprion not taken' genommen haette -> keine Möglichkeit auf B zu stossen
 A[B]
 
+//if we want to chose B we have to chose A too.
 -> keine Möglichkeit auf B zu stossen
 
 
 ---------------------------------------------------------------
-e) <doppelt> <= X [<doppelt>] YY
+e) <doppelt> <= [X <doppelt> YY]
+
+ official solution
+ -------------------
+ 
