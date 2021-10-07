@@ -1,4 +1,4 @@
-public class VollerFehler {
+public class FollerVehler {
     public static void main(String args) {  //returntype not declared
         System.out.println("Hello world"); //method input not a string
         System.out.println("Gefällt Ihnen dieses Programm?"); //capitalization and name
