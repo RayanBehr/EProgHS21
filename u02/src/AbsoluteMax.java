@@ -14,7 +14,7 @@ public class AbsoluteMax {
 		this.a = a;
 		this.b = b;
 		this.c = c;
-		this.r = r;
+		this.r = r; //
 		
 		sysout();
 	}
