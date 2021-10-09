@@ -15,7 +15,11 @@ public class AbsoluteMax {
 		this.b = b;
 		this.c = c;
 		this.r = r; //
-		
+		doStuff();
+	}
+	
+	void doStuff() {
+		r = gcd(28,21);		
 		sysout();
 	}
 	
@@ -23,5 +27,12 @@ public class AbsoluteMax {
 		// Der finale Wert von r wird ausgegeben
 		System.out.println("a: " + a + ", b: " + b + 
 					       ", c: " + c + " --> r: " + r);
+	}
+	
+	int gcd(int n, int m) {
+		for(int d = m; d > 1; d--)
+			if(n%d == 0 && m%d == 0)
+				return d;
+		return 1;
 	}
 }
