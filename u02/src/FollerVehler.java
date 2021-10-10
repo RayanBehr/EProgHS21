@@ -1,5 +1,5 @@
 public class FollerVehler {
-    public static void main(String args) {  //returntype not declared
+    public static void main(String[] args) {  //returntype not declared, //String[]
         System.out.println("Hello world"); //method input not a string
         System.out.println("Gefällt Ihnen dieses Programm?"); //capitalization and name
         System.out.println(); //semicolon
