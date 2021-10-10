@@ -1,0 +1,14 @@
+EBNF
+	1) Very good
+	
+	2) Nicely done :)
+	
+	3) In this exercise for every X there should a pair of Ys. That means the YY should not be 
+	separated like XYX. This is not very clear on the exercise sheet. so rule <c> should be taken out.
+	Also, in your definition, XYYYYX would not be valid. You can fix it by adding the repetition brackets
+	around the <x2ygemisch rule>:
+		<x2ygemisch> <= {<a> | <b>}   and don't forget the <> brackets everytime you use the name of a rule.
+		
+	
+
+If you have any questions, don't hesitate to send me an email: crobinson@student.ethz.ch	
