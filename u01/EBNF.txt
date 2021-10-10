@@ -53,7 +53,7 @@ Tools:
 
 <x2ygemisch> <= a | b | c
 
-//proof my intimidation
+//proof by intimidation
  <x2ygemisch> <=
  	   ([<x2ygemisch>] X  [<x2ygemisch>] Y  [<x2ygemisch>] Y  [<x2ygemisch>]) 
  	|  ([<x2ygemisch>] Y  [<x2ygemisch>] Y  [<x2ygemisch>] X  [<x2ygemisch>])   
