@@ -32,7 +32,7 @@ public class AbsoluteMax {
 		System.out.println("<------------>");
 		
 		System.out.println("using Euclid's Algo");
-		r = gcdFAST(n,m);
+		r = gcdR(n,m);
 		sysout();
 	}
 	
@@ -49,6 +49,12 @@ public class AbsoluteMax {
 				return d;
 			}
 		return 1;
+	}
+	
+	//can't count steps
+	long gcdR(long n, long m) {
+		if(n % m == 0) return m;
+		else return gcdR(m, n % m);	
 	}
 	
 	long gcdFAST(long n, long m) {
