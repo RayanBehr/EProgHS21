@@ -6,13 +6,20 @@ public class ForwardAndBackward {
     }
     
     ForwardAndBackward(){
+    	for(int i = 1; i < 4; i++)
+    		System.out.println(" ".repeat(6-i) + "\\".repeat(i) + "/".repeat(i));
+    	for(int i = 3; i > 0; i--)
+    		System.out.println(" ".repeat(6-i) + "/".repeat(i) + "\\".repeat(i));
+    }
+    
+    
+    void forwardBackwardOld(){
     	for(int i = 1; i < 4; i++) {
     		System.out.println(helper(6-i, " ") + helper(i, "\\") + helper(i, "/"));
     	}
     	for(int i = 3; i > 0; i--) {
     		System.out.println(helper(6-i, " ") + helper(i, "/") + helper(i, "\\"));
     	}
-    	
     }
     
     String helper(int n, String m) {
