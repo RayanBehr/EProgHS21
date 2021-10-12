@@ -4,7 +4,10 @@ public class AbsoluteMax {
 	public static void main(String[] args) { 	
 		long n = Long.parseLong("139472305678615");
 		long m = Long.parseLong("273426584985");
-		new AbsoluteMax( n, m); 
+		
+		int a, b, c;
+		a = 5; b = 7; c = 42;
+		new AbsoluteMax(n, m, a, b, c); 
 	}
 	
 	// Aendern Sie die Werte um verschiedene Ausfuehrungen zu testen.
@@ -15,15 +18,28 @@ public class AbsoluteMax {
 	// TODO: Vervollstaendigen Sie den Code wie in der Aufgabenbeschreibung beschrieben
 	long r;
 
+	int a, b , c;
 
-	public AbsoluteMax(long n, long m) {
+	public AbsoluteMax(long n, long m, int a, int b, int c) {
 		this.n = n;
 		this.m = m;
+		this.a = a;
+		this.b = b;
+		this.c = c;
 
 		doStuff();
 	}
 	
+	int getMax() {
+		return a > b && a > c? a : (b > c)? b : c; 
+	}
+	
 	void doStuff() {
+		System.out.print("max of  is: ");
+		r = getMax();
+		System.out.println(r);
+		
+		
 		System.out.println("using Naive Algo");
 		//r = gcd(n,m);
 		System.out.println("Program would not terminate in time");
