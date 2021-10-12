@@ -7,5 +7,11 @@ public class SumPattern {
 		int c = 6;
 		
 		// Vervollstaendigen Sie den Code wie in der Aufgabenbeschreibung beschrieben
+		if(a + b == c) System.out.println("Moeglich.	" + a +" + " + b  + " == " + c);
+		else if(a + c == b) System.out.println("Moeglich.	" + a +" + " + c  + " == " + b);
+		else if(c + b == a) System.out.println("Moeglich.	" + c +" + " + b  + " == " + a);
+		//Wenn die Summe von zwei der Variablen die dritte ergibt... Die Reihenfolge ist dabei egal!
+		else System.out.println("Unmoeglich");
+		
 	}
 }
