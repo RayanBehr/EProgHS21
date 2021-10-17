@@ -1,0 +1,35 @@
+Feedback
+
+	1) Perfect
+	
+	2) Nice use of methods and loops. However, on line 8 you are writing the code in the constructor
+	   of the class. The constructor shouldn't be used to methods/print statements; it is more for defining attributes. 
+	   The constructor always has exactly the same name as your class.You will learn more about this later in the course.
+	   I would recommend doing this instead of using the class:
+	   
+	   public class ForwardAndBackward {
+    
+    		public static void main(String[] args) {
+        		 forwardAndBackward();
+    		}
+		    
+		    public static void forwardAndBackward(){
+		    	//your code
+		 	}
+    
+    		String helper(int n, String m) {
+		    	//your code
+    		}
+
+		}		
+	    
+	    If you are calling a method from the "main" function, then the method called must have the word static in it.
+	    
+	    
+	   
+		
+	3) Same problem as in exercise 2; you should out the code on line 10 in a method.
+	   Also I don't recommend initiating variables outside of methods(line 4/6) yet because 
+	   we havn't talked a lot about classes yet.  
+	
+If you have any questions, don't hesitate to send me an email: crobinson@student.ethz.ch	
