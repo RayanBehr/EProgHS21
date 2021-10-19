@@ -11,7 +11,7 @@ public class Binaer {
 	public static void main(String[] args) {
 		// TODO 
 		
-		System.out.println(intToBinary(14));
+		System.out.println(intToBinary(1452354532));
 	}
 	
 	static String intToBinary(int Z){
@@ -21,11 +21,11 @@ public class Binaer {
 	
 	
 	static String intToBinaryRek(int Z, int k) {
-		if(Z == 0) return "0";
-		int r = Z - (int) Math.pow(Z, k);
+		if(k == -1) return "";
+		int r = Z - (int) Math.pow(2, k);
 		
-		return 0 < r? "1" +  intToBinaryRek(r, k-1) :
-			"1" +  intToBinaryRek(r, k-1);
+		return 0 <= r? "1" +  intToBinaryRek(r, k-1):
+			"0" +  intToBinaryRek(Z, k-1);
 	}
 
 }
