@@ -8,9 +8,11 @@ import java.util.Scanner;
 public class Reihe {
 
 	public static void main(String[] args) {
-		// TODO 
-		int N = 42000;	//Wahcstum stagniert sehr schnell
+		System.out.print("Input for N: ");
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
 		System.out.println("N = " + N + " -> " + funnySum(N));
+		sc.close();
 	}
 	
 	static double funnySum(int N) {
