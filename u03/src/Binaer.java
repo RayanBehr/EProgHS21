@@ -24,8 +24,8 @@ public class Binaer {
 		if(k == -1) return "";
 		int r = Z - (int) Math.pow(2, k);
 		
-		return 0 <= r? "1" +  intToBinaryRek(r, k-1):
-			"0" +  intToBinaryRek(Z, k-1);
+		return 0 <= r? "1" +  intToBinaryRek(r, k-1) 
+				     : "0" +  intToBinaryRek(Z, k-1);
 	}
 
 }
