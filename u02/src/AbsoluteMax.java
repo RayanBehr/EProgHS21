@@ -48,7 +48,7 @@ public class AbsoluteMax {
 		System.out.println("<------------>");
 		
 		System.out.println("using Euclid's Algo");
-		r = gcdR(n,m);
+		r = gcdFAST(n,m);
 		sysout();
 	}
 	

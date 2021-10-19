@@ -10,7 +10,7 @@ public class SumPattern {
 		if(a + b == c) System.out.println("Moeglich.	" + a +" + " + b  + " == " + c);
 		else if(a + c == b) System.out.println("Moeglich.	" + a +" + " + c  + " == " + b);
 		else if(c + b == a) System.out.println("Moeglich.	" + c +" + " + b  + " == " + a);
-		//Wenn die Summe von zwei der Variablen die dritte ergibt... Die Reihenfolge ist dabei egal!
+		//Wenn die Summe von zwei der Variablen die dritte ergibt... Die Reihenfolge ist dabei egal! ¯\_(ツ)_/¯
 		else System.out.println("Unmoeglich");
 		
 	}
