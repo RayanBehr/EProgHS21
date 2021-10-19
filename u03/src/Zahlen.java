@@ -10,15 +10,16 @@ public class Zahlen {
 	public static void main(String[] args) {
 		
 		System.out.println(codeToInt("abcdef"));		//0
+		System.out.println(codeToInt("abcfg"));			//9	
 		System.out.println(codeToInt("bc"));			//1
+		System.out.println(codeToInt("abcdefg"));		//8
 		System.out.println(codeToInt("abdeg"));			//2	
+		System.out.println(codeToInt("abc"));			//7
 		System.out.println(codeToInt("abcdg"));			//3
+		System.out.println(codeToInt("acdefg"));		//6
 		System.out.println(codeToInt("bcfg"));			//4
 		System.out.println(codeToInt("acdfg"));			//5
-		System.out.println(codeToInt("acdefg"));		//6
-		System.out.println(codeToInt("abc"));			//7
-		System.out.println(codeToInt("abcdefg"));		//8
-		System.out.println(codeToInt("abcfg"));			//9	
+		
 	}
 	
 	public static int codeToInt(String k) {

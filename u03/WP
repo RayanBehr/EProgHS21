@@ -1,0 +1,21 @@
+
+Aufgabe 6: Weakest Precondition
+
+1.
+	P: { m > 4 && m > 7 }
+	S: m = n * 4; k = m - 2; //there seems to be some problem here 
+	Q: { n > 0 && k > 5 }
+	
+2.
+	P: { m > 0 && n != 0 }
+	S: m = n * n; k = m * 2; 
+	Q: { k > 0 }
+	
+3.
+	P: { y != x }
+	S: if(x>y){ 
+		z = x - y;
+       } else {
+            z = y - x;
+		}
+	Q: { z > 0 }

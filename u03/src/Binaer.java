@@ -11,6 +11,9 @@ public class Binaer {
 	public static void main(String[] args) {
 		// TODO 
 		
+		//System.out.println(Calculations.magic7(7, 9));
+		//System.out.println(Calculations.fast12(15));
+		
 		System.out.println(intToBinary(468573920));
 	}
 	
