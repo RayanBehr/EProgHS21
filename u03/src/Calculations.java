@@ -17,6 +17,6 @@ public class Calculations {
 	}
 	
 	public static boolean fast12(int z) {		
-		return (z % 12 <= 2 | z % 12 >= 8)? true : false;
+		return (z % 12 <= 2 | z % 12 >= 10)? true : false;
 	}
 }
