@@ -1,6 +1,6 @@
 
 public class Max3 {
-
+	//Bonusaufgabe (Aufgabe 4)
 	public static void main(String[] args) {
 		
 		int[] test1 = new int[] {1, 2, 3, 4, 5};
@@ -51,9 +51,35 @@ public class Max3 {
 	}
 	
 	public static int[] max3(int[] x) {
-		// TODO: Schreiben Sie hier Ihre Loesung
-		return null;
+		
+		int[] arr = new  int[x.length];
+		for(int i = 0; i < arr.length; i++)
+			arr[i] = x[i];
+		for(int u = arr.length-1;arr.length-3 <= u; u--)
+			for(int v = 0; v < u; v++)
+				if(arr[u] < arr[v] ) {
+					int t = arr[u];
+					arr[u] = arr[v];
+					arr[v] = t;
+				}
+		
+		int[] ret = new int[3];
+		ret[0] = arr[arr.length-3];
+		ret[1] = arr[arr.length-2];
+		ret[2] = arr[arr.length-1];
+		
+		return ret;
 	}
+	
+	/*
+	 * 		for(int u = 0; u < arr.length; u++)
+			for(int v = u+1; v < arr.length; v++)
+				if(arr[v] < arr[u]) {
+					int t = arr[u];
+					arr[u] = arr[v];
+					arr[v] = t;
+				}
+	 */
 	
 	/** Gibt true zurueck, genau dann wenn `x` und `y` die gleichen Werte enthalten oder beide null sind. */ 
 	public static boolean isEqual(int[] x, int[] y) {
