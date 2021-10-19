@@ -11,7 +11,7 @@ public class Binaer {
 	public static void main(String[] args) {
 		// TODO 
 		
-		System.out.println(intToBinary(1452354532));
+		System.out.println(intToBinary(468573920));
 	}
 	
 	static String intToBinary(int Z){
