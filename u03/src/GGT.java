@@ -9,6 +9,7 @@ public class GGT {
 	
 	static int iterations = 0;
 
+	
 	public static void main(String[] args) {
 		// TODO 
 		long n = Long.parseLong("139472305678615");
@@ -19,6 +20,7 @@ public class GGT {
 		System.out.println("Computed in " + iterations+ " iterations");
 
 	}
+	
 	
 	static long gcdFAST(long n, long m) {
 		iterations = 0;
