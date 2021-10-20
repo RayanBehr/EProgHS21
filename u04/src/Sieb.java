@@ -1,10 +1,18 @@
+import java.util.Scanner;
 
 public class Sieb {
 	
-	/*
+	///*
 	public static void main(String[] args) {
-		System.out.println(anzahlPrimzahlenbis(13));
-	}*/
+		
+		Scanner s = new Scanner(System.in);
+		
+		System.out.print("Upper limit: ");
+		System.out.println("Number of primes up to inclusive limit: " + 
+							anzahlPrimzahlenbis(s.nextInt()));
+		
+		s.close();
+	}//*/
 	
 	public static int anzahlPrimzahlenbis(int limit) {
 		boolean[] notPr = new boolean[limit + 1];
