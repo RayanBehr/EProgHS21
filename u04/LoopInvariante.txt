@@ -1,1 +1,20 @@
 Schreiben Sie hier Ihre Loop Invariante:
+Exam Questions.... 5Poins!!!
+
+public int compute(int a, int b) {
+
+  	// Precondition:  a >= 0
+  	int x;
+  	int res;
+	x = 0; res = b;
+	
+  	// Loop Invariante:
+  	while (x < a) {
+		res = res - 1;
+		x = x + 1; 
+	}
+	
+  	// Postcondition:  res == b - a
+	return res; 
+	
+}
