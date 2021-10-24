@@ -1,0 +1,25 @@
+Feedback
+
+
+
+5) Scrabble: Your code prints out the correct output. However, instead of making a new class of itself
+			Scrabble s = new Scrabble();, leave that out and just make your other methods static. It's not
+			good practice to use classes like that. Also be careful when you define variables outside a method
+			like on line 9 and 10. It is better if you passed them through as a parameter in a method. You will
+			learn more about classes later. Other than that, well done! 	
+	
+
+7) 
+	1. check the master solution and try and understand the solution.
+	2. You only need the condition for n because m is dependent on n.
+	3. correct
+
+6) checksum: All correct.
+	magic7: Almost all correct, Math.abs(a + b) should just be a+b. If a = 7 and b= -14, your code returns true
+			but it should be false.
+	
+	fast12: I would recommend using || instead of |. Also
+			return (z % 12 <= 2 | z % 12 >= 10)? true : false;
+			can just be written as return (z % 12 <= 2 | z % 12 >= 10) without checking the conditions,
+			it is the same.
+			
