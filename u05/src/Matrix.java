@@ -1,42 +1,41 @@
 
 public class Matrix {	
-	
-	public static void main(String[] args) {
-		int[][] m = new int[][]
-				{
-					{1,2,3},
-					{4,5,6},
-					{7,8,9},
-				};
-		print2dArray(m);
-		m = toSnail(m);
-		print2dArray(m);
-	}
 
 	static int[][] toSnail(int[][] matrix) {
 		// TODO: Konstruiere die Schneckenkonstruktion von matrix
 		//assuming matrix.length == matrix[0].length
 		//assuming matrix.length > 0
 		
-		int[][] snail = new //snail matrix
-				int[(matrix.length+1)/2][matrix.length*4]; 
+		if(matrix.length == 1) return matrix;
+		
+		int[][] snail = new int[(matrix.length+1)/2][];//snail matrix
 				//[<Ring-Level>][<Element>]
 		
+		
 		for(int k = 0; k < snail.length; k++) {
+			
+			if((matrix.length-2*k)*4-4 == 0) {
+				int[] ring = new int[1];
+				ring[0] = matrix[k][k];
+				snail[k] = ring; continue; }
+			
+			int[] ring = new int[(matrix.length-2*k)*4-4];
 			int m = 0;
 			int i = k; int j = k;
 			
-			while(i < snail.length - k - 1) {
-				snail[k][m] = matrix[i][j]; i++; m++; }
+			while(!(i == matrix.length - k - 1)) {
+				ring[m] = matrix[j][i]; i++; m++; }
 			
-			while(j < snail.length - k - 1) {
-				snail[k][m] = matrix[i][j]; j++; m++; }
+			while(!(j == matrix.length - k - 1)) {
+				ring[m] = matrix[j][i]; j++; m++; }
 			
-			while(0 < i) {
-				snail[k][m] = matrix[i][j]; i--; m++; }
+			while(!(k == i)) {
+				ring[m] = matrix[j][i]; i--; m++; }
 			
-			while(0 < j) {
-				snail[k][m] = matrix[i][j]; j--; m++; }
+			while(!(k == j)) {
+				ring[m] = matrix[j][i]; j--; m++; }
+			
+			snail[k] = ring;
 			//now i and j are back at k,k
 		}			
 		
@@ -44,12 +43,40 @@ public class Matrix {
 	}
 	
 	static int[][] fromSnail(int[][] snailConstruction) {
-		// TODO: Implementieren Sie die Methode
-		return null;
+		int n = snailConstruction[0].length / 4 + 1;
+		int[][] matrix = new int[n][n];
+		
+		for(int k = 0; k < snailConstruction.length; k++) {
+			
+			
+			int m = 0;
+			int i = k; int j = k;
+			
+			if(snailConstruction[k].length == 1) 
+				matrix[k][k] = snailConstruction[k][0];
+			
+			while(!(i == matrix.length - k - 1)) {
+				matrix[j][i] = snailConstruction[k][m]; i++; m++; }
+			
+			while(!(j == matrix.length - k - 1)) {
+				matrix[j][i] = snailConstruction[k][m]; j++; m++; }
+			
+			while(!(k == i)) {
+				matrix[j][i] = snailConstruction[k][m]; i--; m++; }
+			
+			while(!(k == j)) {
+				matrix[j][i] = snailConstruction[k][m]; j--; m++; }
+
+			//now i and j are back at k,k
+		}	
+		
+		return matrix;
 	}
 	
 	static boolean areRowsPositive(int[][] snailConstruction) {
-		// TODO: Implementieren Sie die Methode
+		
+		
+		
 		return false;
 	}
 	
