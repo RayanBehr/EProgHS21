@@ -1,9 +1,46 @@
 
 public class Matrix {	
+	
+	public static void main(String[] args) {
+		int[][] m = new int[][]
+				{
+					{1,2,3},
+					{4,5,6},
+					{7,8,9},
+				};
+		print2dArray(m);
+		m = toSnail(m);
+		print2dArray(m);
+	}
 
 	static int[][] toSnail(int[][] matrix) {
-		// TODO: Implementieren Sie die Methode
-		return null;
+		// TODO: Konstruiere die Schneckenkonstruktion von matrix
+		//assuming matrix.length == matrix[0].length
+		//assuming matrix.length > 0
+		
+		int[][] snail = new //snail matrix
+				int[(matrix.length+1)/2][matrix.length*4]; 
+				//[<Ring-Level>][<Element>]
+		
+		for(int k = 0; k < snail.length; k++) {
+			int m = 0;
+			int i = k; int j = k;
+			
+			while(i < snail.length - k - 1) {
+				snail[k][m] = matrix[i][j]; i++; m++; }
+			
+			while(j < snail.length - k - 1) {
+				snail[k][m] = matrix[i][j]; j++; m++; }
+			
+			while(0 < i) {
+				snail[k][m] = matrix[i][j]; i--; m++; }
+			
+			while(0 < j) {
+				snail[k][m] = matrix[i][j]; j--; m++; }
+			//now i and j are back at k,k
+		}			
+		
+		return snail;
 	}
 	
 	static int[][] fromSnail(int[][] snailConstruction) {
