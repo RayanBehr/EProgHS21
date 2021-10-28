@@ -74,15 +74,28 @@ public class Matrix {
 	}
 	
 	static boolean areRowsPositive(int[][] snailConstruction) {
+		int[][] matrix = fromSnail(snailConstruction);
+		//print2dArray(matrix);
 		
-		
-		
-		return false;
+		for(int j = 0; j < matrix.length; j++) {
+			int sum = 0;
+			for(int i = 0; i < matrix[0].length; i++)
+				sum += matrix[j][i];
+			//System.out.println(sum);
+			if(sum < 1) return false; //I thougth 0 was non negative
+		}
+		return true;
 	}
 	
 	static boolean areRingsDense(int[][] matrix) {
-		// TODO: Implementieren Sie die Methode
-		return false;
+		int[][] snail = toSnail(matrix);
+		for(int r = 0; r < snail.length; r++) {
+			int num0 = 0;
+			for(int i = 0; i < snail[r].length; i++)
+				if(snail[r][i] == 0) num0++;
+			if(num0 > snail[r].length/4) return false; }
+		
+		return true;
 	}
 	
 	
