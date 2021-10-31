@@ -1,0 +1,9 @@
+Feedback - Exercise Sheet 4
+
+1. Sieb: Very nice 
+
+2. Newton: On line 21 your wile loop condition should be: while(Math.abs(c-t*t) > 0.0000000000001)
+			With that change, your code works.
+
+3. -
+	Loop Invariant: x <= a && res == b - x
