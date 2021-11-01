@@ -1,0 +1,128 @@
+NETHZ: rabehr
+compile errors: NO
+timeout: NO
+
+test01: PASS
+test02: PASS
+test03: PASS
+test04: PASS
+test05: PASS
+test06: PASS
+test07: PASS
+test08: PASS
+test09: PASS
+test10: PASS
+test11: PASS
+
+Total Punkte (von 5): 5
+
+
+Folgende Test-Datei wurde für die Bewertung verwendet:
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
+import org.junit.jupiter.api.Test;
+
+public class Max3GradingTest {
+	
+	@Test
+	public void test01() {
+		int []  t = new int [] {1, 2, 3};
+		
+		int [] result = Max3.max3(t);
+		assertArrayEquals(new int [] {1,2,3}, result);
+	}
+	
+	@Test
+	public void test02() {
+		int [] t = new int [] {17,22,0,5,205,892,14,31,2};
+				
+		int [] result = Max3.max3(t);
+		assertArrayEquals(new int [] {31,205,892}, result);
+	}
+	
+	@Test
+	public void test03() {
+		int [] t = new int [] {4,9,2,7,1,0,10};
+		
+		int [] result = Max3.max3(t);
+		assertArrayEquals(new int [] {7,9,10}, result);
+	}
+	
+	@Test
+	public void test04() {
+		int [] t = new int [] {301,308,201,250};
+		
+		int [] result = Max3.max3(t);
+		assertArrayEquals(new int [] {250,301,308}, result);
+	}
+	
+	@Test
+	public void test05() {
+		int [] t = new int [] { 1230,145,30,5,203,891,15,5000};
+		
+		int [] result = Max3.max3(t);
+		assertArrayEquals(new int [] {891, 1230, 5000}, result);
+	}
+	
+	@Test
+	public void test06() {
+		int [] t = new int [] {-17,-22,0,-5,-205,-892,-14,-31,-2};
+		
+		int [] result = Max3.max3(t);
+		assertArrayEquals(new int [] {-5,-2,0}, result);
+	}	
+	
+	@Test
+	public void test07() {
+		int [] t = new int [50];
+		for(int i = 0; i < t.length; i++) {
+			if(i % 2 == 0) {
+				t[i] = 50+i;
+			} else {
+				t[i] = 100+i;
+			}
+		}
+		
+		t[3] = 174;
+		t[41] = 192;
+		t[25] = 172;
+		
+		int [] result = Max3.max3(t);
+		assertArrayEquals(new int [] {172,174,192}, result);
+	}
+
+	
+	@Test
+	public void test08() {
+		int [] t = new int [] {1,4,1,1};
+		
+		int [] result = Max3.max3(t);
+		assertArrayEquals(new int [] {1,1,4}, result);
+	}
+	
+	@Test
+	public void test09() {
+		int [] t = new int [] {1,2,7,3,7,4,7,6};
+		
+		int [] result = Max3.max3(t);
+		assertArrayEquals(new int [] {7,7,7}, result);
+	}
+	
+	@Test
+	public void test10() {
+		int [] t = new int [] {3,1,2};
+		int [] result = Max3.max3(t);
+		assertArrayEquals(new int [] {1,2,3}, result);
+		assertArrayEquals(new int [] {3,1,2}, t);
+	}
+	
+	@Test
+	public void test11() {
+		int [] t = new int [] {4,9,3,8,1,0,10};
+		int [] result = Max3.max3(t);
+		assertArrayEquals(new int [] {8,9,10}, result);
+		assertArrayEquals(new int [] {4,9,3,8,1,0,10}, t);
+	}
+	
+}
