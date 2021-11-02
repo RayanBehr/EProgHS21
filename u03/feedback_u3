@@ -1,7 +1,8 @@
 Feedback
-
-
-
+1) good job
+2) good use of recursion
+3) good job
+4)smart solution
 5) Scrabble: Your code prints out the correct output. However, instead of making a new class of itself
 			Scrabble s = new Scrabble();, leave that out and just make your other methods static. It's not
 			good practice to use classes like that. Also be careful when you define variables outside a method
