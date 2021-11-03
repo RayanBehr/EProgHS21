@@ -7,3 +7,5 @@ Feedback - Exercise Sheet 4
 
 3. -
 	Loop Invariant: x <= a && res == b - x
+5.-
+6.-
