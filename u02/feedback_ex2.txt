@@ -32,4 +32,9 @@ Feedback
 	   Also I don't recommend initiating variables outside of methods(line 4/6) yet because 
 	   we havn't talked a lot about classes yet.  
 	
-If you have any questions, don't hesitate to send me an email: crobinson@student.ethz.ch	
+If you have any questions, don't hesitate to send me an email: crobinson@student.ethz.ch
+
+4) very cool way of solving shared digit
+	your getMax is correct. Great job
+5) you statements are correct, but make sure to make statements about as many variables as possible in 1. we can state that x>10
+6)- 	
