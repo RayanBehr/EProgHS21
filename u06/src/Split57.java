@@ -34,7 +34,7 @@ public class Split57 {
 		for(int i = 0; i < n; i++) ina[i]    =  (x[i] % 5 == 0) && !(x[i] % 7 == 0); 		
 		for(int i = 0; i < n; i++) inb[i]    = !(x[i] % 5 == 0) &&  (x[i] % 7 == 0);
 		for(int i = 0; i < n; i++) free[i]   = (x[i] % 5 == 0) &&  (x[i] % 7 == 0);
-		for(int i = 0; i < n; i++) free[i]   = !(x[i] % 5 == 0) &&  !(x[i] % 7 == 0);
+		for(int i = 0; i < n; i++) if(!free[i])free[i]   = !(x[i] % 5 == 0) &&  !(x[i] % 7 == 0);
 		
 		int suma = 0; int sumb = 0;
 		
@@ -61,7 +61,7 @@ public class Split57 {
 		//wie platziere ich, welche elemente aus 'beides' platziere ich wo
 		//damit die Summe 
 				
-		boolean[] code = new boolean[cnt]; // cnt = 3, -> onen of {000, 001, 010, 011, 100, 101, 110, 111}
+		boolean[] code = new boolean[cnt]; // cnt = 3, -> one of {000, 001, 010, 011, 100, 101, 110, 111}
 		//System.out.println(code.length);
 		boolean[][] psrm = powerSetRelationMatrix(cnt); //{000, 001, 010, 011, 100, 101, 110, 111}
 		
