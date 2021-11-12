@@ -1,0 +1,568 @@
+NETHZ: rabehr
+
+Timeout?: NO
+
+testToFromSnail01: PASS
+testToFromSnail02: PASS
+testToFromSnail03: PASS
+testToFromSnail04: PASS
+testToFromSnail05: PASS
+testToFromSnail06: PASS
+testToFromSnail07: PASS
+testToFromSnail08: PASS
+testToFromSnail09: PASS
+testToFromSnail10: PASS
+testToFromSnail11: PASS
+testToFromSnail12: PASS
+
+testAreRowsPositive01True: PASS
+testAreRowsPositive02True: PASS
+testAreRowsPositive03True: PASS
+testAreRowsPositive04True: PASS
+testAreRowsPositive05True: PASS
+testAreRowsPositive06False: PASS
+testAreRowsPositive07False: PASS
+testAreRowsPositive08False: PASS
+testAreRowsPositive09False: PASS
+testAreRowsPositive10False: PASS
+testAreRingsDense01: PASS
+testAreRingsDense02: PASS
+testAreRingsDense03: PASS
+testAreRingsDense04: PASS
+testAreRingsDense05: PASS
+testAreRingsDense06: PASS
+testAreRingsDense07: PASS
+testAreRingsDense08: PASS
+testAreRingsDense09: PASS
+testAreRingsDense10: PASS
+
+Total Punkte (von 5): 5
+
+
+Folgende Test-Datei wurde für die Bewertung verwendet:
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
+public class MatrixGradingTest {
+	
+	/** a) and b) **/	
+	@Test
+	public void testToFromSnail01() {
+		int[][] t =  {
+				 { 23,  46,  82,  76,  41,  19},
+				 { 20,  14,  57,  32,   2,  43},
+				 { 50,  53,  37,  41,  97,  48},
+				 { 30,  99,  61,  86,  59,  59},
+				 {  3,  81, 100,   6, 100,  96},
+				 { 73,  32,  32,  60,  65,  50}};
+				
+		int[][] expected =  {
+				 { 23,  46,  82,  76,  41,  19,  43,  48,  59,  96,  50,  65,  60,  32,  32,  73,   3,  30,  50,  20},
+				 { 14,  57,  32,   2,  97,  59, 100,   6, 100,  81,  99,  53},
+				 { 37,  41,  86,  61}};
+		
+		int[][] result = Matrix.toSnail(t);
+		
+		assertArrayEquals(expected, result);
+	}
+	
+	@Test
+	public void testToFromSnail02() {
+		int[][] t =  {
+				 {49, 82, 46, 79, 35, 94, 13},
+				 {88, 86,  9, 14,  1, 20, 29},
+				 {86, 44, 48, 58, 27, 35, 36},
+				 {72,  8, 60, 20, 43, 44, 22},
+				 {95, 20, 56, 83, 52, 62, 54},
+				 {86, 64, 22, 49, 42,  2, 31},
+				 {17, 59, 96, 99, 65, 92, 74}};
+				
+		int[][] expected =  {
+				 {49, 82, 46, 79, 35, 94, 13, 29, 36, 22, 54, 31, 74, 92, 65, 99, 96, 59, 17, 86, 95, 72, 86, 88},
+				 {86,  9, 14,  1, 20, 35, 44, 62,  2, 42, 49, 22, 64, 20,  8, 44},
+				 {48, 58, 27, 43, 52, 83, 56, 60},
+				 {20}};
+		
+		int[][] result = Matrix.toSnail(t);
+		
+		assertArrayEquals(expected, result);
+		
+	}
+	
+	@Test
+	public void testToFromSnail03() {
+		int[][] t =  {
+				 {20}
+			};
+		
+		int [] [] expected =  {
+				 {20}
+			};	
+			
+		int[][] result = Matrix.toSnail(t);
+		
+		assertArrayEquals(expected , result);
+	}
+	
+	@Test
+	public void testToFromSnail04() {
+		int[][] t =  {
+				 {20, 12},
+				 {1, 46}
+			};
+			
+		int[][] expected =  {
+				 {20, 12, 46, 1}
+			};
+			
+		int[][] result = Matrix.toSnail(t);
+		
+		assertArrayEquals(expected, result);
+	}
+	
+	@Test
+	public void testToFromSnail05() {
+		int[][] t =  {
+				 { -1,  60, -31,  70, -31, -86,   6, -14,  46,  63},
+				 {-51,  12, -14, -41, -63, -23, -67,  -9, -71, -29},
+				 { 74,  68,   7, -67,  44,  -6, -34,   7,  33,  73},
+				 { 31, -73,  23, -78,  78,  48,  35,  99,  74,  27},
+				 {  3, -53, -62, -95,  27,  23,   4,  87,  20,  23},
+				 {-92,  53,  14,  87, -71, -20,  90, -94,  71,  75},
+				 {  7, -22,  -5, -18, -54,  82, -61,  18,  -8,  83},
+				 { 32, -47,  -9, -13,  22,  67, -88,  70, -12, -10},
+				 {-82,  33, -64, -51,  18,  66,  76,  26,   8,  57},
+				 {-23,  -7, -30,  73,  28,   1,  30,  54, -91, -24}};
+			
+		int[][] expected =  {
+				 { -1,  60, -31,  70, -31, -86,   6, -14,  46,  63, -29,  73,  27,  23,  75,  83, -10,  57, -24, -91,  54,  30,   1,  28,  73, -30,  -7, -23, -82,  32,   7, -92,   3,  31,  74, -51},
+				 { 12, -14, -41, -63, -23, -67,  -9, -71,  33,  74,  20,  71,  -8, -12,   8,  26,  76,  66,  18, -51, -64,  33, -47, -22,  53, -53, -73,  68},
+				 {  7, -67,  44,  -6, -34,   7,  99,  87, -94,  18,  70, -88,  67,  22, -13,  -9,  -5,  14, -62,  23},
+				 {-78,  78,  48,  35,   4,  90, -61,  82, -54, -18,  87, -95},
+				 { 27,  23, -20, -71}};
+			
+		int[][] result = Matrix.toSnail(t);
+		
+		assertArrayEquals(expected, result);
+	}
+	
+	@Test
+	public void testToFromSnail06() {
+		int[][] t =  {
+				 {8, 4, 8, 8, 44, 4, 34, 30, 40, 4, 39, 31, 20, 43, 34, 4}, 
+				 {42, 38, 7, 49, 19, 49, 16, 28}, 
+				 {14}
+			};
+		
+		int[][] expected =  {
+				 {8, 4, 8, 8, 44}, 
+				 {4, 42, 38, 7, 4}, 
+				 {34, 28, 14, 49, 34}, 
+				 {43, 16, 49, 19, 30}, 
+				 {20, 31, 39, 4, 40}
+			};
+		
+		int[][] result = Matrix.fromSnail(t);
+		
+		assertArrayEquals(expected, result);
+	}
+	
+	@Test
+	public void testToFromSnail07() {
+		
+		int[][] t =  {
+				 {42, 3, 40, 40, 24, 11, 40, 21, 38, 34, 13, 33}, 
+				 {4, 15, 7, 7} 
+			};
+		
+		int[][] expected =  {
+				 {42, 3, 40, 40}, 
+				 {33, 4, 15, 24}, 
+				 {13, 7, 7, 11}, 
+				 {34, 38, 21, 40}
+			};
+		
+		int[][] result = Matrix.fromSnail(t);
+		
+		assertArrayEquals(expected, result);
+	}
+	
+	@Test
+	public void testToFromSnail08() {
+		int[][] t =  {
+				 {1}
+			};
+		
+		int[][] expected =  {
+				 {1}
+			};
+		
+		int [][] result = Matrix.fromSnail(t);
+		
+		assertArrayEquals(expected, result);
+	}
+	
+	@Test
+	public void testToFromSnail09() {
+		int[][] t =  {
+				 {30, 41, 40, 42}
+			};
+		
+		int[][] expected =  {
+				 {30, 41}, 
+				 {42, 40}, 
+			};
+			
+		int[][] result = Matrix.fromSnail(t);
+		
+		assertArrayEquals(expected, result);
+	}
+	
+	@Test
+	public void testToFromSnail10() {
+		int[][] t =  {
+				 {-77,  10, -82,  75,  77, -44, -25,  42,  91,  71, -25,  72,  14, -32, -37, -15,  33,  84,  30, -44, -40, -83,  18,  92,  88, -45, -70, -98,  -6, -75,  48,  89, -59, -29,  20,  2},
+				 { 95,   8, -11,  89,  15,  -9,  10, -73, -40,   7,  33, -99,  93,  57, -42,   5, -64,  51,  70, -62,  17, -76, -73,  99, -97, -95, -23,   5},
+				 { 93, -31,  63, -68,  71,   1,   0,   2, -87,  -2, -91,  75, -27, -49,  39,  22, -53,  54, -40, -92},
+				 { 83, -59,  74,  63,  24,  72,   8, -83, -78, -65,  69,  31},
+				 { 90, -97, -78,  28}};
+		
+		int[][] expected =  {
+				 {-77,  10, -82,  75,  77, -44, -25,  42,  91,  71},
+				 {  2,  95,   8, -11,  89,  15,  -9,  10, -73, -25},
+				 { 20,   5,  93, -31,  63, -68,  71,   1, -40,  72},
+				 {-29, -23, -92,  83, -59,  74,  63,   0,   7,  14},
+				 {-59, -95, -40,  31,  90, -97,  24,   2,  33, -32},
+				 { 89, -97,  54,  69,  28, -78,  72, -87, -99, -37},
+				 { 48,  99, -53, -65, -78, -83,   8,  -2,  93, -15},
+				 {-75, -73,  22,  39, -49, -27,  75, -91,  57,  33},
+				 { -6, -76,  17, -62,  70,  51, -64,   5, -42,  84},
+				 {-98, -70, -45,  88,  92,  18, -83, -40, -44,  30}};
+			
+		int[][] result = Matrix.fromSnail(t);
+		
+		assertArrayEquals(expected, result);
+	}
+	
+	@Test
+	public void testToFromSnail11() {
+		int[][] t =  {
+				 {48, 13,  2, 16, 62, 12, 66, 72},
+				 { 2,  6, 66, 85, 31,  4, 30, 70},
+				 {96, 47, 63, 56, 41, 74,  0, 68},
+				 {32, 69, 27, 70, 77, 54, 19, 86},
+				 {36, 52,  5, 35, 95,  3, 14,  4},
+				 {45, 41, 48, 58, 38, 65, 24, 52},
+				 { 4, 67, 64,  5, 86, 85, 79, 89},
+				 {25, 43, 50,  1, 56, 21, 73, 31}};
+		
+		int[][] expected =  {
+				 {48, 13,  2, 16, 62, 12, 66, 72},
+				 { 2,  6, 66, 85, 31,  4, 30, 70},
+				 {96, 47, 63, 56, 41, 74,  0, 68},
+				 {32, 69, 27, 70, 77, 54, 19, 86},
+				 {36, 52,  5, 35, 95,  3, 14,  4},
+				 {45, 41, 48, 58, 38, 65, 24, 52},
+				 { 4, 67, 64,  5, 86, 85, 79, 89},
+				 {25, 43, 50,  1, 56, 21, 73, 31}};
+		
+		int res[][] = Matrix.toSnail(t);
+		
+		assertNotNull(res);
+			
+		assertArrayEquals(expected, Matrix.fromSnail(res));
+	}
+	
+	@Test
+	public void testToFromSnail12() {
+		int[][] t =  {
+				 {79, 40, 27, 89, 66, 11, 84, 63, 71, 79, 66, 21, 14, 84, 29, 61, 66,  5, 17, 76, 87, 39, 91, 97, 35, 36, 30, 32},
+				 {92, 35, 57, 46, 91, 32, 83, 99, 25, 15, 86, 56, 93, 92, 51, 58, 60, 70, 58, 81},
+				 {15, 78, 25, 86, 69, 21, 29, 99, 83,  9, 74, 88},
+				 {80, 44, 20, 28}};
+		
+		int[][] expected =  {
+				 {79, 40, 27, 89, 66, 11, 84, 63, 71, 79, 66, 21, 14, 84, 29, 61, 66,  5, 17, 76, 87, 39, 91, 97, 35, 36, 30, 32},
+				 {92, 35, 57, 46, 91, 32, 83, 99, 25, 15, 86, 56, 93, 92, 51, 58, 60, 70, 58, 81},
+				 {15, 78, 25, 86, 69, 21, 29, 99, 83,  9, 74, 88},
+				 {80, 44, 20, 28}};
+		
+		int[][] res = Matrix.fromSnail(t);
+		
+		assertNotNull(res);
+		
+		assertArrayEquals(expected, Matrix.toSnail(res));
+	}
+	
+	/** c) **/
+	
+	// true cases		
+	@Test
+	public void testAreRowsPositive01True() {
+		int[][] snailConstruction1 = {{  1,   2,   4,   3}};
+		assertTrue(Matrix.areRowsPositive(snailConstruction1));
+		
+		int[][] snailConstruction2 = {{  1,   2,   3,   6,   9,   8,  7,   4,  2, 1, 7, 12}, {5,  3,  8,  7}};
+		assertTrue(Matrix.areRowsPositive(snailConstruction2));		
+	}
+
+	@Test
+	public void testAreRowsPositive02True() {
+		int[][] snailConstruction1 = {{  1,   -2,   3,   -4,   5,   -6, 7,  -8}, {100}};
+
+		assertTrue(Matrix.areRowsPositive(snailConstruction1));
+		
+		int[][] snailConstruction2 = {{ 2, -2,  2, -2,  2, -2, -2,  2, -2, -2,  2,  2,  2,  2,  2,  2},
+				       				  { 2, -2,  2,  2,  2,  2,  2,  2},
+				       				  { 2}};
+
+		assertTrue(Matrix.areRowsPositive(snailConstruction2));		
+	}
+	
+	@Test
+	public void testAreRowsPositive03True() {		
+		int[][] snailConstruction1 = {{  3,   -1,   0,   4,   0,   1,   1,   0,  0,  0,  0,  0}, {3, 2, 4, 8}};
+		assertTrue(Matrix.areRowsPositive(snailConstruction1));
+		
+		int[][] snailConstruction2 = {{  0,   3,   0,   -2,   0,   3,   3,   0,  2,  0, 0, 1}, {4, 1, 22, 3}};
+		assertTrue(Matrix.areRowsPositive(snailConstruction2));
+	}
+		
+	@Test
+	public void testAreRowsPositive04True() {		
+		int[][] snailConstruction ={{  1,  -2,   3,  -4,   5,  -6,   7,  -8,   9, -10,  11,  11,  11,  11,  11,  11,  11,  11,  11,  11,  11, -10,   9,  -8,   7,  -6,   5,  -4,   3,  -2,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1},
+				 { -2,   3,  -4,   5,  -6,   7,  -8,   9, -10, -10, -10, -10, -10, -10, -10, -10, -10,   9,  -8,   7,  -6,   5,  -4,   3,  -2,  -2,  -2,  -2,  -2,  -2,  -2,  -2},
+				 {  3,  -4,   5,  -6,   7,  -8,   9,   9,   9,   9,   9,   9,   9,  -8,   7,  -6,   5,  -4,   3,   3,   3,   3,   3,   3},
+				 { -4,   5,  -6,   7,  -8,  -8,  -8,  -8,  -8,   7,  -6,   5,  -4,  -4,  -4,  -4},
+				 {  5,  -6,   7,   7,   7,  -6,   5,   5},
+				 { -6}};
+
+		assertTrue(Matrix.areRowsPositive(snailConstruction));		
+	}
+	
+	@Test
+	public void testAreRowsPositive05True() {		
+		int [][] snailConstruction = {
+			{49, 45, 48, -80, -57, 99, 78, 23, -64, 8, 68, 68, 64, 88, 19, 24, 81, 28, -28, -6, 41, -44, 73, 72, -85, 89, -79, 2}, 
+			{40, 47, 84, -30, -87, 52, -66, -41, -40, 44, 77, -91, -62, 9, 11, 25, -27, 81, 38, 76},
+			{60, 84, -87, 81, 0, 28, 59, -67, -34, 50, 32, -42}, 
+			{17, 73, -21, 75}
+		};
+		
+		assertTrue(Matrix.areRowsPositive(snailConstruction));
+	}
+
+	
+	// false cases
+	@Test
+	public void testAreRowsPositive06False() {	
+		int[][] snailConstruction1 = {{  -1,   -2,  -4,   -3}};		
+		assertFalse(Matrix.areRowsPositive(snailConstruction1));
+		
+		int[][] snailConstruction2 = {{  -1,   -2,  -3,   -6,   -9,   -8, -7,   -4}, {  -5}};
+		assertFalse(Matrix.areRowsPositive(snailConstruction2));		
+	}
+		
+	@Test
+	public void testAreRowsPositive07False() {		
+		int[][] snailConstruction1 = {{  -1,   2,   -3,   10,   -5,   6, -7,  20}, {100}};
+		assertFalse(Matrix.areRowsPositive(snailConstruction1));
+		
+		int[][] snailConstruction2 = {{ 2, -2,  2, -2,  2, -2,  2, -2,  2, -2,  2, -2,  2, -2,  2, -2},
+				 					  { 2, -2,  2, -2,  2, -2,  2, -2},
+				 					  { 2}};
+		assertFalse(Matrix.areRowsPositive(snailConstruction2));
+	}
+	
+	@Test
+	public void testAreRowsPositive08False() {
+		int[][] snailConstruction1 = {{  1,   0,   0,   0,   -1,   0,   0,   0, 12,  13,  14,  0}, {0,  0,  200,  300}};
+		assertFalse(Matrix.areRowsPositive(snailConstruction1));
+		
+		int[][] snailConstruction2 = {{  0,   2,   0,   -3,   0,   3,   0,   -1, 100, 200, 300, 400}, {2, 500, 600, 700}};
+		assertFalse(Matrix.areRowsPositive(snailConstruction2));
+	}
+	
+	@Test
+	public void testAreRowsPositive09False() {
+		int[][] snailConstruction = {{ -1,   2,  -3,   4,  -5,   6,  -7,   8,  -9,  10, 11, -11, 11, -11, 11, -11, 11, -11, 11, -11, 11,  10,  -9,   8,  -7,   6,  -5,   4,  -3,   2,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1},
+				 {  2,  -3,   4,  -5,   6,  -7,   8,  -9,  10,  10,  10,  10,  10,  10,  10,  10,  10,  -9,   8,  -7,   6,  -5,   4,  -3,   2,   2,   2,   2,   2,   2,   2,   2},
+				 { -3,   4,  -5,   6,  -7,   8,  -9,  -9,  -9,  -9,  -9,  -9,  -9,   8,  -7,   6,  -5,   4,  -3,  -3,  -3,  -3,  -3,  -3},
+				 {  4,  -5,   6,  -7,   8,   8,   8,   8,   8,  -7,   6,  -5,   4,   4,   4,   4},
+				 { -5,   6,  -7,  -7,  -7,   6,  -5,  -5},
+				 {  6}};
+
+		assertFalse(Matrix.areRowsPositive(snailConstruction));
+	}
+	
+	@Test
+	public void testAreRowsPositive10False() {
+		int[][] snailConstruction = {
+		  {65, 37, 69, 74, -77, 46, 14, 62, 94, -17, 57, 4, 36, 87, -88, -16, -11, 21, -17, 59, 93, 75, 41, 35, 84, 91, -25, 23}, 
+		  {-24, -25, 16, 34, -46, 11, 34, -49, -42, -28, -71, 20, -32, 54, 14, 14, -44, 18, -13, 70}, 
+		  {78, -75, 67, -13, 18, -1, 88, 21, -93, -37, 90, 33}, 
+		  {3, 29, -73, -40}
+	    };
+		
+		assertFalse(Matrix.areRowsPositive(snailConstruction));
+	}
+	
+	/** d) **/
+	
+	// true cases
+	@Test
+	public void testAreRingsDense01() {
+		int[][] matrix =  {
+				{1,2},
+				{3,4}
+			};
+				
+		assertTrue(Matrix.areRingsDense(matrix));
+	}
+		
+	@Test
+	public void testAreRingsDense02() {	
+		int[][] matrix1 = {
+				{0,2,4},
+				{5,-14,2},
+				{0,4,6}
+		};
+		assertTrue(Matrix.areRingsDense(matrix1));
+		
+		int[][] matrix2 = {
+				{3,2,4},
+				{6,-7,5},
+				{0,6,0}
+		};
+		assertTrue(Matrix.areRingsDense(matrix2));
+	}
+		
+	@Test
+	public void testAreRingsDense03() {			
+		int[][] matrix1 = {
+				{4,2,0,8},
+				{5,-14,2,8},
+				{0,0,6,8},
+				{3,5,8,0}
+		};
+		assertTrue(Matrix.areRingsDense(matrix1));	
+		
+		int[][] matrix2 = {
+				{1,2,0,8},
+				{2,32,-2,-43},
+				{0,5,-7,0},
+				{22,54,5,-5}
+		};
+		assertTrue(Matrix.areRingsDense(matrix2));
+	}
+	
+	@Test
+	public void testAreRingsDense04() {			
+		int [][] a = {
+				{23, 0, 56, 32, 35},
+				{-34, 89, -64, -21, -97},
+				{24, 5, 69, -23, 25},
+				{-47, 32, 5, 94, 26}, 
+				{38, 0, 0, -10, -88}
+		};
+		
+		assertTrue(Matrix.areRingsDense(a));
+	}
+
+	@Test
+	public void testAreRingsDense05() {			
+		int[][] matrix1 = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+				 		   {1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1},
+				 		   {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
+				 		   {1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1},
+				 		   {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1},
+				 		   {1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0},
+				 		   {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+				 		   {1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1},
+				 		   {1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
+				 		   {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+				 		   {1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1}};
+		assertTrue(Matrix.areRingsDense(matrix1));
+	}
+	
+	//false cases
+	@Test
+	public void testAreRingsDense06() {
+		int[][] matrix2 = {
+				{0,0},
+				{3,0}
+		};
+		assertFalse(Matrix.areRingsDense(matrix2));
+	}
+	
+	@Test
+	public void testAreRingsDense07() {	
+		int[][] matrix1 = {
+				{4,0,7},
+				{2,5,0},
+				{-7,8,0}
+		};
+		assertFalse(Matrix.areRingsDense(matrix1));
+		
+		int[][] matrix2 = {
+				{2,0,0},
+				{4,1,0},
+				{6,8,0}
+			};
+		assertFalse(Matrix.areRingsDense(matrix2));
+	}
+
+	@Test
+	public void testAreRingsDense08() {		
+		int[][] matrix1 = {
+				{4,2,0,8},
+				{5,0,2,8},
+				{0,0,6,8},
+				{3,5,8,0}
+		};
+		assertFalse(Matrix.areRingsDense(matrix1));
+		
+		int[][] matrix2 = {
+				{1,0,0,8},
+				{2,32,-2,-43},
+				{0,0,-7,0},
+				{22,54,5,0}
+		};
+		assertFalse(Matrix.areRingsDense(matrix2));
+	}	
+	
+	@Test
+	public void testAreRingsDense09() {
+		int [][] a = {
+				{93, 0, 56, 32, 35},
+				{-65, 89, 0, -29, -99},
+				{24, 0, 69, 0, 26},
+				{-47, 32, 5, 97, 26}, 
+				{38, 0, 0, -10, -88}
+		};
+		
+		assertFalse(Matrix.areRingsDense(a));
+	}
+	
+	@Test
+	public void testAreRingsDense10() {			
+		int[][] matrix1 ={{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+				 		  {1, 0, 800, 1, 200, 1, 1, 1, 201, 1, 1},
+				 		  {1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+				 		  {0, 0, 51, 1, 1, 1, 89, 1, 305, 1, 1},
+				 		  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+				 		  {1, 79, 1, 1, 1, 0, 1, 1, 0, 1, 1},
+				 		  {1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+				 		  {1, 1, 1, 41, 210, 1, 1, 0, 1, 1, 1},
+				 		  {0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
+				 		  {1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+				 		  {1, 2, 1, 1, 1, 0, 5, 5, 1, 0, 0}};
+		assertFalse(Matrix.areRingsDense(matrix1));
+	}
+
+}
