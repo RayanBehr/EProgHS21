@@ -26,34 +26,46 @@ public class Grid {
 			current = current.getBottom();
 			a++; }
 
-		//count colums
+		// count colums
 		current = origin;	
 		int b = 0;
 		while(current != null) {
 			current = current.getRight();
 			b++; }	
-		
+		// copy all nodes we cant to keep
 		Node rowStart = origin;	
 		for(int i = 0; i < A && i < a; i++) {
 			Node rowElement = rowStart;
 			for(int j = 0; j < B && j < b; j++) {
 				stru[i][j] = rowElement;				
-				rowElement = rowElement.getRight(); } //at end null
+				rowElement = rowElement.getRight(); } // at end null
 
-			rowStart = rowStart.getBottom(); } //at end null
+			rowStart = rowStart.getBottom(); } // at end null
 	
+		
+		
+	
+
 	    for(int i = 0; i < A; i++) {
 	        for(int j = 0; j < B; j++) {
 	            Node curNode = stru[i][j];
+	            
 	            if (curNode == null)  {
+	            	// add missing nodes if missing
 	            	stru[i][j] = new Node(null, null); 
 	                curNode = stru[i][j]; }
 	            
+	            // delete all conections //graph gone
 	            curNode.setRight(null); curNode.setBottom(null);
 	            
+	            // rebuild the connections
 	            if(i != 0) stru[i-1][j].setBottom(curNode);
-	            if(j != 0) stru[i][j-1].setRight(curNode); } }
-	    
+	            if(j != 0) stru[i][j-1].setRight(curNode); 
+	            } 
+	        }
+	    // but because we have the nodes in the skelleton amtrix we know where they have to be
+	   
+	    // show addresses 
 		for(int i = 0; i < A; i++) {
 			for(int j = 0; j < B; j++)
 				System.out.print("(" + stru[i][j] + ", " + 
