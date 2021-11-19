@@ -1,0 +1,249 @@
+NETHZ: rabehr
+
+nondeterministic: NO
+timeout: NO
+
+test01: FAIL
+test02: PASS
+test03: PASS
+test04: PASS
+test05: PASS
+test06: PASS
+test07: PASS
+test08: PASS
+test09: PASS
+test10: PASS
+test11: PASS
+test12: PASS
+test13: PASS
+test14: PASS
+test15: PASS
+test16: PASS
+test17: PASS
+test18: PASS
+
+Total Punkte (von 5): 4.72
+
+
+Folgende Test-Datei wurde für die Bewertung verwendet:
+
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
+
+public class Split57GradingTest {
+	
+	@Test
+	public void test01() {
+		int[] x = {35, 35, 35, 35};
+		
+		boolean [] result = Split57.split57(x);
+		assertNull(result);
+	}	
+	
+	@Test
+	public void test02() {
+		int [] x = {12, 19, 36, 88, 4, 8, 17, 24, 29};
+		
+		boolean [] result = Split57.split57(x);
+		
+		assertNull(result);
+	}
+	
+	@Test
+	public void test03() {
+		int [] x = {707, 640, 10, 77};
+		
+		boolean [] result = Split57.split57(x);
+		
+		assertNull(result);
+	}
+	
+	@Test
+	public void test04() {
+		int [] x = {5000014, 1241241242, 21489014, 7124141, 983592, 1231243, 94814};
+		
+		boolean [] result = Split57.split57(x);		
+		assertNull(result);
+	}
+	
+	@Test
+	public void test05() {
+		int []  x = {5, 2, 7};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = {{true, true, false}};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test06() {
+		int[] x = {7, 3, 9, 4, 2, 8, 5};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = {{false, true, true, false, true, false, true},
+								 {false, false, false, true, true, true, true}};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test07() {
+		int[] x = {3, 3, 3, 4, 5};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = {{false, false, false, true, true}};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test08() {
+		int[] x = {2, 3, 11, 21, 101, 201, 1001, 1112};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = {{true, false, true, false, true, false, false, true}};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test09() {
+		int[] x = {1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = {{true, false, false, false, true, true, true, false, true, true, false}, 
+								 {false, true, false, false, true, true, true, false, true, true, false}};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test10() {
+		int[] x = {1, 4, 9, 16, 25, 36, 49};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = {{false, false, true, false, true, true, false}};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test11() {
+		int[] x = {35, 46, 107, 217, 1327, 2427, 56319, 60201, 62020, 67319, 722543, 832543};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = {{true, false, true, false, true, false, true, true, true, false, true, false}};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test12() {
+		int[] x = {1079578, 357081, 424354, 357142, 357070, 1903648, 417236, 357252, 358362, 413354, 419055, 359462};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = {{true, false, false, true, true, false, true, false, true, true, true, false}};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test13() {
+		int[] x = {1059462, 1057070, 1057081, 1058362, 1124354, 4003648, 1113354, 1119055, 1057142, 1057252, 1117236, 1779578};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = {{false, true, false, true, false, false, true, true, true, false, true, true}};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test14() {
+		int[] x = {9, 11, 17, 23, 24, 31, 37, 41, 41};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = {{true, false, true, true, false, true, true, false, false},
+								 {false, true, false, false, true, false, false, true, true}};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test15() {
+		int[] x = {12345678, 5, 76876764, 8884374, 4737847, 98837, 99999, 314156, 65372, 68299242};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = {{true, true, false, false, true, true, false, true, true, true}};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test16() {
+		int [] x = {-17, -17, 101, 101, 236};
+		
+		boolean [] result = Split57.split57(x);
+		
+		boolean [][] expected = {
+				{true, true, false, false, true},
+				{false, false, true, true, false} };
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test17() {
+		int [] x = {103, -17, 15, 49, -300, 6125, 5703,-2};
+		
+		boolean [] result = Split57.split57(x);
+		
+		boolean [][] expected = { {false, false, true, false, true, true, false, true} };
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+	
+	@Test
+	public void test18() {
+		int [] x = {-101, -22, -43, -102, -409, 9, -352};
+		
+		boolean [] result = Split57.split57(x);
+		boolean [][] expected = { 
+				{true, false, false, false, true, false, false},
+				{false, true, true, true, false, true, true}
+		};
+		
+		assertEqualsOneOfExpected(expected, result);
+	}
+
+	
+	/* Asserted dass einer der Arrays aus 'expected' gleich dem Array 'actual' ist. */
+	public void assertEqualsOneOfExpected(boolean[][] expected, boolean[] actual) {
+		// Diese Methode enthaelt Konstrukte, welche noch nicht in der Vorlesung behandelt wurden.
+		
+		for (boolean[] ex : expected) {
+			if (Arrays.equals(ex, actual)) {
+				return;
+			}
+		}
+		
+		StringBuilder buf = new StringBuilder();
+		buf.append("expected one of: ");
+		boolean first = true;
+		for (boolean[] ex : expected) {
+			if (!first) {
+				buf.append(", ");
+			}
+			buf.append(Arrays.toString(ex));
+			first = false;
+		}
+		buf.append("   but was: ");
+		buf.append(Arrays.toString(actual));
+		
+		throw new AssertionError(buf);
+	}
+	
+}
