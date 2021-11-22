@@ -27,19 +27,24 @@ public class Labyrinth {
 	}
 	
 	public static boolean task2(Room room) {		
-		if(room.isExit()) return false;	
+		
 		Stack<Room> memoA = new Stack<>(); 
-		Stack<Room> memoB = new Stack<>(); 		
+		Stack<Room> memoB = new Stack<>(); 	
+		
 		for(Room ajRoomA : room.doorsTo)
 			for(Room ajRoomB : room.doorsTo) 
-			{
-				//we try to find two ajecent rooms with the same age					
+			{ // we try to find two ajecent rooms with the same age									
 				if(ajRoomA.getAge() == ajRoomB.getAge())
 				{
+					// we add the ajecent rooms to the memo
 					memoA.push(ajRoomA); memoB.push(ajRoomB);
+					
+					//if the recursion evaluates to true we found it
 					if(rec2(ajRoomA, ajRoomB, copy(memoA), copy(memoB)))
-						return true;			
-					memoA.pop(); memoB.pop();
+						return true;	
+					
+					// we remove the rooms we just pushed, because we want to try another combination
+					memoA.pop(); memoB.pop(); //revert memo
 				}
 			}		
 		return false;
@@ -73,13 +78,14 @@ public class Labyrinth {
 			// we only want to return true if they are different somewhere
 			while(memoA.size() > 0) // stacks have same size
 				if(memoA.pop() != memoB.pop()) {
+					/*
 					for(int i = 0; i < memoSaveA.size(); i++) {
 						Room a = memoSaveA.pop();
 						Room b = memoSaveB.pop();						
 						System.out.println("Reference: " + a + ",	Age: " + a.getAge() + "	" + 
 									       "Reference: " + b + ",	Age: " + b.getAge());
 					}
-					System.out.println("--------------------");
+					System.out.println("--------------------");*/
 					return true;
 				}		
 			// we restore our memo
