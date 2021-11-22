@@ -70,7 +70,7 @@ public class LabyrinthTest {
 	@Test
 	public void testTask2Big() {
 		
-		int n = 100; 
+		int n = 400; 
 		int[][] plan1 = new int[n][n];
 		for (int i = 0; i < n; i += 1) {
 			for (int j = 0; j < n; j += 1) {
