@@ -346,4 +346,55 @@ public class LabyrinthTest2 {
 	    assertEquals(stack.pop(), stack2.pop());
     }
     
+    @Test // tests eve
+    public void testTask2Pitfalls() {
+        // generates two paths which diverge at the very start and never come together again
+        Room[] empty = {};
+        Room exit1 = new Room(5, empty);
+        Room[] toExit1 = {exit1};
+        Room middle1 = new Room(4, toExit1);
+        
+        Room exit2 = new Room(5, empty);
+        Room[] toExit2 = {exit2};
+        Room middle2 = new Room(4, toExit2);
+        
+        Room[] toMiddle = {middle1, middle2};
+        Room start = new Room(3, toMiddle);
+        
+        assertEquals(true, Labyrinth.task2(start));
+        
+        // generates a labyrinth where the two paths both always have the same age
+        // but one of them ends with an exit
+        // and the other ends with another room
+        Room exit3 = new Room(5, empty);
+        Room[] toExit3 = {exit3};
+        Room middle3 = new Room(4, toExit3);
+        
+        Room exit4 = new Room(4, empty);
+        
+        Room[] toMiddle2 = {middle3, exit4};
+        Room start2 = new Room(3, toMiddle2);
+        
+        assertEquals(false, Labyrinth.task2(start2));
+        
+        // generates a labyrinth where the two paths diverge first with the same age
+        // but then get to different ages
+        // before coming together again
+        Room finalExit = new Room(6, empty);
+        Room[] tofinalExit = {finalExit};
+        
+        Room exit5 = new Room(42, tofinalExit);
+        Room[] toExit5 = {exit5};
+        Room middle5 = new Room(4, toExit5);
+        
+        Room exit6 = new Room(5, tofinalExit);
+        Room[] toExit6 = {exit6};
+        Room middle6 = new Room(4, toExit6);
+        
+        Room[] toMiddle3 = {middle5, middle6};
+        Room start3 = new Room(3, toMiddle3);
+        
+        assertEquals(false, Labyrinth.task2(start3));
+    }
+    
 }
