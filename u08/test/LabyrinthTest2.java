@@ -346,7 +346,7 @@ public class LabyrinthTest2 {
 	    assertEquals(stack.pop(), stack2.pop());
     }
     
-    @Test // tests eve
+    @Test // tests eveeee
     public void testTask2Pitfalls() {
         // generates two paths which diverge at the very start and never come together again
         Room[] empty = {};
