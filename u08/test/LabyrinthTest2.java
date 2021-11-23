@@ -343,6 +343,7 @@ public class LabyrinthTest2 {
 	    stack.push(r);
 	
 	    Stack<Room> stack2 = Labyrinth.copy(stack);
+	    if(stack2 == stack) assertEquals(0, 1);
 	    assertEquals(stack.pop(), stack2.pop());
     }
     
