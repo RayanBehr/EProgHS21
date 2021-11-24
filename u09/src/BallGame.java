@@ -1,10 +1,11 @@
-import java.util.ArrayList;
+
+import java.util.Stack;
 
 public class BallGame {
 	
 	BallPool pool;
 	
-	ArrayList<Integer> drawsToSkip = new ArrayList<>();
+	Stack<Integer> drawsToSkip = new Stack<>();
 	
 	public BallGame(BallPool pool) {
 		this.pool = pool;
