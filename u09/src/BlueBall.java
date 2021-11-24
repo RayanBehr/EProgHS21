@@ -1,6 +1,13 @@
 
 public class BlueBall extends Ball {
-	public BlueBall() {
-		
+
+	@Override
+	public int scoreActions(int score, 
+							BallPool pool,
+							BallGame game) {
+		pool.add(new BlueBall());
+		return score - this.stickerCount;
 	}
+	
+	
 }

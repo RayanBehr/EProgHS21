@@ -23,7 +23,7 @@ public class Labyrinth {
 				return true;			}		
 		return false;
 	}
-	
+
 	public static boolean task2(Room room) {			
 		Stack<Room> memoA = new Stack<>(); Stack<Room> memoB = new Stack<>(); 		
 		for(Room ajRoomA : room.doorsTo) for(Room ajRoomB : room.doorsTo)							
