@@ -25,7 +25,7 @@ public class BallGame {
 				if(draw.getClass()
 						.toString()
 						.equals("class HabsburgerYellowBall"))
-					drawsToSkip.add(t + 3);
+					drawsToSkip.push(t + 3);
 	
 				draw.stickerCount++;
 				
