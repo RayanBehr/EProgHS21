@@ -1,0 +1,233 @@
+NETHZ: rabehr
+
+timeout: NO
+
+test00AdjustToOrigin: PASS
+test01LessRowsLessCols1: PASS
+test02LessRowsLessCols2: PASS
+test03LessRowsMoreCols1: PASS
+test04LessRowsMoreCols2: PASS
+test05MoreRowsLessCols1: PASS
+test06MoreRowsLessCols2: PASS
+test07MoreRowsMoreCols1: PASS
+test08MoreRowsMoreCols2: PASS
+test09MoreRowsEqualCols1: PASS
+test10MoreRowsEqualCols2: PASS
+test11LessRowsEqualCols1: PASS
+test12LessRowsEqualCols2: PASS
+test13EqualRowsMoreCols1: PASS
+test14EqualRowsMoreCols2: PASS
+test15EqualRowsLessCols1: PASS
+test16EqualRowsLessCols2: PASS
+test17EqualRowsEqualCols1: PASS
+test18EqualRowsEqualCols2: PASS
+
+Total Punkte (von 5): 5
+
+
+Folgende Test-Datei wurde für die Bewertung verwendet:
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import org.junit.jupiter.api.Test;
+
+public class GridGradingTests {
+	
+	@Test
+	public void test00AdjustToOrigin() {
+		final Node [][] grid = createGrid(4,3);
+		
+		Grid.adjustGrid(grid[0][0], 1, 1);
+        
+        assertNull(grid[0][0].getRight());
+        assertNull(grid[0][0].getBottom());
+	}
+	
+	@Test
+	public void test01LessRowsLessCols1() {		
+		testAdjustGrid(4,5,3,2);		
+	}
+	
+	@Test
+	public void test02LessRowsLessCols2() {		
+		testAdjustGrid(15,14,11,10);		
+	}
+	
+	@Test
+	public void test03LessRowsMoreCols1() {		
+		testAdjustGrid(4,3,3,5);	
+	}
+	
+	@Test
+	public void test04LessRowsMoreCols2() {		
+		testAdjustGrid(12,12,10,16);		
+	}
+	
+	@Test
+	public void test05MoreRowsLessCols1() {		
+		testAdjustGrid(3,3,5,2);		
+	}
+	
+	@Test
+	public void test06MoreRowsLessCols2() {		
+		testAdjustGrid(10,13,17,10);		
+	}
+	
+	@Test
+	public void test07MoreRowsMoreCols1() {		
+		testAdjustGrid(3,2,5,5);		
+	}
+	
+	@Test
+	public void test08MoreRowsMoreCols2() {		
+		testAdjustGrid(10,11,16,17);		
+	}
+	
+	@Test
+	public void test09MoreRowsEqualCols1() {		
+		testAdjustGrid(4,3,5,3);		
+	}
+	
+	@Test
+	public void test10MoreRowsEqualCols2() {		
+		testAdjustGrid(11,12,17,12);		
+	}
+	
+	@Test
+	public void test11LessRowsEqualCols1() {		
+		testAdjustGrid(4,5,3,5);		
+	}
+	
+	@Test
+	public void test12LessRowsEqualCols2() {		
+		testAdjustGrid(12,11,10,11);		
+	}
+	
+	@Test
+	public void test13EqualRowsMoreCols1() {		
+		testAdjustGrid(4,3,4,5);		
+	}
+	
+	@Test
+	public void test14EqualRowsMoreCols2() {		
+		testAdjustGrid(12,11,12,15);		
+	}
+	
+	@Test
+	public void test15EqualRowsLessCols1() {		
+		testAdjustGrid(3,5,3,2);
+	}
+	
+	@Test
+	public void test16EqualRowsLessCols2() {		
+		testAdjustGrid(10,14,10,11);
+	}
+	
+	@Test
+	public void test17EqualRowsEqualCols1() {		
+		testAdjustGrid(3,4,3,4);		
+	}
+	
+	@Test
+	public void test18EqualRowsEqualCols2() {		
+		testAdjustGrid(10,11,10,11);		
+	}
+	
+	/** helper functions **/	
+	
+	public static void testAdjustGrid(int oldRows, int oldCols, int newRows, int newCols) {
+		final Node [][] grid = createGrid(oldRows,oldCols);
+		
+		Grid.adjustGrid(grid[0][0], newRows, newCols);
+					
+		// check 1st row
+		final Node [] row0 = checkAndGetRow(grid[0][0], newCols);
+		checkRowsEqualUpTo(grid[0], row0, Math.min(oldCols, newCols));
+			
+		Node [] rowPrev = row0;
+		
+		// check overlap of old and new Grid
+		for (int i = 1; i < Math.min(oldRows, newRows); i++) {			
+			final Node [] rowi = checkAndGetRow(grid[i][0], newCols);
+			checkRowsEqualUpTo(grid[i], rowi, Math.min(oldCols, newCols));
+			checkRowsConnected(rowPrev, rowi);
+			rowPrev = rowi;
+		}
+		
+		// check new nodes in case new grid bigger than old
+		int rowDiff = newRows - oldRows;		
+		Node curr = grid[oldRows-1][0];
+		
+		
+		for (int i = 0; i < rowDiff; i++) {			
+			assertNotNull(curr.getBottom());
+			
+			final Node [] rowi = checkAndGetRow(curr.getBottom(), newCols);
+			checkRowsConnected(rowPrev, rowi);
+			rowPrev = rowi;
+			curr = curr.getBottom();
+		}
+		
+		// check the last row
+		checkIsLastRow(rowPrev);		
+	}
+		
+	//get row starting from leftMost and check that it has exactly nCols columns
+	public static Node [] checkAndGetRow(Node leftMost, int nCols) {
+		Node [] result = new Node[nCols];
+		Node cur = leftMost;
+		
+		for(int i = 0; i < nCols; i++) {
+			assertNotNull(cur);
+			result[i] = cur;
+			cur = cur.getRight();
+		}
+		
+		//cur is the right node of the final node in the row
+		assertNull(cur);
+		return result;
+	}
+	
+	
+	public static void checkIsLastRow(Node [] row) {
+		for(int i = 0; i < row.length; i++) {
+			assertNull(row[i].getBottom());
+		}
+	}
+	
+	public static void checkRowsConnected(Node [] top, Node [] bottom) {
+		for(int i = 0; i < top.length; i++) {
+			assertEquals(bottom[i], top[i].getBottom());
+		}
+	}
+	
+	//checks the two input rows are the same for the first k elements
+	public static void checkRowsEqualUpTo(Node [] first, Node [] second, int k) {
+		for(int i = 0; i < k; i++) {
+			assertEquals(first[i], second[i]);
+		}
+	}
+	
+	public static Node [][] createGrid(int nrows, int ncols) {		
+		Node [][] gridNodes = new Node[nrows][ncols];
+		
+		for(int i = 0; i < nrows; i++) {
+			for(int j = 0; j < ncols; j++) {
+				Node curNode = new Node(null, null);
+				gridNodes[i][j] = curNode;
+				
+				if(i != 0) {
+					gridNodes[i-1][j].setBottom(curNode);
+				}
+				if(j != 0) {
+					gridNodes[i][j-1].setRight(curNode);
+				}
+			}
+		}
+		
+		return gridNodes;
+	}
+
+}
