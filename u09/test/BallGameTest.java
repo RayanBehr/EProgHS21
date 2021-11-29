@@ -62,6 +62,127 @@ public class BallGameTest {
 		assertEquals(-2, g1.playGame(2, 0)); // Benutzt den letzten Pool!
 	}
 	
+	@Test
+	public void testContinuousCusrom1() {
+		
+		int[] vals = new int[] {33, 
+								36, 
+								39, 
+								78, 
+								156, 
+								153, 
+								153, 
+								152, 
+								152, 
+								150, 
+								150, 
+								149, 
+								149, 
+								145, 
+								149, 
+								153, 
+								153, 
+								152, 
+								152, 
+								150, 
+								150, 
+								149, 
+								149, 
+								146, 
+								146, 
+								145, 
+								145, 
+								143, 
+								143, 
+								142, 
+								142, 
+								138, 
+								142, 
+								146, 
+								292, 
+								584, 
+								580, 
+								580, 
+								579, 
+								579, 
+								577, 
+								577, 
+								576, 
+								576, 
+								573, 
+								573, 
+								572, 
+								572, 
+								570, 
+								570, 
+								569, 
+								569, 
+								564, 
+								569, 
+								574, 
+								574, 
+								573, 
+								573, 
+								571, 
+								571, 
+								570, 
+								570, 
+								567, 
+								567, 
+								566, 
+								566, 
+								564, 
+								564, 
+								563, 
+								563, 
+								559, 
+								559, 
+								558, 
+								558, 
+								556, 
+								556, 
+								555, 
+								555, 
+								552, 
+								552, 
+								551, 
+								551, 
+								549, 
+								549, 
+								548, 
+								548, 
+								543, 
+								548, 
+								553};
+	
+		
+		for(int t = 48; t < 137; t++)
+		{
+			Ball[] b1 = {new PinkBall(),
+						 new GreenBall(),
+						 new RedBall(),
+						 new PinkBall(),
+						 new BlueBall(),
+						 new GreenBall(),
+						 new GreenBall(),
+						 new BlueBall(),
+						 new GreenBall(),
+						 new GreenBall(),
+						 new RedBall()};
+			TestBallPool p1 = new TestBallPool(b1);
+			System.out.println("---------- " + p1.myPool.size);
+			BallGame g1 = new BallGame(p1);		
+			//System.out.println(g1.playGame(t, 0) + ", ");
+			assertEquals(g1.playGame(t, 0), vals[t-48]);
+			for(int i = 0; p1.myPool.size != 0; i++)
+			{
+				Ball draw = p1.draw();
+				System.out.println(draw.getClass() + ": " + i);
+			}
+		}
+
+	}
+	
 	
 }
 
