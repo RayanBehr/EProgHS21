@@ -198,6 +198,114 @@ public class BallGameTest {
 
         assertEquals(17, g1.playGame(11, 17));
     }
+    
+    @Test
+	public void testContinuous3() { //Lu's test
+		Ball[] b1 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p1 = new TestBallPool(b1);
+		BallGame g1 = new BallGame(p1);
+		assertEquals(1, g1.playGame(1, 1)); // Green ball drawn +0
+		
+		Ball[] b2 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p2 = new TestBallPool(b2);
+		BallGame g2 = new BallGame(p2);
+		assertEquals(2, g2.playGame(2, 1)); // Pink ball drawn *2, second green ball removed
+		
+		Ball[] b3 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p3 = new TestBallPool(b3);
+		BallGame g3 = new BallGame(p3);
+		assertEquals(2, g3.playGame(3, 1)); // third green ball drawn, +0
+		
+		Ball[] b4 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p4 = new TestBallPool(b4);
+		BallGame g4 = new BallGame(p4);
+		assertEquals(3, g4.playGame(4, 1)); // first green ball drawn, +1
+		
+		Ball[] b5 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p5 = new TestBallPool(b5);
+		BallGame g5 = new BallGame(p5);
+		assertEquals(1, g5.playGame(5, 1)); // yellow ball drawn *0+1, the third ball will have no effect
+		
+		Ball[] b6 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p6 = new TestBallPool(b6);
+		BallGame g6 = new BallGame(p6);
+		assertEquals(2, g6.playGame(6, 1)); // pink ball drawn *2, third green ball removed
+		
+		Ball[] b7 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p7 = new TestBallPool(b7);
+		BallGame g7 = new BallGame(p7);
+		assertEquals(4, g7.playGame(7, 1)); // first green ball drawn, +2
+		
+		Ball[] b8 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p8 = new TestBallPool(b8);
+		BallGame g8 = new BallGame(p8);
+		assertEquals(4, g8.playGame(8, 1)); // first yellow ball drawn, no effect (see above)
+		
+		Ball[] b9 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p9 = new TestBallPool(b9);
+		BallGame g9 = new BallGame(p9);
+		assertEquals(1, g9.playGame(9, 1)); // second yellow ball drawn *0+1, the third ball will have no effect
+		
+		Ball[] b10 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p10 = new TestBallPool(b10);
+		BallGame g10 = new BallGame(p10);
+		assertEquals(2, g10.playGame(10, 1)); // pink ball drawn *2, first green ball removed
+		
+		Ball[] b11 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p11 = new TestBallPool(b11);
+		BallGame g11 = new BallGame(p11);
+		assertEquals(5, g11.playGame(11, 1)); // first yellow ball drawn, *2+1, the third ball will have no effect
+		
+		Ball[] b12 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p12 = new TestBallPool(b12);
+		BallGame g12 = new BallGame(p12);
+		assertEquals(5, g12.playGame(12, 1)); // second yellow ball drawn, no effect (see above)
+		
+		Ball[] b13 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p13 = new TestBallPool(b13);
+		BallGame g13 = new BallGame(p13);
+		assertEquals(1, g13.playGame(13, 1)); // third yellow ball drawn, the third ball will have no effect
+		
+		Ball[] b14 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p14 = new TestBallPool(b14);
+		BallGame g14 = new BallGame(p14);
+		assertEquals(1, g14.playGame(14, 1)); // pink ball drawn, no effect (see above)
+		
+		Ball[] b15 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p15 = new TestBallPool(b15);
+		BallGame g15 = new BallGame(p15);
+		assertEquals(4, g15.playGame(15, 1)); // first yellow ball drawn, *3+1, the third ball will have no effect
+		
+		Ball[] b16 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p16 = new TestBallPool(b16);
+		BallGame g16 = new BallGame(p16);
+		assertEquals(4, g16.playGame(16, 1)); // second yellow ball drawn, no effect (see above)
+		
+		Ball[] b17 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p17 = new TestBallPool(b17);
+		BallGame g17 = new BallGame(p17);
+		assertEquals(5, g17.playGame(17, 1)); // third yellow ball drawn, *1+1, the third ball will have no effect
+		
+		Ball[] b18 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p18 = new TestBallPool(b18);
+		BallGame g18 = new BallGame(p18);
+		assertEquals(5, g18.playGame(18, 1)); // pink ball drawn, no effect (see above)
+		
+		Ball[] b19 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p19 = new TestBallPool(b19);
+		BallGame g19 = new BallGame(p19);
+		assertEquals(21, g19.playGame(19, 1)); // first yellow ball drawn, *4+1, the third ball will have no effect
+		
+		Ball[] b20 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p20 = new TestBallPool(b20);
+		BallGame g20 = new BallGame(p20);
+		assertEquals(21, g20.playGame(20, 1)); // second yellow ball drawn, no effect (see above)
+		
+		Ball[] b21 = {new GreenBall(), new PinkBall(), new GreenBall(), new GreenBall()};
+		BallPool p21 = new TestBallPool(b21);
+		BallGame g21 = new BallGame(p21);
+		assertEquals(43, g21.playGame(21, 1)); // third yellow ball drawn, *2+1, the third ball will have no effect
+	}
 	
 	
 }

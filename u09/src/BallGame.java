@@ -16,21 +16,18 @@ public class BallGame {
 		
 		for(int t = 0; t < turns; t++) 
 		{
+			Ball draw = pool.draw();
 			if(!drawsToSkip.contains(t))
-			{
-				Ball draw = pool.draw();
-				
+			{			
 				score = draw.scoreActions(score, pool, this); //we add absed on what we draw
 				
 				if(draw.getClass()
 						.toString()
 						.equals("class HabsburgerYellowBall"))
-					drawsToSkip.push(t + 3);
-	
-				draw.stickerCount++;
-				
-				pool.add(draw);
+					drawsToSkip.push(t + 3);				
 			}
+			draw.stickerCount++;
+			pool.add(draw);
 		}
 			
 		
