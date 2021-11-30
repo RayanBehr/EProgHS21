@@ -26,7 +26,7 @@ public class BallGame {
 						.equals("class HabsburgerYellowBall"))
 					drawsToSkip.push(t + 3);				
 			}
-			draw.stickerCount++;
+			draw.stickerCount++; // haha
 			pool.add(draw);
 		}
 			
