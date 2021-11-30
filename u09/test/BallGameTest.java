@@ -170,20 +170,70 @@ public class BallGameTest {
 						 new GreenBall(),
 						 new RedBall()};
 			TestBallPool p1 = new TestBallPool(b1);
-			System.out.println("---------- " + p1.myPool.size);
+			//System.out.println("---------- " + p1.myPool.size);
 			BallGame g1 = new BallGame(p1);		
 			//System.out.println(g1.playGame(t, 0) + ", ");
 			assertEquals(g1.playGame(t, 0), vals[t-48]);
+			/*
 			for(int i = 0; p1.myPool.size != 0; i++)
 			{
 				Ball draw = p1.draw();
 				System.out.println(draw.getClass() + ": " + i);
-			}
+			}*/
 		}
+		
 
 	}
 	
+    @Test
+    public void testContinuous2() {
+        // testing yellow ball behavior (once)
+        Ball[] b1 = {
+                new PinkBall(),
+                new GreenBall(),
+                new GreenBall(),
+                new GreenBall()};
+        BallPool p1 = new TestBallPool2(b1);
+        BallGame g1 = new BallGame(p1);
+
+        assertEquals(17, g1.playGame(11, 17));
+    }
 	
+	
+}
+
+/** Alternative Implementation von BallPool mit einem deterministischen Ziehen. Es wird immer der erste, dann der zweite Ball aus der Liste gezogen. */
+class TestBallPool2 extends BallPool {
+    
+    LinkedBallList myPool; // Fuer das Korrigieren werden wir nicht LinkedBallList verwenden.
+    boolean alt = false;
+    
+    TestBallPool2(Ball[] balls) {
+        this.myPool = new LinkedBallList();
+        for (int i = 0; i < balls.length; i += 1) {
+            this.myPool.addLast(balls[i]);
+        }
+    }
+    
+    @Override
+    public void add(Ball ball) {
+        myPool.addLast(ball);
+    }
+    
+    @Override
+    public Ball draw() {
+        if (myPool.isEmpty()) {
+            return null;
+        }
+        
+        if (this.alt) {
+            this.alt = false;
+            return myPool.remove(1);
+        } else {
+            this.alt = true;
+            return myPool.remove(0);
+        }
+    }
 }
 
 
