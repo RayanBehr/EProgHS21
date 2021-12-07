@@ -6,6 +6,7 @@ public class Pyramid {
 	}
 
 	public static void main(String[] args) {
+		
 		Node pyramid = new Node(
 			new Node(null, null),
 			new Node(null, null));
