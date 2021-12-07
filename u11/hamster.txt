@@ -1,0 +1,15 @@
+3  Cansumys     2 101 Bonanno
+4  Mesocricetus 3 826 Lucchese
+18 Cansumys     1 83  Gambino
+3  Mesocricetus 3 828 Genovese
+4  Mesocricetus 3 122 Colombo
+9  Tscherskia   1 74  Genovese
+9  Cricetus     1 75  Bonanno
+4  Cansumys     2 282 Colombo
+4  Cansumys     2 4   Lucchese
+4  Mesocricetus 3 123 Bonanno
+4  Cansumys     2 65  Genovese
+20 Cansumys     3 12  Gambino
+5  Mesocricetus 3 289 Gambino
+7  Cansumys     2 202 Bonanno
+9  Cricetulus   1 76  Colombo

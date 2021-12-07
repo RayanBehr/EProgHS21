@@ -1,0 +1,518 @@
+NETHZ: rabehr
+
+nondeterministic: NO
+timeout: NO
+
+testLabyrinthA01False: PASS
+testLabyrinthA02False: PASS
+testLabyrinthA03False: PASS
+testLabyrinthA04False: PASS
+testLabyrinthA05False: PASS
+testLabyrinthA06False: PASS
+testLabyrinthA07True: PASS
+testLabyrinthA08True: PASS
+testLabyrinthA09True: PASS
+testLabyrinthA10True: PASS
+testLabyrinthA11True: PASS
+testLabyrinthA12True: PASS
+testLabyrinthA13: PASS
+testLabyrinthA14: PASS
+testLabyrinthA15: PASS
+
+testLabyrinthB01False: PASS
+testLabyrinthB02False: PASS
+testLabyrinthB03False: PASS
+testLabyrinthB04False: PASS
+testLabyrinthB05False: PASS
+testLabyrinthB06False: PASS
+testLabyrinthB11False: PASS
+testLabyrinthB07True: PASS
+testLabyrinthB08True: PASS
+testLabyrinthB09True: PASS
+testLabyrinthB10True: PASS
+testLabyrinthB12True: PASS
+
+Total Punkte (von 5): 5
+
+
+Folgende Test-Datei wurde für die Bewertung verwendet:
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class LabyrinthGradingTest {
+	
+/** a) **/
+	
+	@Test
+	public void testLabyrinthA01False() {		
+		Room ex0 = new Room(3,new Room[0]);
+		assertFalse(Labyrinth.task1(ex0));		
+	}
+	
+	@Test
+	public void testLabyrinthA02False() {		
+		Room ex0 = createDenseLabyrinth(new int[][] {{1},{4},{10},{1},{3}});
+		assertFalse(Labyrinth.task1(ex0));		
+	}
+
+	
+	@Test
+	public void testLabyrinthA03False() {		
+		Room ex0 = createDenseLabyrinth(new int[][] {{1},{2,13,5},{1,4,19},{13,34,12}});
+		assertFalse(Labyrinth.task1(ex0));	
+	}
+	
+	
+	@Test
+	public void testLabyrinthA04False() {		
+		Room ex0 = createDenseLabyrinth(new int[][] {{0},{13,7,0},{5,0,34},{0,0,2}});
+		assertFalse(Labyrinth.task1(ex0));		
+	}
+	
+	@Test
+	public void testLabyrinthA05False() {
+		int n = 8;
+		int[][] plan = new int[n][n];
+		for (int i = 0; i < n; i += 1) {
+			for (int j = 0; j < n; j += 1) {
+				if (i == 0) { plan[i][j] = 14; }
+				else if (i == n-1) { plan[i][j] = 22; } 
+				else { plan[i][j] = 6 * i + 18 * j; }
+			}
+		}
+		
+		Room ex0 = createDenseLabyrinth(plan);
+		assertFalse(Labyrinth.task1(ex0));		
+	}
+	
+	@Test
+	public void testLabyrinthA06False() {		
+		int n = 8; 
+		int[] ages = new int[n*n+2];
+		ages[n*n]=13;
+		ages[n*n+1]=25;
+		
+		for (int i = 0; i < n; i += 1) {
+			for (int j = 0; j < n; j += 1) {
+				ages[n*i+j] = 6+i*18+j*30+i%2;
+			}
+		}
+		List<Integer>[] plan=new List[n*n+2];
+		
+		for (int i = 0; i < n-1; i += 1) {
+			for (int j = 0; j < n; j += 1) {
+				plan[i*n+j]=new ArrayList<Integer>();
+				if(i<n-2) {
+					for(int k=0;k<n;k+=1) {
+						plan[i*n+j].add((i+2)*n+k);
+					}
+				}
+				if(i%2==0) {
+					for(int k=0;k<n;k+=1) {
+						plan[i*n+j].add((i+1)*n+k);
+					}
+				}
+			}
+		}
+		plan[n*n]=new ArrayList<Integer>();
+		plan[n*n+1]=new ArrayList<Integer>();
+		
+		for(int j=0;j<n;j+=1) {
+			plan[n*n].add(j);
+			plan[(n-1)*n+j]=new ArrayList<Integer>();
+			plan[(n-1)*n+j].add(n*n+1);
+		}
+		
+		Room ex0 = createLabyrinthFromAdjList(plan,ages,n*n);
+		assertFalse(Labyrinth.task1(ex0));		
+	}
+	
+	@Test
+	public void testLabyrinthA07True() {		
+		Room ex0 = new Room(1,new Room[0]);
+		assertTrue(Labyrinth.task1(ex0));		
+	}
+	
+	
+	@Test
+	public void testLabyrinthA08True() {		
+		Room ex0 = createDenseLabyrinth(new int[][] {{1},{1},{2},{3},{1}});
+		assertTrue(Labyrinth.task1(ex0));		
+	}
+	
+	@Test
+	public void testLabyrinthA09True() {		
+		Room ex0 = createDenseLabyrinth(new int[][] {{1},{2,1,5},{12,34,19},{22,19,5}});
+		assertTrue(Labyrinth.task1(ex0));		
+	}
+	
+	@Test
+	public void testLabyrinthA10True() {		
+		Room ex0 = createDenseLabyrinth(new int[][] {{1},{2,3,0},{13,23,31},{0,19,4}});
+		assertTrue(Labyrinth.task1(ex0));		
+	}
+	
+	@Test
+	public void testLabyrinthA11True() {
+		int n = 100; 
+		int[][] plan = new int[n][n];
+		for (int i = 0; i < n; i += 1) {
+			for (int j = 0; j < n; j += 1) {
+				plan[i][j] = 4 + 22*i + 4*j;
+			}
+		}
+		
+		Room ex0 = createDenseLabyrinth(plan);
+		assertTrue(Labyrinth.task1(ex0));		
+	}
+	
+	@Test
+	public void testLabyrinthA12True() {		
+		int n = 100; 
+		int[] ages = new int[n*n+1];
+		ages[n*n]=13;
+		
+		for (int i = 0; i < n; i += 1) {
+			for (int j = 0; j < n; j += 1) {
+				ages[n*i+j] = 15+i*39+j*3;
+			}
+		}
+		
+		List<Integer>[] plan=new List[n*n+2];
+		
+		for (int i = 0; i < n-1; i += 1) {
+			for (int j = 0; j < n; j += 1) {
+				plan[i*n+j]=new ArrayList<Integer>();
+				if(i<n-2) {
+					for(int k=0;k<n;k+=1) {
+						plan[i*n+j].add((i+2)*n+k);
+					}
+				}
+				if(i%2==0) {
+					for(int k=0;k<n;k+=1) {
+						plan[i*n+j].add((i+1)*n+k);
+					}
+				}
+			}
+		}
+		
+		plan[n*n]=new ArrayList<Integer>();
+		for(int j=0;j<n;j+=1) {
+			plan[n*n].add(j);
+			plan[(n-1)*n+j]=new ArrayList<Integer>();
+		}
+		
+		Room ex0 = createLabyrinthFromAdjList(plan,ages,n*n);
+		assertTrue(Labyrinth.task1(ex0));		
+	}
+	
+	@Test
+	public void testLabyrinthA13() {
+		Room[] row3 = {new Room(1, new Room[0]),new Room(10, new Room[0])};
+		Room[] row2 = {new Room(1, new Room[0]),new Room(3, new Room[0]),new Room(2, new Room[0])};
+		Room[] row1 = {new Room(1, new Room[] {row2[1]}),new Room(3, new Room[] {row2[0],row2[1]}),new Room(2, new Room[] {row2[2]})};
+		Room ex0 = new Room (2, row1);
+		
+		assertTrue(Labyrinth.task1(ex0));
+		
+		for(Room r:row2) {
+			r.doorsTo=row3;
+		}
+		
+		assertFalse(Labyrinth.task1(ex0));		
+	}
+	
+	@Test
+	public void testLabyrinthA14() {		
+		Room[] row3 = {new Room(4, new Room[0]), new Room(10, new Room[0])};
+		Room[] row2= {new Room(1,row3), new Room(2,row3), new Room(3,row3)};
+		Room[] row1= {new Room(2, new Room[0]), new Room(1, new Room[] {row2[0],row2[2]}), new Room(3, new Room[] {row2[0],row2[1]})};
+		Room ex0 = new Room (1,row1);
+		
+		assertFalse(Labyrinth.task1(ex0));
+		
+		for(Room r:row2) {
+			r.doorsTo = new Room[0];
+		}
+		
+		assertTrue(Labyrinth.task1(ex0));		
+	}
+	
+	@Test
+	public void testLabyrinthA15() {
+		Room r0 = new Room(1, new Room [0]);
+		
+		Room rL1 = new Room(1, new Room [0]);
+		
+		Room rL21 = new Room(2, new Room [0]);
+		
+		Room rL31 = new Room(2, new Room [0]);
+		Room rL32 = new Room(86, new Room [0]);
+		Room rL33 = new Room(296, new Room [0]);
+		
+		rL1.doorsTo = new Room [] { rL21 };
+		rL21.doorsTo = new Room [] {rL31, rL32, rL33};
+		
+		
+		Room rR1 = new Room(1, new Room[0]);
+		
+		Room rR2 = new Room(500, new Room[0]);
+		rR1.doorsTo = new Room [] { rR2 };
+		
+		r0.doorsTo = new Room [] { rL1, rR1 };
+		
+		assertTrue(Labyrinth.task1(r0));
+		
+		rR2.age = 502;
+		
+		assertFalse(Labyrinth.task1(r0));
+	}
+	
+/** b) **/
+	
+	@Test
+	public void testLabyrinthB01False() {
+		for(int i = 0; i < 5; i++) {
+			Room r = new Room(i*100, new Room [0]);
+			assertFalse(Labyrinth.task2(r));
+		}
+	}
+	
+	@Test
+	public void testLabyrinthB02False() {
+		Room prev = createChain(7, 12312);
+		
+		assertFalse(Labyrinth.task2(prev));
+	}
+	
+	@Test
+	public void testLabyrinthB03False() {
+		Room rLeft = createChain(8, 19);
+		Room rRight = createChain(8, 19);
+		
+		Room r0 = new Room(24, new Room [] { rLeft, rRight });
+		
+		rLeft.doorsTo[0].doorsTo[0].doorsTo[0].age = 1;
+		
+		assertFalse(Labyrinth.task2(r0));
+	}
+	
+	@Test
+	public void testLabyrinthB04False() {			
+		Room finalChain = createChain(3,1340);
+		
+		Room rLeft = new Room(125, new Room [] { finalChain });
+		Room rRight = new Room(124, new Room [] { finalChain });
+				
+		Room startingChain = createChain(4, 134, new Room [] {rLeft, rRight});
+		
+		assertFalse(Labyrinth.task2(startingChain));
+	}
+	
+	@Test
+	public void testLabyrinthB05False() {
+		Room r = fourChainExampleTask2(false);
+		
+		assertFalse(Labyrinth.task2(r));		
+	}
+	
+	@Test
+	public void testLabyrinthB06False() {
+		int n = 7;
+		int [] [] plan = new int [n][n];
+		
+		int counter = 0;
+		for(int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				plan[i][j] = counter;
+				counter++;
+			}
+		}
+		
+		Room r = createDenseLabyrinth(plan);
+		
+		assertFalse(Labyrinth.task2(r));		
+	}
+	
+	@Test
+	public void testLabyrinthB11False() {
+		Room r2 = new Room(1, new Room [0]);
+		Room r1 = new Room(0, new Room [] {r2, r2});
+		
+		assertFalse(Labyrinth.task1(r1));
+	}
+	
+	@Test
+	public void testLabyrinthB07True() {
+		Room r = createDenseLabyrinth(new int [] [] { {1}, {1, 1, 1}, {1, 1}, {1}});
+		
+		assertTrue(Labyrinth.task2(r));
+	}
+	
+	@Test
+	public void testLabyrinthB08True() {			
+		Room finalChain = createChain(3,1340);
+		
+		Room rLeft = new Room(124, new Room [] { finalChain });
+		Room rRight = new Room(124, new Room [] { finalChain });
+				
+		Room startingChain = createChain(4, 134, new Room [] {rLeft, rRight});
+		
+		assertTrue(Labyrinth.task2(startingChain));
+	}
+	
+	@Test
+	public void testLabyrinthB09True() {
+		Room rLeft = createChain(5, 14);
+		Room rRight = createChain(5, 14);
+		
+		Room r0 = new Room(11, new Room [] { rLeft, rRight });
+		
+		assertTrue(Labyrinth.task2(r0));
+	}
+		
+	@Test
+	public void testLabyrinthB10True() {	
+		Room r = fourChainExampleTask2(true);
+		
+		assertTrue(Labyrinth.task2(r));
+	}
+	
+	@Test
+	public void testLabyrinthB12True() {
+		int n = 7;
+		int [] [] plan = new int [n][n];
+		
+		int counter = 0;
+		for(int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				plan[i][j] = counter;
+				counter++;
+			}
+		}
+		
+		plan[4][n-2] = plan[4][0];
+		
+		Room r = createDenseLabyrinth(plan);
+		
+		assertTrue(Labyrinth.task2(r));		
+	}
+	
+	/** Hilfsfunktionen **/
+	
+	public static Room fourChainExampleTask2(boolean trueResult) {
+			Room chain1 = createChain(5,1);
+			Room chain2 = createChain(5,100);
+			Room chain3 = createChain(5,200);
+			Room chain4 = createChain(5,300);
+			
+			Room r0 = new Room(0, new Room [] {chain1, chain2, chain3, chain4});
+			
+			//Path 1
+			Room A1 = chain2;
+			Room A2 = chain3.doorsTo[0];
+			Room A3 = A2.doorsTo[0];
+			Room A4 = chain2.doorsTo[0].doorsTo[0].doorsTo[0];
+			Room A5 = chain1.doorsTo[0].doorsTo[0].doorsTo[0].doorsTo[0];
+			
+			A1.doorsTo = new Room [] { A1.doorsTo[0], A2 };		
+			A3.doorsTo = new Room [] { A3.doorsTo[0], A4 };
+			A4.doorsTo = new Room [] { A4.doorsTo[0], A5 };
+			
+			A1.age = 5000;
+			A2.age = 6001;
+			A3.age = 5432;
+			A4.age = 12001;
+			A5.age = 1998;
+			
+			//Path 2
+			Room B1 = chain4;
+			Room B2 = chain1.doorsTo[0];
+			Room B3 = B2.doorsTo[0];
+			Room B4 = chain4.doorsTo[0].doorsTo[0].doorsTo[0];
+			Room B5 = B4.doorsTo[0];
+			
+			B1.doorsTo = new Room [] { B1.doorsTo[0], B2 };
+			B3.doorsTo = new Room [] { B3.doorsTo[0], B4 };
+			
+			B1.age = 5000;
+			B2.age = 6001;
+			B3.age = 5432;
+			B4.age = 12001;
+			B5.age = trueResult ? 1998 : 1997;
+			
+			return r0;
+	}
+	
+	public static Room createChain(int lengthOfChain, int startingValue) {
+		return createChain(lengthOfChain, startingValue, new Room [0]);
+	}
+	
+	
+	public static Room createChain(int lengthOfChain, int startingValue, Room [] finalDoorsTo) {
+		Room prev = new Room(startingValue, finalDoorsTo);
+		for(int i = 0; i < lengthOfChain-1; i++) {
+			Room newRoom = new Room(startingValue+i, new Room [] { prev });
+			prev = newRoom;
+		}
+
+		return prev;
+	}
+	
+	/* 
+	 * Eine Hilfsfunktion, welche Labyrinthe erstellt. 
+	 * Es gibt genau einen Raum fÃ¼r jeden Eintrag in `plan`.
+	 * `matrix[i][j]` enthaelt das Alter vom entsprechenden Raum.
+	 * Der Raum fuer `matrix[i][j]` hat Tueren zu `matrix[i+1][k]` fuer jedes k mit 0 <= k < matrix[i+1].length.
+	 * 
+	 * */
+	public static Room createDenseLabyrinth(int[][] plan) {
+		Room[] nexts = new Room[0];
+		
+		for (int i = plan.length-1; i >= 0; i -= 1) {
+			Room[] rooms = new Room[plan[i].length];
+			for (int j = 0; j < plan[i].length; j += 1) {
+				rooms[j] = new Room(plan[i][j], Arrays.copyOf(nexts, nexts.length));
+			}
+			nexts = rooms;
+		}
+		
+		if (nexts.length > 0) { return nexts[0]; }
+		else { return null; }
+	}
+	
+	/* 
+	 * Eine Hilfsfunktion, welche Labyrinthe erstellt. 
+	 * Es gibt genau einen Raum fÃ¼r jeden Eintrag in `ages`.
+	 * `ages[i]` enthaelt das Alter vom entsprechenden Raum.
+	 * Der Raum fuer `i` hat Tueren zu `plan[i].get(j)` fuer jedes j mit 0 <= j < plan[i].size().
+	 * 
+	 * */
+	public static Room createLabyrinthFromAdjList(List<Integer>[] plan, int[] ages, int startroom) {
+		int n = ages.length;
+		Room[] rooms = new Room[n];
+		
+		for(int i=0; i < n; i++) {
+			rooms[i] = new Room(ages[i], null);
+		}
+		
+		for(int i=0; i < n; i++) {
+			Room[] doorsto = new Room[plan[i].size()];
+			
+			for(int j=0; j < plan[i].size(); j++) {
+				doorsto[j] = rooms[plan[i].get(j)];
+			}
+			
+			rooms[i].doorsTo = doorsto;
+		}
+		
+		return rooms[startroom];
+	}
+}
