@@ -1,0 +1,35 @@
+Feedback Exercise sheet 10
+
+4. Circular List: Here you don't need the keyword @override because you are not overriding the method of a
+				  parent class.
+				  
+	get(): Almost correct; in the for loop it should be temp = temp.next; instead or temp = last.next;
+		   You should also check if the index out of bounds then throw an exception if it is:
+		   	
+		   if (index < 0 || index >= size) {
+				throw new IllegalArgumentException("getNode() with invalid index: " + index);
+			}
+			
+	set(): Here the same problems as above with temp = temp.next and the exception.
+	
+	isEmpty() and getSize() are correct.
+	
+	addFirst(), addLast(): correct
+	
+	removeFirst(): You want to check if this list is empty :
+				if (isEmpty()) {
+					throw new NoSuchElementException("removeFirst() on empty list!");
+				}
+				
+				Then if size == 1, you have to clear the list. Rest of the method is correct.
+	
+	removeLast(): correct :)
+				
+				
+	clear(): just set size to 0 and last to null.
+	
+	toArray(): make sure in the for loop you set temp = temp.next; and not temp = last.next because last is 
+			   always the same thing and temp will then never change.
+	
+	
+	
