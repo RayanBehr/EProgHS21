@@ -44,8 +44,7 @@ public class HamsterAnalysis {
 										offer.getAge(), offer.getID(),
 										offer.getAssociation());
 		    offersCopy.add(offerCopy);
-		}
-		return offersCopy;
+		}  return offersCopy;
 	}
 	
 	public List<Integer> genus(String gen) {
