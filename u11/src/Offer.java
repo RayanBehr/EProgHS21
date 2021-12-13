@@ -4,11 +4,11 @@ public class Offer {
 	String genus, association;
 	
 	public Offer(int price, String genus, int age, int id, String association) {
-		this.price = price;
-		this.genus = genus;
-		this.age = age;
-		this.id = id;
-		this.association = association;
+		this.price = price; // non negative
+		this.genus = genus; // string
+		this.age = age; // positive integer
+		this.id = id; // positive and unique
+		this.association = association; // string
 	}
 	
 	public int getPrice() {

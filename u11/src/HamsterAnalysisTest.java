@@ -75,4 +75,32 @@ public class HamsterAnalysisTest {
 		assertEquals(0, x.fraudDistance("Cricetus", 1));
 	}
 	
+	@Test
+    public void testDeepCopy() throws FileNotFoundException {
+        String dateiName = "hamster.txt";
+        Scanner scanner = new Scanner(new File(dateiName));
+        
+        HamsterAnalysis x = new HamsterAnalysis(scanner);
+        scanner.close();
+        
+        List<Offer> original = x.getData();
+        List<Offer> copy = x.getData();
+        
+        copy.get(0).price = 42069;
+        copy.get(0).genus = "Pikachu";
+        copy.get(0).age = 69;
+        copy.get(0).id = 1337;
+        copy.get(0).association = "Pokémon";
+        
+        assertNotEquals(original.get(0).price, copy.get(0).price);
+        assertNotEquals(original.get(0).genus, copy.get(0).genus);
+        assertNotEquals(original.get(0).age, copy.get(0).age);
+        assertNotEquals(original.get(0).id, copy.get(0).id);
+        assertNotEquals(original.get(0).association, copy.get(0).association);
+        
+        copy.remove(0);
+        
+        assertNotEquals(original.size(), copy.size());
+    }
+	
 }
