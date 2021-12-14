@@ -1,0 +1,251 @@
+NETHZ: rabehr
+
+Total Punkte (von 5): 5
+
+testBlueAdvanced: PASS
+testBlueSimple: PASS
+testComplexAllColors: PASS
+testComplexBlueGreen: PASS
+testComplexBluePink: PASS
+testComplexPinkGreenRed: PASS
+testGreenAdvanced: PASS
+testGreenSimple: PASS
+testHabsburgerAdvanced: PASS
+testHabsburgerSimple: PASS
+testPinkAdvanced: PASS
+testPinkSimple: PASS
+testRedAdvanced: PASS
+testRedSimple: PASS
+
+
+Folgende Test-Datei wurde für die Bewertung verwendet:
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.*;  
+
+/** Alternative Implementation von BallPool mit einem deterministischen Ziehen. Es wird immer der erste Ball aus der Liste gezogen. */
+class TestPoolGrading extends BallPool {
+	
+	ArrayList<Ball> myPool;
+	
+	TestPoolGrading(String init) {
+		this.myPool = new ArrayList<Ball>();
+		for (int i = 0; i < init.length(); i++){
+		    char c = init.charAt(i);        
+		    if(c == 'g') {
+		    	this.myPool.add(new GreenBall());
+		    } else if(c == 'r') {
+		    	this.myPool.add(new RedBall());		    	
+		    } else if(c == 'b') {
+		    	this.myPool.add(new BlueBall());			    	
+		    } else if(c == 'p') {
+		    	this.myPool.add(new PinkBall());			    	
+		    } else {
+		    	throw new IllegalArgumentException("Invalid char");
+		    }
+		}
+	}
+	
+	public String getDescription() {
+		String str = "";
+		for (int i = 0; i < this.myPool.size(); i += 1) {
+			Ball b = this.myPool.get(i);
+			String className = b.getClass().getName();
+		    if(className.contentEquals("GreenBall")) {
+		    	str += 'g';
+		    } else if(className.contentEquals("RedBall")) {
+		    	str += 'r';		    	
+		    } else if(className.contentEquals("BlueBall")) {
+		    	str += 'b';			    	
+		    } else if(className.contentEquals("PinkBall")) {
+		    	str += 'p';			    	
+		    } else {
+		    	str += 'x';	//habsburgergelb.. we don't know the class name
+		    }
+		}
+		return str;
+	}
+	
+	public void assertPoolContents(String contents) {
+		String desc = this.getDescription();
+		assertEquals(contents, desc);
+	}
+	
+	@Override
+	public void add(Ball ball) {
+		this.myPool.add(ball);
+	}
+	
+	@Override
+	public Ball draw() {
+		if (this.myPool.isEmpty()) {
+			return null;
+		}		
+		return this.myPool.remove(0);
+	}
+}
+
+
+public class BallGameGradingTest {
+
+	@Test
+	public void testBlueSimple() {
+		TestPoolGrading tPool = new TestPoolGrading("b");
+		assertEquals(0, new BallGame(tPool).playGame(1, 0));
+		tPool.assertPoolContents("bb");
+
+		tPool = new TestPoolGrading("b");
+		assertEquals(0, new BallGame(tPool).playGame(2, 0));
+		tPool.assertPoolContents("bbb");
+		
+		tPool = new TestPoolGrading("b");
+		assertEquals(-1, new BallGame(tPool).playGame(3, 0));
+		tPool.assertPoolContents("bbbb");
+	}
+
+	@Test
+	public void testPinkSimple() {
+		TestPoolGrading tPool = new TestPoolGrading("p");
+		assertEquals(2, new BallGame(tPool).playGame(1, 1));
+		tPool.assertPoolContents("xp");
+	}
+	
+	@Test
+	public void testHabsburgerSimple() {
+		TestPoolGrading tPool = new TestPoolGrading("p");
+		assertEquals(1, new BallGame(tPool).playGame(2, 1));
+		tPool.assertPoolContents("px");
+	}
+	
+	@Test
+	public void testGreenSimple() {
+		TestPoolGrading tPool = new TestPoolGrading("g");
+		assertEquals(15, new BallGame(tPool).playGame(6, 0));
+		tPool.assertPoolContents("g");
+	}
+	
+	@Test
+	public void testRedSimple() {
+		TestPoolGrading tPool = new TestPoolGrading("r");
+		assertEquals(8, new BallGame(tPool).playGame(3, 1));
+		tPool.assertPoolContents("r");
+		
+		tPool = new TestPoolGrading("rr");
+		assertEquals(8, new BallGame(tPool).playGame(3, 1));
+		tPool.assertPoolContents("r");
+	}
+
+	@Test
+	public void testPinkAdvanced() {
+		TestPoolGrading tPool = new TestPoolGrading("pp");
+		assertEquals(2, new BallGame(tPool).playGame(1, 1));
+		tPool.assertPoolContents("xp");
+		
+		tPool = new TestPoolGrading("pp");
+		assertEquals(1, new BallGame(tPool).playGame(2, 1));
+		tPool.assertPoolContents("px");
+	}
+	
+	@Test
+	public void testGreenAdvanced() {
+		TestPoolGrading tPool = new TestPoolGrading("gg");
+		assertEquals(6, new BallGame(tPool).playGame(6, 0));
+		tPool.assertPoolContents("gg");
+		
+		tPool = new TestPoolGrading("ggg");
+		assertEquals(3, new BallGame(tPool).playGame(6, 0));
+		tPool.assertPoolContents("ggg");
+	}
+
+	@Test
+	public void testBlueAdvanced() {
+		TestPoolGrading tPool = new TestPoolGrading("bb");
+		assertEquals(0, new BallGame(tPool).playGame(2, 0));
+		tPool.assertPoolContents("bbbb");
+		
+		tPool = new TestPoolGrading("bb");
+		assertEquals(-2, new BallGame(tPool).playGame(6, 0));
+		tPool.assertPoolContents("bbbbbbbb");
+	}
+	
+	@Test
+	public void testRedAdvanced() {
+		TestPoolGrading tPool = new TestPoolGrading("rrrrrrrr");
+		assertEquals(1024, new BallGame(tPool).playGame(10, 1));
+		tPool.assertPoolContents("r");
+		
+		tPool = new TestPoolGrading("rrrrr");
+		assertEquals(4, new BallGame(tPool).playGame(2, 1));
+		tPool.assertPoolContents("rrr");
+	}
+
+	@Test
+	public void testHabsburgerAdvanced() {
+		TestPoolGrading tPool = new TestPoolGrading("p");
+		assertEquals(2, new BallGame(tPool).playGame(3, 1));
+		tPool.assertPoolContents("xp");	
+		
+		tPool = new TestPoolGrading("p");
+		assertEquals(1, new BallGame(tPool).playGame(4, 1));
+		tPool.assertPoolContents("px");	
+		
+		tPool = new TestPoolGrading("p");
+		assertEquals(1, new BallGame(tPool).playGame(5, 1));
+		tPool.assertPoolContents("xp");	
+		
+		tPool = new TestPoolGrading("p");
+		assertEquals(2, new BallGame(tPool).playGame(6, 1));
+		tPool.assertPoolContents("px");	
+	}
+	
+	@Test
+	public void testComplexAllColors() {
+		TestPoolGrading tPool = new TestPoolGrading("grbpgrbp");
+		assertEquals(1, new BallGame(tPool).playGame(8, 1));
+		tPool.assertPoolContents("prxpx");	
+
+		tPool = new TestPoolGrading("pbrgpbrg");
+		assertEquals(1, new BallGame(tPool).playGame(8, 1));
+		tPool.assertPoolContents("rxxpxp");	
+		
+		tPool = new TestPoolGrading("ggrrbbpp");
+		assertEquals(6, new BallGame(tPool).playGame(8, 1));
+		tPool.assertPoolContents("rbbbbxpgg");	
+	}
+	
+	@Test
+	public void testComplexBlueGreen() {
+		TestPoolGrading tPool = new TestPoolGrading("bbbbgggg");
+		assertEquals(1, new BallGame(tPool).playGame(8, 1));
+		tPool.assertPoolContents("bbbbbbbbgggg");	
+
+		tPool = new TestPoolGrading("bgggbg");
+		assertEquals(1, new BallGame(tPool).playGame(9, 1));
+		tPool.assertPoolContents("ggbbgbbbbg");	
+	}
+	
+	@Test
+	public void testComplexPinkGreenRed() {
+		TestPoolGrading tPool = new TestPoolGrading("pgpgpgpg");
+		assertEquals(4, new BallGame(tPool).playGame(8, 1));
+		tPool.assertPoolContents("xpxxpxpp");	
+
+		tPool = new TestPoolGrading("grgrgr");
+		assertEquals(256, new BallGame(tPool).playGame(9, 1));
+		tPool.assertPoolContents("r");	
+	}
+	
+	@Test
+	public void testComplexBluePink() {
+		TestPoolGrading tPool = new TestPoolGrading("bp");
+		assertEquals(1, new BallGame(tPool).playGame(20, 1));
+		tPool.assertPoolContents("bxxxxp");	
+
+		tPool = new TestPoolGrading("pbgpb");
+		assertEquals(2, new BallGame(tPool).playGame(9, 1));
+		tPool.assertPoolContents("pxpxx");	
+	}
+}
