@@ -1,4 +1,4 @@
-import java.util.Scanner;
+
 /*
  * Author: 
  * 
@@ -11,14 +11,12 @@ public class GGT {
 
 	
 	public static void main(String[] args) {
-		// TODO 
 		long n = Long.parseLong("139472305678615");
 		long m = Long.parseLong("273426584985");
 		
 		System.out.println("using Euclid's Algo");
 		System.out.println("The GCD of " + n + " and " + m + " is " + gcdFAST(n,m));
-		System.out.println("Computed in " + iterations+ " iterations");
-
+		System.out.println("Computed in " + iterations + " iterations");
 	}
 	
 	

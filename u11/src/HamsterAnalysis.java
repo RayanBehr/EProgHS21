@@ -6,20 +6,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class HamsterAnalysis {
-	
+	List<Offer> offers = new ArrayList<>();
 	public static void main(String[] args) throws FileNotFoundException {
 		String dateiName = "hamster.txt";
 		Scanner scanner = new Scanner(new File(dateiName));		
 		HamsterAnalysis x = new HamsterAnalysis(scanner);
 		scanner.close();		
 		System.out.println("Data: ");
-		for (Offer offer : x.getData()) {
+		for (Offer offer : x.getData())
 		    System.out.println(offer);
-		}
 	}
-	
-	List<Offer> offers = new ArrayList<>();
-	
 	HamsterAnalysis(Scanner input) {		
 		while(input.hasNextLine()) {
 			String line = input.nextLine();
@@ -35,8 +31,7 @@ public class HamsterAnalysis {
 			lineScan.close();
 			offers.add(o);
 		}	
-	}
-	
+	}	
 	public List<Offer> getData() {
 		List<Offer> offersCopy = new ArrayList<>();
 		for (Offer offer : offers) {
@@ -45,8 +40,8 @@ public class HamsterAnalysis {
 										offer.getAssociation());
 		    offersCopy.add(offerCopy);
 		}  return offersCopy;
-	}
-	
+		//return new ArrayList<>(offers);
+	}	
 	public List<Integer> genus(String gen) {
 		List<Integer> idList = new ArrayList<>();	
 		for (Offer offer : offers)
@@ -54,13 +49,12 @@ public class HamsterAnalysis {
 				idList.add(offer.getID());			
 		return idList;
 	}
-	
 	public int fraudDistance(String gen, int age) {
 		List<Integer> hams = new ArrayList<>();
 		for (Offer offer : offers)
 			if(offer.getGenus().equals(gen) && offer.age == age)
 				hams.add(offer.getPrice());
-		if(hams.size() == 0) return -1; // es gibt keine passenden
+		 if(hams.size() == 0) return -1; // es gibt keine passenden
 		int minPrice = Integer.MAX_VALUE; int maxPrice = -1;
 		int avg; int sum = 0;
 		for (Integer price : hams) {
@@ -69,6 +63,7 @@ public class HamsterAnalysis {
 			sum += price; }
 		avg = (int) Math.ceil( (double) sum / hams.size());	
 		return Math.max((maxPrice - avg), (avg - minPrice));
-	}
-	
+	}	
 } 
+
+
