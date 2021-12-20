@@ -51,6 +51,7 @@ public class RoutingNode implements Node {
 				minId = Math.min(minId, id);
 			}
 		}
+		
 		return minId;
 	}
 	
