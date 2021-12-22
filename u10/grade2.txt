@@ -1,0 +1,869 @@
+NETHZ: rabehr
+
+timeout: NO
+test01A: PASS
+test01B: PASS
+test01C: PASS
+test02A: PASS
+test02B: PASS
+test03A: PASS
+test03B: PASS
+test03C: PASS
+test03D: PASS
+test06A: PASS
+test06B: PASS
+test06C: PASS
+test07A: PASS
+test07B: PASS
+test07C: PASS
+test08A: PASS
+test08B: PASS
+test8C: PASS
+test08D: PASS
+test09A: PASS
+test09B: PASS
+test09C: PASS
+test09D: PASS
+test10A: PASS
+test10B: PASS
+test10C: PASS
+test10D: PASS
+test11: PASS
+
+zTest01A: PASS
+zTest01B: PASS
+zTest02A: PASS
+zTest02B: PASS
+zTest03A: PASS
+zTest03B: FAIL
+zTest04: FAIL
+zTest05: PASS
+
+Total Punkte: 4.6
+
+
+Folgende Test-Datei wurde für die Bewertung verwendet:
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
+
+public class GradingFlexArrayTest {
+	
+	/** 1) **/
+
+	@Test
+	public void test01A() {		
+		FlexArray fx = new FlexArray();
+		assertTrue(fx.base() == 0 && fx.length() == 0);	
+		assertNotNull(fx.rawArray());
+	}
+	
+	@Test
+	public void test01B() {
+		{
+			FlexArray fx = new FlexArray(10);
+			assertTrue(fx.base() == 0 && fx.length() == 10);
+		}
+
+		{
+			FlexArray fx2 = new FlexArray(17);
+			assertTrue(fx2.base() == 0 && fx2.length() == 17);
+		}
+	}
+	
+	@Test
+	public void test01C() {		
+		{
+			FlexArray fx3 = new FlexArray(9,101);
+			assertTrue(fx3.base() == 101 && fx3.length() == 9);
+		}
+		
+		{
+			FlexArray fx4 = new FlexArray(2,20);
+			assertTrue(fx4.base() == 20 && fx4.length() == 2);
+		}
+	}
+	
+	@Test
+	public void test02A() {
+		FlexArray fx = new FlexArray(12);
+		assertTrue(fx.length() != 0);
+		
+		for(int i = 0; i < 12; i++) {
+			assertEquals(fx.read(i), 0);
+		}
+	}
+	
+	@Test
+	public void test02B() {
+		FlexArray fx = new FlexArray(10,5);
+		assertTrue(fx.length() != 0);
+
+		for(int i = 0; i < 10; i++) {
+			assertEquals(fx.read(i+5), 0);			
+		}
+	}
+	
+	@Test
+	public void test03A() {
+		FlexArray fx = new FlexArray(10);
+		fx.write(3, 42);
+		assertEquals(fx.read(3), 42);
+		
+		fx.write(9, 19);
+		assertEquals(fx.read(9), 19);
+		assertEquals(fx.read(3), 42);		
+	}
+	
+	@Test
+	public void test03B() {
+		FlexArray fx = new FlexArray(21);
+		fx.write(15, 42);
+		assertEquals(fx.read(15), 42);
+		
+		fx.write(9, 19);
+		assertEquals(fx.read(9), 19);
+		assertEquals(fx.read(15), 42);		
+	}
+	
+	@Test
+	public void test03C() {
+		FlexArray fx = new FlexArray(10,7);
+		fx.write(10, 42);
+		assertEquals(fx.read(10), 42);
+		
+		fx.write(16, 19);
+		assertEquals(fx.read(16), 19);
+		assertEquals(fx.read(10), 42);		
+	}
+	
+	@Test
+	public void test03D() {
+		FlexArray fx = new FlexArray(10,-5);
+		fx.write(-2, 42);
+		assertEquals(fx.read(-2), 42);
+		
+		fx.write(1, 19);
+		assertEquals(fx.read(1), 19);
+		assertEquals(fx.read(-2), 42);		
+	}
+
+	@Test
+	public void test06A() {
+		FlexArray fx = new FlexArray(0);
+		assertEquals(fx.read(-100), Integer.MIN_VALUE);
+		assertEquals(fx.read(-1), Integer.MIN_VALUE);
+		assertEquals(fx.read(0), Integer.MIN_VALUE);
+		assertEquals(fx.read(1), Integer.MIN_VALUE);
+		assertEquals(fx.read(10), Integer.MIN_VALUE);
+		assertEquals(fx.read(107), Integer.MIN_VALUE);		
+	}
+	
+	@Test
+	public void test06B() {
+		FlexArray fx = new FlexArray(10);
+		assertEquals(fx.read(-21), Integer.MIN_VALUE);
+		assertEquals(fx.read(-1), Integer.MIN_VALUE);
+		assertEquals(fx.read(10), Integer.MIN_VALUE);
+		assertEquals(fx.read(107), Integer.MIN_VALUE);		
+	}
+	
+	@Test
+	public void test06C() {
+		FlexArray fx = new FlexArray(20, 100);
+		assertEquals(fx.read(-21), Integer.MIN_VALUE);
+		assertEquals(fx.read(99), Integer.MIN_VALUE);
+		assertEquals(fx.read(120), Integer.MIN_VALUE);
+		assertEquals(fx.read(4001), Integer.MIN_VALUE);		
+	}
+	
+	@Test
+	public void test07A() {			
+		int n = 35;
+		int[] A = new int[n];
+		A[0] = 1; A[1] = 1;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] + A[i-2];
+		}
+		
+		
+		FlexArray fx = new FlexArray(n);
+		for(int i = 0; i< n; i++) {
+			fx.write(i, A[i]);
+		}
+
+		for(int i = 0; i< n; i++) {
+			assertEquals(fx.read(i), A[i]);
+		}
+		assertEquals(fx.read(-1), Integer.MIN_VALUE);
+		assertEquals(fx.read(n), Integer.MIN_VALUE);
+		fx.write(-1, 42);
+		fx.write(n, 42);
+		assertEquals(fx.read(-1), Integer.MIN_VALUE);
+		assertEquals(fx.read(n), Integer.MIN_VALUE);
+	}
+	
+	@Test
+	public void test07B() {			
+		int[] Bases = {1337, 5337};
+		int n = 35;
+		int[] A = new int[n];
+		A[0] = 1; A[1] = 1;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] + A[i-2];
+		}
+		
+		
+		for(int base : Bases) {
+			FlexArray fx = new FlexArray(n, base);
+			for(int i = 0; i< n; i++) {
+				fx.write(i+base, A[i]);
+			}
+
+			for(int i = 0; i< n; i++) {
+				assertEquals(fx.read(i+base), A[i]);
+			}
+			fx.write(base-1, 42);
+			fx.write(base+n, 42);
+			assertEquals(fx.read(base-1), Integer.MIN_VALUE);
+			assertEquals(fx.read(base+n), Integer.MIN_VALUE);
+		}
+	}
+	
+	@Test
+	public void test07C() {
+		int[] Bases = {-5337, -1337};
+		int n = 14;
+		int[] A = new int[n];
+		A[0] = 3; A[1] = 7;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] + A[i-2];
+		}
+		
+		
+		for(int base : Bases) {
+			FlexArray fx = new FlexArray(n, base);
+			for(int i = 0; i < n; i++) {
+				fx.write(i+base, A[i]);
+			}
+			
+			for(int i = 0; i< n; i++) {
+				assertEquals(fx.read(i+base), A[i]);
+			}
+			fx.write(base-1, 42);
+			fx.write(base+n, 42);
+			assertEquals(fx.read(base-1), Integer.MIN_VALUE);
+			assertEquals(fx.read(base+n), Integer.MIN_VALUE);
+		}
+	}
+	
+	@Test
+	public void test08A() {
+		int n = 7;
+		int[] A = new int[n];
+		A[0] = 2; A[1] = 4;
+		for(int i = 2; i < n; i++) {
+			A[i] = A[i-1] - A[i-2];
+		}
+				
+		FlexArray fx = new FlexArray(n);
+		for(int i = 0; i< n; i++) {
+			fx.write(i, A[i]);
+		}
+		assertArrayEquals(A, fx.rawArray());
+	}
+	
+	@Test
+	public void test08B() {
+		int[] Bases = {17, 298, 388};
+		int n = 7;
+		int[] A = new int[n];
+		A[0] = 5; A[1] = 8;
+		for(int i = 2; i < n; i++) {
+			A[i] = A[i-1] - A[i-2];
+		}
+				
+		for(int base : Bases) {
+			FlexArray fx = new FlexArray(n, base);
+			for(int i = 0; i< n; i++) {
+				fx.write(i+base, A[i]);
+			}
+			assertArrayEquals(A, fx.rawArray());
+		}
+	}
+	
+	@Test
+	public void test8C() {
+		int[] Bases = {-25, -10};
+		int n = 15;
+		int[] A = new int[n];
+		A[0] = 1; A[1] = 1;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] - A[i-2]+1;
+		}
+		
+		
+		for(int base : Bases) {
+			FlexArray fx = new FlexArray(n, base);
+			for(int i = 0; i< n; i++) {
+				fx.write(i+base, A[i]);
+			}
+			assertArrayEquals(A, fx.rawArray());
+		}
+	}
+	
+	@Test
+	public void test08D() {
+		int[] Bases = {-11, 12, 200};
+		int n = 7;
+		int[] A = new int[n];
+		A[0] = 5; A[1] = 8;
+		for(int i = 2; i < n; i++) {
+			A[i] = A[i-1] - A[i-2];
+		}
+		
+		int [] B = Arrays.copyOf(A, A.length);
+		B[A.length-1] = 50;
+				
+		for(int base : Bases) {
+			FlexArray fx = new FlexArray(n, base);
+			for(int i = 0; i< n; i++) {
+				fx.write(i+base, A[i]);
+			}
+			
+			int [] rawArray = fx.rawArray();
+			
+			assertArrayEquals(A, rawArray);
+			
+			
+			fx.write(base+(n-1), 50);
+			assertArrayEquals(B, fx.rawArray());
+			
+			assertFalse(Arrays.equals(B, rawArray));
+		}
+	}
+
+	@Test
+	public void test09A() {
+		int n = 32;
+		int[] A = new int[n];
+		A[0] = 2; A[1] = 7;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] + A[i-2];
+		}
+		A[n-1] = -(int)1e9+9;
+		
+		
+		FlexArray fx1 = new FlexArray(n);
+		FlexArray fx2 = new FlexArray(n);
+		for(int i = 0; i< n; i++) {
+			fx1.write(i, A[i]);
+			fx2.write(i, A[i]);
+		}
+		assertTrue(fx1.equals(fx2) && fx2.equals(fx1));
+		fx2.write(10, 42);
+		assertFalse(fx1.equals(fx2));
+		fx1.write(10, 42);
+		assertTrue(fx1.equals(fx2) && fx2.equals(fx1));
+	}
+	
+	@Test
+	public void test09B() {
+		int[] Bases = {1337, 5337};
+		int n = 35;
+		int[] A = new int[n];
+		A[0] = 1; A[1] = 1;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] + A[i-2];
+		}
+		A[n-1] = -(int)1e9+9;
+		
+		
+		for(int base : Bases) {
+			FlexArray fx1 = new FlexArray(n, base);
+			FlexArray fx2 = new FlexArray(n, base);
+			for(int i = 0; i< n; i++) {
+				fx1.write(i+base, A[i]);
+				fx2.write(i+base, A[i]);
+			}
+			assertTrue(fx1.equals(fx2) && fx2.equals(fx1));
+			fx2.write(base + 10, 42);
+			assertFalse(fx1.equals(fx2));
+			fx1.write(base + 10, 42);
+			assertTrue(fx1.equals(fx2) && fx2.equals(fx1));
+		}
+	}
+	
+	@Test
+	public void test09C() {
+		int n = 35;
+		int[] A = new int[n];
+		A[0] = 1; A[1] = 1;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] + A[i-2];
+		}
+		A[n-1] = -(int)1e9+9;
+		
+		
+		FlexArray fx1 = new FlexArray(n);
+		for(int i = 0; i< n; i++) {
+			fx1.write(i, A[i]);
+		}
+		assertFalse(fx1.equals(A));
+		
+		assertTrue(fx1.equals(fx1));
+		assertTrue(fx1.equals(fx1.copy()));
+	}
+	
+	@Test
+	public void test09D() {
+		int[] Bases = {0, 1337, (int)1e9+7};
+		int n = 35;
+		int[] A = new int[n];
+		A[0] = 1; A[1] = 1;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] + A[i-2];
+		}
+		A[n-1] = -(int)1e9+9;
+		
+		
+		for(int base : Bases) {
+			FlexArray fx1 = new FlexArray(n, base);
+			for(int i = 0; i< n; i++) {
+				fx1.write(i+base, A[i]);
+			}
+			assertFalse(fx1.equals(A));
+			assertTrue(fx1.equals(fx1));
+			assertTrue(fx1.equals(fx1.copy()));
+		}
+		
+	}
+	
+	@Test
+	public void test10A() {
+		int n = 35;
+		int[] A = new int[n];
+		A[0] = 1; A[1] = 1;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] + A[i-2];
+		}
+		A[n-1] = -(int)1e9+9;
+		
+		
+		FlexArray fx1 = new FlexArray(n);
+		for(int i = 0; i< n; i++) {
+			fx1.write(i, A[i]);
+		}
+		FlexArray fx2 = fx1.copy();
+		for(int i = 0; i< n; i++) {
+			assertEquals(fx1.read(i), fx2.read(i));
+		}
+	}
+	
+	@Test
+	public void test10B() {
+		int n = 35;
+		int[] A = new int[n];
+		A[0] = 1; A[1] = 1;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] + A[i-2];
+		}
+		A[n-1] = -(int)1e9+9;
+		
+		
+		FlexArray fx1 = new FlexArray(n);
+		for(int i = 0; i< n; i++) {
+			fx1.write(i, A[i]);
+		}
+		FlexArray fx2 = fx1.copy();
+		fx2.write(10, 42);
+		assertTrue(fx1.read(10) != fx2.read(10));
+		fx1.write(10, 42);
+		for(int i = 0; i< n; i++) {
+			assertEquals(fx1.read(i), fx2.read(i));
+		}
+	}
+	
+	@Test
+	public void test10C() {
+		int[] Bases = {1213, (int)1e9+7};
+		int n = 35;
+		int[] A = new int[n];
+		A[0] = 1; A[1] = 1;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] + A[i-2];
+		}
+		A[n-1] = -(int)1e9+9;
+		
+		
+		for(int base : Bases) {
+			FlexArray fx1 = new FlexArray(n, base);
+			for(int i = 0; i< n; i++) {
+				fx1.write(i+base, A[i]);
+			}
+			FlexArray fx2 = fx1.copy();
+			for(int i = 0; i< n; i++) {
+				assertEquals(fx1.read(i+base), fx2.read(i+base));
+			}
+		}
+	}
+	
+	@Test
+	public void test10D() {
+		int[] Bases = {1213, (int)1e9+7};
+		int n = 35;
+		int[] A = new int[n];
+		A[0] = 1; A[1] = 1;
+		for(int i = 2; i< n; i++) {
+			A[i] = A[i-1] + A[i-2];
+		}
+		A[n-1] = -(int)1e9+9;
+		
+		
+		for(int base : Bases) {
+			FlexArray fx1 = new FlexArray(n, base);
+			for(int i = 0; i< n; i++) {
+				fx1.write(i+base, A[i]);
+			}
+			FlexArray fx2 = fx1.copy();
+			fx2.write(base + 10, 42);
+			assertTrue(fx1.read(base+10) != fx2.read(base+10));
+			fx1.write(base + 10, 42);
+			for(int i = 0; i< n; i++) {
+				assertEquals(fx1.read(i+base), fx2.read(i+base));
+			}
+		}
+	}
+	
+	
+	@Test
+    public void test11() {        
+        FlexArray fa;
+
+        int[] starts = {-15, -5, 0, 5 };
+        int[] ref = new int[10];
+        for (int i=0; i<ref.length; i++) {
+            ref[i] = i;
+        }
+        
+        for (int k = 0; k< starts.length; k++) {
+            
+            fa = new FlexArray(10, starts[k]);
+
+            for (int i=0; i<10; i++) {
+                fa.write(i+starts[k], i);
+            }
+            
+           assertArrayEquals(ref, fa.rawArray());
+
+	        int[] tmp = new int[10];
+	        for (int i=0; i<10; i++) {
+	            tmp[i] = fa.read(i+starts[k]);
+	        }
+           assertArrayEquals(tmp, fa.rawArray());
+            
+            int out1 = fa.read(starts[k]-1);
+            assertEquals(Integer.MIN_VALUE, out1);
+
+            int out2 = fa.read(starts[k]+11);
+            assertEquals(Integer.MIN_VALUE, out2);
+
+            int[] data = fa.rawArray();
+            fa.write(starts[k], 42);
+            assertFalse(Arrays.equals(fa.rawArray(), data));
+            
+            fa.write(starts[k],0);
+
+            FlexArray ga = fa.copy();
+            assertTrue(ga.equals(fa));
+            assertTrue(fa.equals(ga));
+
+            ga.write(starts[k], 43);
+            
+            assertFalse(ga.equals(fa));
+            assertFalse(fa.equals(ga));
+         
+            
+            ga = new FlexArray(20, starts[k]);
+            for (int i=0; i<10; i++) {
+                ga.write(i+starts[k], i);
+            }
+            
+            assertFalse(ga.equals(fa));
+            assertFalse(fa.equals(ga));         
+
+            ga = new FlexArray(10, starts[k]-1);
+            for (int i=0; i<10; i++) {
+                ga.write(i+starts[k]-1, i);
+            }
+            
+            assertFalse(ga.equals(fa));
+            assertFalse(fa.equals(ga));
+                   
+            ga = new FlexArray(10, starts[k]+1);
+            for (int i=0; i<10; i++) {
+                ga.write(i+starts[k]+1, i);
+            }
+            
+            assertFalse(ga.equals(fa));
+            assertFalse(fa.equals(ga));          
+        }
+    }
+	
+	/** 2) **/
+	
+	@Test
+	public void zTest01A() {
+		FlexArray fx1 = new FlexArray(5);
+		FlexArray fx2 = new FlexArray(5);
+		
+		int [] A = {2,4,5,9,20};
+		int [] B = {3,7,9,10,19};
+		int [] C = new int [A.length];
+		for(int i = 0; i < A.length; i++) {
+			C[i] = A[i]+B[i];
+		}
+
+		fillFlexArray(A, fx1);
+		fillFlexArray(B, fx2);
+		
+		FlexArray fx3 = fx1.merge(fx2);
+		
+		checkArrayRead(C, fx3);
+	}
+	
+	@Test
+	public void zTest01B() {
+		FlexArray fx1 = new FlexArray(7);
+		FlexArray fx2 = new FlexArray(7);
+		
+		int [] A = {-1,4,5,-9,20,-2,9};
+		int [] B = {5,7,9,20,32,-1,4};
+		int [] C = new int [A.length];
+		for(int i = 0; i < A.length; i++) {
+			C[i] = A[i]+B[i];
+		}
+
+		fillFlexArray(A, fx1);
+		fillFlexArray(B, fx2);
+		
+		FlexArray fx3 = fx1.merge(fx2);
+		
+		assertArrayEquals(C, fx3.rawArray());
+	}
+	
+	
+	@Test
+	public void zTest02A() {
+		FlexArray fx1 = new FlexArray(5,2);
+		FlexArray fx2 = new FlexArray(5,4);
+		
+		int [] A = {2,4,5,9,20};
+		int [] B =     {3,7,9,10,18};
+		
+		int [] C = {2,4,8,16,29,10,18};
+		
+		fillFlexArray(A, fx1);
+		fillFlexArray(B, fx2);
+		
+		FlexArray fx3 = fx1.merge(fx2);
+		assertNotNull(fx3);
+		
+		checkArrayRead(C, fx3);
+	}
+	
+	@Test
+	public void zTest02B() {
+		FlexArray fx1 = new FlexArray(7,1);
+		FlexArray fx2 = new FlexArray(9,5);
+		
+		int [] A = {2,4,5,9,20,-10,-19};
+		int [] B =         {3,  7,  9,  10, -2, 18, 11, 16, -2};
+		
+		int [] C = {2,4,5,9,23, -3, -10, 10, -2, 18, 11, 16, -2};
+		
+		fillFlexArray(A, fx1);
+		fillFlexArray(B, fx2);
+		
+		FlexArray fx3 = fx1.merge(fx2);
+		assertNotNull(fx3);
+		
+		assertArrayEquals(C, fx3.rawArray());
+	}
+	
+	@Test
+	public void zTest03A() {
+		FlexArray fx1 = new FlexArray(7,1);
+		FlexArray fx2 = new FlexArray(7,20);
+		
+		assertNull(fx1.merge(fx2));
+		assertNull(fx2.merge(fx1));
+
+		FlexArray fx3 = new FlexArray(7,4);
+		
+		assertNotNull(fx1.merge(fx3));
+		assertNotNull(fx3.merge(fx1));
+	}
+	
+	@Test
+	public void zTest03B() {
+		FlexArray fx1 = new FlexArray(7,-3);
+		FlexArray fx2 = new FlexArray(18,4);
+		
+		assertNull(fx1.merge(fx2));
+		assertNull(fx2.merge(fx1));
+
+		FlexArray fx3 = new FlexArray(18,3);
+		
+		assertNotNull(fx1.merge(fx3));
+		assertNotNull(fx3.merge(fx1));
+	}
+	
+	@Test
+    public void zTest04() {
+        int[] startsOne = {-30, -10, -5, 0, 10 };
+        int[] lengthOne = {10, 20, 5, 10, 10};
+
+        // 
+        int[] startsTwo = {-50, -35, -30, -25, -5, 0, 5 };
+        int[] lengthTwo = {10, 5, 1};
+
+        for (int ix=0; ix < startsOne.length; ix++) {
+            for (int jx=0; jx < startsTwo.length; jx++) {
+                for (int jy=0; jy< lengthTwo.length; jy++) {
+                    
+                    FlexArray f = new FlexArray(lengthOne[ix], startsOne[ix]);
+                    for (int k=0; k<lengthOne[ix]; k++) {
+                        f.write(k+startsOne[ix], 100*k);
+                    }
+                    
+                    FlexArray g = new FlexArray(lengthTwo[jy], startsTwo[jx]);
+                    for (int k=0; k<lengthTwo[jy]; k++) {
+                        g.write(k+startsTwo[jx], 1000*k);
+                    }
+
+                    FlexArray r = f.merge(g);
+
+                    int minStart = Math.min(startsOne[ix], startsTwo[jx]);
+                    int maxStart = Math.max(startsOne[ix], startsTwo[jx]);
+                    int minLast = Math.min(startsOne[ix]+lengthOne[ix]-1, startsTwo[jx]+lengthTwo[jy]-1);
+                
+                    if (maxStart <= minLast) {
+                        int[] temp = new int[lengthOne[ix]+lengthTwo[jy]];
+                        int count = 0;
+                        for (int k = 0; k < lengthOne[ix]+lengthTwo[jy]; k++) {
+                            int fv = f.read(k+minStart);
+                            int gv = g.read(k+minStart);
+                            
+                            if ((fv!=Integer.MIN_VALUE) && (gv!=Integer.MIN_VALUE)) {
+                                temp[count] = fv + gv;
+                                count++;
+                            } else if ((fv==Integer.MIN_VALUE) && (gv==Integer.MIN_VALUE)) {
+                               //
+                            } else if (fv==Integer.MIN_VALUE) {
+                                temp[count] = gv;
+                                count++;
+                            } else if (gv == Integer.MIN_VALUE) {
+                                temp[count] = fv;
+                                count++;
+                            }
+                        }
+                        FlexArray t = new FlexArray(count, minStart);
+                        for (int k = 0; k < count; k++) {
+                            t.write(minStart+k, temp[k]);
+                        }
+                        
+                        assertTrue(t.equals(r));   
+                    } else {
+                    	assertNull(r);
+                    }
+                }
+            }
+        }
+    }
+	
+	//same as testMerge1 from template
+	@Test
+	public void zTest05() {
+		FlexArray fa;
+        FlexArray ga;
+        FlexArray r;
+        int[] ra;
+
+        // 4 sample tests for merge
+        fa = new FlexArray(10, -12);
+        for (int i=0; i<10; i++) {
+            fa.write(i-12, i);
+        }
+        ga = new FlexArray(4, -8);
+        for (int i=0; i<4; i++) {
+            ga.write(i-8, 100 + 100*i);
+        }
+        r = fa.merge(ga);
+        ra = r.rawArray();
+        int[] expected1 = {0, 1, 2, 3, 104, 205, 306, 407, 8, 9};
+        assertArrayEquals(expected1, ra);
+
+        fa = new FlexArray(10, -12);
+        for (int i=0; i<10; i++) {
+            fa.write(i-12, i);
+        }
+        ga = new FlexArray(4, 0);
+        for (int i=0; i<4; i++) {
+            ga.write(i+0, 100 + 100*i);
+        }
+        r = fa.merge(ga);
+        assertEquals(null, r);
+
+        fa = new FlexArray(10, -5);
+        for (int i=0; i<10; i++) {
+            fa.write(i-5, i);
+        }
+        ga = new FlexArray(4, 0);
+        for (int i=0; i<4; i++) {
+            ga.write(i, 100 + 100*i);
+        }
+        r = fa.merge(ga);
+        ra = r.rawArray();
+        int[] expected2 = {0, 1, 2, 3, 4, 105, 206, 307, 408, 9};
+        assertArrayEquals(expected2, ra);
+
+        fa = new FlexArray(10, 5);
+        for (int i=0; i<10; i++) {
+            fa.write(i+5, i);
+        }
+        ga = new FlexArray(4, 7);
+        for (int i=0; i<4; i++) {
+            ga.write(i+7, 100 + 100*i);
+        }
+        r = fa.merge(ga);
+        ra = r.rawArray();
+        int[] expected3 = {0, 1, 102, 203, 304, 405, 6, 7, 8, 9};
+        assertArrayEquals(expected3, ra);
+	}
+
+	public static void checkArrayRead(int [] A, FlexArray fx) {
+		assertEquals(A.length, fx.length());
+		for(int i = 0; i < A.length; i++) {
+			assertEquals(A[i], fx.read(i+fx.base()));
+		}
+	}
+	 
+	public static void fillFlexArray(int [] A, FlexArray fx) {
+		if(fx.length() != A.length) {
+			throw new IllegalArgumentException();
+		}
+		
+		for(int i = 0; i < A.length; i++) {
+			fx.write(fx.base()+i, A[i]);
+		}
+	}	
+}
