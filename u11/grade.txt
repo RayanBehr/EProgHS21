@@ -1,0 +1,878 @@
+NETHZ: rabehr
+
+testFraudDistance01: PASS
+testFraudDistance02: PASS
+testFraudDistance03: PASS
+testFraudDistance04A: PASS
+testFraudDistance04B: PASS
+testFraudDistance05A: PASS
+testFraudDistance05B: PASS
+testFraudDistance06A: PASS
+testFraudDistance06B: PASS
+testFraudDistance07A: PASS
+testFraudDistance07B: PASS
+testFraudDistance08A: PASS
+testFraudDistance08B: PASS
+testFraudDistance09A: PASS
+testFraudDistance09B: PASS
+
+testGenusAllNoOrder: PASS
+testGenusAllOrder: PASS
+testGenusEmpty: PASS
+testGenusNone: PASS
+testGenusOne: PASS
+testGenusSomeNoOrder: PASS
+testGenusSomeOrder: PASS
+
+testgetDataCopy: PASS
+testgetDataEmpty: PASS
+testgetDataNoOrder1: PASS
+testgetDataNoOrder2: PASS
+testgetDataOneOffer: PASS
+testgetDataOrder1: PASS
+testgetDataOrder2: PASS
+
+Total Punkte (von 5): 5
+
+
+Folgende Test-Datei wurde für die Bewertung verwendet:
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+
+import org.junit.jupiter.api.Test;
+
+public class GradingHamsterAnalysisTest {
+	
+		
+	/** getData **/
+	
+	@Test
+	public void testgetDataEmpty() {
+		Scanner scanner = new Scanner("");
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		List<Offer> data = x.getData();
+		
+		assertTrue(data.isEmpty());
+	}
+	
+	@Test
+	public void testgetDataOneOffer() {
+		Scanner scanner = new Scanner("20 Cricetus     3 12  Gambino");
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		List<Offer> data = x.getData();
+		
+		assertTrue(data.size() == 1);
+		
+		assertEquals(20, data.get(0).getPrice());
+		assertEquals("Cricetus", data.get(0).getGenus());
+		assertEquals(3, data.get(0).getAge());
+		assertEquals(12, data.get(0).getID());
+		assertEquals("Gambino", data.get(0).getAssociation());
+	}
+	
+	@Test
+	public void testgetDataCopy() {
+		Scanner scanner = new Scanner("3  Cansumys     2 101 Bonanno");
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+			
+		List<Offer> data1 = x.getData();
+		List<Offer> data2 = x.getData();
+		
+		assertNotSame(data1, data2);
+	}
+	
+	@Test
+	public void testgetDataNoOrder1() {
+		String input = "12  Mesocricetus     4 201 Genovese\r\n" + 
+				"5  Tscherskia 2 234 Gambino\r\n" + 
+				"11 Cricetus     1 412  Lucchese\r\n" + 
+				"7  Cansumys 2 101 Bonanno\r\n" + 
+				"10  Mesocricetus 3 98 Colombo";
+		
+		Scanner sc1 = new Scanner(input);
+		Scanner sc2 = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(sc1);
+		sc1.close();
+		
+		List<InternOffer> expected = init(sc2);
+		sc2.close();
+		
+		List<InternOffer> data = convert(x.getData());
+		
+		testListsContainedBothWays(expected, data);
+	}
+	
+	@Test
+	public void testgetDataNoOrder2() {
+		String input = "5  Mesocricetus 1 312 Gambino\r\n" + 
+				"9  Cricetulus   2 211  Colombo\r\n" + 
+				"9  Tscherskia   3 132  Genovese\r\n" + 
+				"18 Cansumys     2 201  Gambino\r\n" + 
+				"4  Cricetus     1 98  Lucchese\r\n" + 
+				"20 Cansumys     3 31  Lucchese\r\n" + 
+				"5  Mesocricetus 3 42 Gambino\r\n" + 
+				"7  Cansumys     2 412 Bonanno\r\n" + 
+				"9  Cricetulus   1 85  Bonanno\r\n" + 
+				"18 Cansumys     1 21  Gambino\r\n" + 
+				"4  Cricetus     2 213 Lucchese\r\n" + 
+				"4  Cansumys     2 187   Genovese\r\n" + 
+				"4  Mesocricetus 1 313 Bonanno\r\n" + 
+				"4  Mesocricetus 3 451 Genovese\r\n" + 
+				"9  Tscherskia   1 190  Genovese\r\n" + 
+				"4  Mesocricetus 2 99 Bonanno\r\n" + 
+				"4  Cricetus     2 11  Genovese\r\n" + 
+				"20 Cansumys     1 12  Gambino\r\n" + 
+				"3  Cansumys     2 123 Colombo\r\n" + 
+				"4  Mesocricetus 3 401 Lucchese";
+		
+		Scanner sc1 = new Scanner(input);
+		Scanner sc2 = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(sc1);
+		sc1.close();
+		
+		List<InternOffer> expected = init(sc2);
+		sc2.close();
+		
+		List<InternOffer> data = convert(x.getData());
+		
+		testListsContainedBothWays(expected, data);
+	}
+	
+	@Test
+	public void testgetDataOrder1() {
+		String input = "12  Mesocricetus     4 201 Genovese\r\n" + 
+				"5  Tscherskia 2 234 Gambino\r\n" + 
+				"11 Cansumys     1 412  Lucchese\r\n" + 
+				"7  Cricetus 2 101 Bonanno\r\n" + 
+				"10  Mesocricetus 3 98 Colombo";
+		
+		Scanner sc1 = new Scanner(input);
+		Scanner sc2 = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(sc1);
+		sc1.close();
+		
+		List<InternOffer> expected = init(sc2);
+		sc2.close();
+		
+		List<InternOffer> data = convert(x.getData());
+		
+		assertTrue(data.equals(expected));
+	}
+	
+	@Test
+	public void testgetDataOrder2() {
+		String input = "5  Mesocricetus 1 312 Gambino\r\n" + 
+				"9  Cricetulus   2 211  Colombo\r\n" + 
+				"9  Tscherskia   3 132  Genovese\r\n" + 
+				"18 Cansumys     2 201  Gambino\r\n" + 
+				"4  Cricetus     1 98  Lucchese\r\n" + 
+				"20 Cansumys     3 31  Lucchese\r\n" + 
+				"5  Mesocricetus 3 42 Gambino\r\n" + 
+				"7  Cansumys     2 412 Bonanno\r\n" + 
+				"9  Cricetulus   1 85  Bonanno\r\n" + 
+				"18 Cansumys     1 21  Gambino\r\n" + 
+				"4  Cricetus     2 213 Lucchese\r\n" + 
+				"4  Cansumys     2 187   Genovese\r\n" + 
+				"4  Mesocricetus 1 313 Bonanno\r\n" + 
+				"4  Mesocricetus 3 451 Genovese\r\n" + 
+				"9  Tscherskia   1 190  Genovese\r\n" + 
+				"4  Mesocricetus 2 99 Bonanno\r\n" + 
+				"4  Cansumys     2 11  Genovese\r\n" + 
+				"20 Cricetus     1 12  Gambino\r\n" + 
+				"3  Cansumys     2 123 Colombo\r\n" + 
+				"4  Mesocricetus 3 401 Lucchese";
+		
+		Scanner sc1 = new Scanner(input);
+		Scanner sc2 = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(sc1);
+		sc1.close();
+		
+		List<InternOffer> expected = init(sc2);
+		sc2.close();
+		
+		List<InternOffer> data = convert(x.getData());
+		
+		assertTrue(data.equals(expected));
+	}
+	
+	/** genus **/
+	
+	@Test
+	public void testGenusEmpty() {
+		String input = "";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		List<Integer> empty = new LinkedList<Integer>();
+		
+		assertEquals(empty, x.genus("Cricetus"));
+		assertEquals(empty, x.genus("Tscherskia"));
+		assertEquals(empty, x.genus("Mesocricetus"));
+		assertEquals(empty, x.genus("Cansumys"));
+	}
+	
+	@Test
+	public void testGenusNone() {
+		String input = "12  Mesocricetus     4 201 Genovese\r\n" + 
+				"5  Tscherskia 2 234 Gambino\r\n" + 
+				"11 Cansumys     1 412  Lucchese\r\n" + 
+				"7  Cansumys 2 101 Bonanno\r\n" + 
+				"10  Mesocricetus 3 98 Colombo";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		List<Integer> empty = new LinkedList<Integer>();
+		
+		assertEquals(empty, x.genus("Cricetus"));
+		assertEquals(empty, x.genus("Cricetulus"));
+	}
+	
+	@Test
+	public void testGenusOne() {
+		String input = "12  Mesocricetus     4 201 Genovese\r\n" + 
+				"5  Tscherskia 2 234 Gambino\r\n" + 
+				"11 Cricetus     1 412  Lucchese\r\n" + 
+				"7  Cansumys 2 101 Bonanno\r\n" + 
+				"10  Cricetulus 3 98 Colombo";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+			
+		assertEquals(List.of(201), x.genus("Mesocricetus"));
+		assertEquals(List.of(234), x.genus("Tscherskia"));
+		assertEquals(List.of(412), x.genus("Cricetus"));
+		assertEquals(List.of(101), x.genus("Cansumys"));
+		assertEquals(List.of(98), x.genus("Cricetulus"));
+	}
+
+	
+	@Test
+	public void testGenusSomeOrder() {
+		String input = "5  Mesocricetus 1 312 Gambino\r\n" + 
+				"9  Cricetulus   2 211  Colombo\r\n" + 
+				"9  Tscherskia   3 132  Genovese\r\n" + 
+				"18 Cansumys     2 201  Gambino\r\n" + 
+				"4  Cricetus     1 98  Lucchese\r\n" + 
+				"20 Cansumys     3 31  Lucchese\r\n" + 
+				"5  Mesocricetus 3 42 Gambino\r\n" + 
+				"7  Cansumys     2 412 Bonanno\r\n" + 
+				"9  Cricetulus   1 85  Bonanno\r\n" + 
+				"18 Cansumys     1 21  Gambino\r\n" + 
+				"4  Cricetus     2 213 Lucchese\r\n" + 
+				"4  Cansumys     2 187   Genovese\r\n" + 
+				"4  Mesocricetus 1 313 Bonanno\r\n" + 
+				"4  Mesocricetus 3 451 Genovese\r\n" + 
+				"9  Tscherskia   1 190  Genovese\r\n" + 
+				"4  Mesocricetus 2 99 Bonanno\r\n" + 
+				"4  Cansumys     2 11  Genovese\r\n" + 
+				"20 Cricetus     1 12  Gambino\r\n" + 
+				"3  Cansumys     2 123 Colombo\r\n" + 
+				"4  Mesocricetus 3 401 Lucchese";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+			
+		assertEquals(List.of(312, 42, 313, 451, 99, 401), x.genus("Mesocricetus"));
+		assertEquals(List.of(132, 190), x.genus("Tscherskia"));
+		assertEquals(List.of(98, 213, 12), x.genus("Cricetus"));
+		assertEquals(List.of(201, 31, 412, 21, 187, 11, 123), x.genus("Cansumys"));
+		assertEquals(List.of(211, 85), x.genus("Cricetulus"));
+	}
+	
+	@Test
+	public void testGenusSomeNoOrder() {
+		String input = "5  Mesocricetus 1 312 Gambino\r\n" + 
+				"9  Cricetulus   2 211  Colombo\r\n" + 
+				"9  Tscherskia   3 132  Genovese\r\n" + 
+				"18 Cansumys     2 201  Gambino\r\n" + 
+				"4  Cricetus     1 98  Lucchese\r\n" + 
+				"20 Cansumys     3 31  Lucchese\r\n" + 
+				"5  Mesocricetus 3 42 Gambino\r\n" + 
+				"7  Cansumys     2 412 Bonanno\r\n" + 
+				"9  Cricetulus   1 85  Bonanno\r\n" + 
+				"18 Cansumys     1 21  Gambino\r\n" + 
+				"4  Cricetus     2 213 Lucchese\r\n" + 
+				"4  Cansumys     2 187   Genovese\r\n" + 
+				"4  Mesocricetus 1 313 Bonanno\r\n" + 
+				"4  Mesocricetus 3 451 Genovese\r\n" + 
+				"9  Tscherskia   1 190  Genovese\r\n" + 
+				"4  Mesocricetus 2 99 Bonanno\r\n" + 
+				"4  Cansumys     2 11  Genovese\r\n" + 
+				"20 Cricetus     1 12  Gambino\r\n" + 
+				"3  Cansumys     2 123 Colombo\r\n" + 
+				"4  Mesocricetus 3 401 Lucchese";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		List<Integer> curr;
+		
+		curr = List.of(312, 42, 313, 451, 99, 401);
+		
+		testListsContainedBothWays(curr, x.genus("Mesocricetus"));
+		
+		curr = List.of(132, 190);
+		testListsContainedBothWays(curr, x.genus("Tscherskia"));
+				
+		curr = List.of(98, 213, 12);
+		testListsContainedBothWays(curr, x.genus("Cricetus"));
+				
+		curr = List.of(201, 31, 412, 21, 187, 11, 123);
+		testListsContainedBothWays(curr, x.genus("Cansumys"));
+				
+		curr = List.of(211, 85);
+		testListsContainedBothWays(curr, x.genus("Cricetulus"));
+		
+	}
+	
+	@Test
+	public void testGenusAllOrder() {
+		String input = "12  Mesocricetus     4 201 Genovese\r\n" + 
+				"5  Mesocricetus 2 234 Gambino\r\n" + 
+				"11 Mesocricetus     1 412  Lucchese\r\n" + 
+				"7  Mesocricetus 2 101 Bonanno\r\n" + 
+				"10  Mesocricetus 3 98 Colombo";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+			
+		assertEquals(List.of(201, 234, 412, 101, 98), x.genus("Mesocricetus"));
+	}
+	
+	@Test
+	public void testGenusAllNoOrder() {	
+		String input = "12  Mesocricetus     4 201 Genovese\r\n" + 
+				"5  Mesocricetus 2 234 Gambino\r\n" + 
+				"11 Mesocricetus     1 412  Lucchese\r\n" + 
+				"7  Mesocricetus 2 101 Bonanno\r\n" + 
+				"10  Mesocricetus 3 98 Colombo";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		
+		List<Integer> curr;
+		
+		curr = List.of(201, 234, 412, 101, 98);
+		testListsContainedBothWays(curr, x.genus("Mesocricetus"));		
+	}
+	
+	/** fraudDistance **/
+	
+	@Test
+	public void testFraudDistance01() {
+		String input = "3  Cansumys     2 101 Bonanno\r\n"
+				+ "18 Cansumys     1 83  Gambino\r\n"
+				+ "9  Tscherskia   1 74  Genovese\r\n"
+				+ "9  Cricetus     1 75  Bonanno\r\n"
+				+ "4  Cansumys     2 282 Colombo\r\n"
+				+ "4  Cansumys     2 4   Lucchese\r\n"
+				+ "4  Cansumys     2 65  Genovese\r\n"
+				+ "20 Cansumys     3 12  Gambino\r\n"
+				+ "7  Cansumys     2 202 Bonanno\r\n"
+				+ "9  Cricetulus   1 76  Colombo";
+		
+		Scanner scanner = new Scanner(input);
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(-1, x.fraudDistance("Mesocricetus", 0));
+	}
+	
+	@Test
+	public void testFraudDistance02() {
+		String input = "3  Cansumys     2 101 Bonanno\r\n"
+				+ "9  Tscherskia   1 74  Genovese\r\n"
+				+ "9  Cricetus     1 75  Bonanno\r\n"
+				+ "7  Cansumys     2 202 Bonanno\r\n"
+				+ "9  Cricetulus   1 76  Colombo\r\n"
+				+ "18 Cansumys     1 83  Gambino\r\n"
+				+ "4  Cansumys     2 282 Colombo\r\n"
+				+ "8  Mesocricetus 10 234 Bonanno\r\n"
+				+ "4  Cansumys     2 4   Lucchese\r\n"
+				+ "4  Cansumys     2 65  Genovese\r\n"
+				+ "20 Cansumys     3 12  Gambino";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+
+		assertEquals(-1, x.fraudDistance("Mesocricetus", 11));
+		assertEquals(0, x.fraudDistance("Mesocricetus", 10));
+	}
+	
+	@Test
+	public void testFraudDistance03() {
+		String input = "";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+
+		assertEquals(-1, x.fraudDistance("Mesocricetus", 10));
+		assertEquals(-1, x.fraudDistance("unknown", 10));
+	}
+	
+	@Test
+	public void testFraudDistance04A() {
+		String input = "3  Cansumys       2 101 Bonanno\r\n"
+				+ "4  Mesocricetus   3 826 Lucchese\r\n"
+				+ "18 Cansumys       1 83  Gambino\r\n"
+				+ "3  Mesocricetus   3 828 Genovese\r\n"
+				+ "9  Tscherskia     1 74  Genovese\r\n"
+				+ "8  Allocricetulus 1 75  Bonanno\r\n"
+				+ "4  Cansumys       2 282 Colombo\r\n"
+				+ "4  Cansumys       2 4   Lucchese\r\n"
+				+ "20 Cansumys       3 12  Gambino\r\n"
+				+ "5  Mesocricetus   3 289 Gambino\r\n"
+				+ "7  Cansumys       2 202 Bonanno\r\n"
+				+ "20  Allocricetulus 1 76  Colombo\r\n"
+				+ "4  Mesocricetus   3 122 Colombo\r\n"
+				+ "4  Cansumys       2 65  Genovese";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(6, x.fraudDistance("Allocricetulus", 1));		
+	}
+	
+	@Test
+	public void testFraudDistance04B() {
+		String input = "3  Cansumys       2 101 Bonanno\r\n"
+				+ "4  Mesocricetus   3 826 Lucchese\r\n"
+				+ "18 Cansumys       1 83  Gambino\r\n"
+				+ "3  Mesocricetus   3 828 Genovese\r\n"
+				+ "9  Tscherskia     1 74  Genovese\r\n"
+				+ "6  Allocricetulus 1 75  Bonanno\r\n"
+				+ "4  Cansumys       2 282 Colombo\r\n"
+				+ "4  Cansumys       2 4   Lucchese\r\n"
+				+ "4  Allocricetulus 3 123 Bonanno\r\n"
+				+ "20 Cansumys       3 12  Gambino\r\n"
+				+ "5  Mesocricetus   3 289 Gambino\r\n"
+				+ "7  Cansumys       2 202 Bonanno\r\n"
+				+ "10  Allocricetulus 1 76  Colombo\r\n"
+				+ "4  Mesocricetus   3 122 Colombo\r\n"
+				+ "4  Cansumys       2 65  Genovese";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(2, x.fraudDistance("Allocricetulus", 1));		
+	}
+
+	@Test
+	public void testFraudDistance05A() {
+		String input = "3  Cansumys       2 101 Bonanno\r\n"
+				+ "4  Mesocricetus   3 826 Lucchese\r\n"
+				+ "18 Cansumys       1 83  Gambino\r\n"
+				+ "3  Mesocricetus   3 828 Genovese\r\n"
+				+ "9  Tscherskia     1 74  Genovese\r\n"
+				+ "6  Allocricetulus 1 75  Bonanno\r\n"
+				+ "4  Cansumys       2 282 Colombo\r\n"
+				+ "4  Cansumys       2 4   Lucchese\r\n"
+				+ "5  Allocricetulus 1 123 Bonanno\r\n"
+				+ "20 Cansumys       3 12  Gambino\r\n"
+				+ "5  Mesocricetus   3 289 Gambino\r\n"
+				+ "7  Cansumys       2 202 Bonanno\r\n"
+				+ "10  Allocricetulus 1 76  Colombo\r\n"
+				+ "4  Mesocricetus   3 122 Colombo\r\n"
+				+ "4  Cansumys       2 65  Genovese";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(3, x.fraudDistance("Allocricetulus", 1));		
+	}
+	
+	@Test
+	public void testFraudDistance05B() {
+		String input = "3  Cansumys       2 101 Bonanno\r\n"
+				+ "4  Mesocricetus   3 826 Lucchese\r\n"
+				+ "18 Cansumys       1 83  Gambino\r\n"
+				+ "3  Mesocricetus   3 828 Genovese\r\n"
+				+ "9  Tscherskia     1 74  Genovese\r\n"
+				+ "6  Allocricetulus 1 75  Bonanno\r\n"
+				+ "4  Cansumys       2 282 Colombo\r\n"
+				+ "4  Cansumys       2 4   Lucchese\r\n"
+				+ "5  Allocricetulus 1 123 Bonanno\r\n"
+				+ "20 Cansumys       3 12  Gambino\r\n"
+				+ "5  Mesocricetus   3 289 Gambino\r\n"
+				+ "7  Cansumys       2 202 Bonanno\r\n"
+				+ "10  Allocricetulus 1 76  Colombo\r\n"
+				+ "4  Mesocricetus   3 122 Colombo\r\n"
+				+ "5  Allocricetulus 9 9001 Bonanno\r\n"
+				+ "5  Allocricetulus 9 9002 Bonanno\r\n"
+				+ "5  Allocricetulus 1 792 Bonanno\r\n"
+				+ "4  Allocricetulus 1 794 Bonanno\r\n"
+				+ "4  Cansumys       2 65  Genovese";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(4, x.fraudDistance("Allocricetulus", 1));		
+	}
+
+	@Test
+	public void testFraudDistance06A() {
+		String input = "3  Cansumys       2 101 Bonanno\r\n"
+				+ "4  Mesocricetus   3 826 Lucchese\r\n"
+				+ "18 Cansumys       1 83  Gambino\r\n"
+				+ "3  Mesocricetus   3 828 Genovese\r\n"
+				+ "9  Tscherskia     1 74  Genovese\r\n"
+				+ "15  Roborovskii 5 75  Bonanno\r\n"
+				+ "4  Cansumys       2 282 Colombo\r\n"
+				+ "4  Cansumys       2 4   Lucchese\r\n"
+				+ "15  Roborovskii 5 123 Bonanno\r\n"
+				+ "20 Cansumys       3 12  Gambino\r\n"
+				+ "5  Mesocricetus   3 289 Gambino\r\n"
+				+ "7  Cansumys       2 202 Bonanno\r\n"
+				+ "15  Roborovskii 5 76  Colombo\r\n"
+				+ "4  Mesocricetus   3 122 Colombo\r\n"
+				+ "4  Cansumys       2 65  Genovese\r\n"
+				+ "3  Roborovskii 5 77  Colombo";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(9, x.fraudDistance("Roborovskii", 5));		
+	}
+	
+	@Test
+	public void testFraudDistance06B() {
+		String input = "3  Cansumys       2 101 Bonanno\r\n"
+				+ "4  Mesocricetus   3 826 Lucchese\r\n"
+				+ "18 Cansumys       1 83  Gambino\r\n"
+				+ "3  Mesocricetus   3 828 Genovese\r\n"
+				+ "9  Tscherskia     1 74  Genovese\r\n"
+				+ "15  Roborovskii 7 75  Bonanno\r\n"
+				+ "4  Cansumys       2 282 Colombo\r\n"
+				+ "4  Cansumys       2 4   Lucchese\r\n"
+				+ "15  Roborovskii 5 123 Bonanno\r\n"
+				+ "20 Cansumys       3 12  Gambino\r\n"
+				+ "5  Mesocricetus   3 289 Gambino\r\n"
+				+ "7  Cansumys       2 202 Bonanno\r\n"
+				+ "15  Roborovskii 5 76  Colombo\r\n"
+				+ "4  Mesocricetus   3 122 Colombo\r\n"
+				+ "15  Roborovskii 7 1340  Colombo\r\n"
+				+ "4  Cansumys       2 65  Genovese\r\n"
+				+ "11  Roborovskii 5 4122 Colombo\r\n"
+				+ "3  Roborovskii 5 77  Colombo";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(8, x.fraudDistance("Roborovskii", 5));		
+	}
+	
+	@Test		
+	public void testFraudDistance07A() {
+		String input = "3  Cansumys       2 101 Bonanno\r\n"
+				+ "4  Mesocricetus   3 826 Lucchese\r\n"
+				+ "18 Cansumys       1 83  Gambino\r\n"
+				+ "1  Roborovskii 12 1239  Bonanno\r\n"
+				+ "20  Campbelli   7 828 Genovese\r\n"
+				+ "9  Tscherskia     1 74  Genovese\r\n"
+				+ "2  Campbelli 7 75  Bonanno\r\n"
+				+ "4  Allocricetulus 2 282 Colombo\r\n"
+				+ "4  Cansumys       2 4   Lucchese\r\n"
+				+ "20 Cansumys       3 12  Gambino\r\n"
+				+ "5  Mesocricetus   3 289 Gambino\r\n"
+				+ "7  Cansumys       2 202 Bonanno\r\n"
+				+ "10  Campbelli 7 76  Colombo\r\n"
+				+ "4  Mesocricetus   3 122 Colombo\r\n"
+				+ "4  Cansumys       2 65  Genovese\r\n"
+				+ "10 Campbelli 7 3412  Colombo";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(9, x.fraudDistance("Campbelli", 7));
+	}
+	
+	@Test		
+	public void testFraudDistance07B() {
+		String input = "3  Cansumys       2 101 Bonanno\r\n"
+				+ "4  Mesocricetus   3 826 Lucchese\r\n"
+				+ "18 Cansumys       1 83  Gambino\r\n"
+				+ "1  Roborovskii 12 1239  Bonanno\r\n"
+				+ "11  Campbelli   7 828 Genovese\r\n"
+				+ "9  Tscherskia     1 74  Genovese\r\n"
+				+ "4  Campbelli 7 75  Bonanno\r\n"
+				+ "4  Allocricetulus 2 282 Colombo\r\n"
+				+ "4  Cansumys       2 4   Lucchese\r\n"
+				+ "20 Cansumys       3 12  Gambino\r\n"
+				+ "5  Mesocricetus   3 289 Gambino\r\n"
+				+ "7  Cansumys       2 202 Bonanno\r\n"
+				+ "11  Campbelli 7 76  Colombo\r\n"
+				+ "4  Mesocricetus   3 122 Colombo\r\n"
+				+ "4  Cansumys       2 65  Genovese\r\n"
+				+ "2  Campbelli 22 5001  Bonanno\r\n"
+				+ "20 Campbelli 7 3412  Colombo";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(8, x.fraudDistance("Campbelli", 7));
+	}
+
+	@Test		
+	public void testFraudDistance08A() {
+		String input = "3  Cansumys       2 101 Bonanno\r\n"
+				+ "4  Mesocricetus   3 826 Lucchese\r\n"
+				+ "18 Cansumys       1 83  Gambino\r\n"
+				+ "1  Roborovskii 12 1239  Bonanno\r\n"
+				+ "3  Mesocricetus   3 828 Genovese\r\n"
+				+ "9  Tscherskia     1 74  Genovese\r\n"
+				+ "2  Roborovskii 12 75  Bonanno\r\n"
+				+ "4  Allocricetulus 2 282 Colombo\r\n"
+				+ "4  Cansumys       2 4   Lucchese\r\n"
+				+ "20 Cansumys       3 12  Gambino\r\n"
+				+ "5  Mesocricetus   3 289 Gambino\r\n"
+				+ "7  Cansumys       2 202 Bonanno\r\n"
+				+ "3  Roborovskii 12 123 Bonanno\r\n"
+				+ "15  Roborovskii 12 76  Colombo\r\n"
+				+ "4  Mesocricetus   3 122 Colombo\r\n"
+				+ "4  Cansumys       2 65  Genovese\r\n"
+				+ "4  Roborovskii 12 3412  Colombo\r\n"
+				+ "5  Roborovskii 12 1231  Bonanno\r\n"
+				+ "39  Roborovskii 12 1236  Bonanno";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(29, x.fraudDistance("Roborovskii", 12));
+	}
+	
+	@Test		
+	public void testFraudDistance08B() {
+		String input = "3  Cansumys       2 101 Bonanno\r\n"
+				+ "4  Mesocricetus   3 826 Lucchese\r\n"
+				+ "18 Cansumys       1 83  Gambino\r\n"
+				+ "1  Roborovskii 12 1239  Bonanno\r\n"
+				+ "3  Mesocricetus   3 828 Genovese\r\n"
+				+ "9  Tscherskia     1 74  Genovese\r\n"
+				+ "2  Roborovskii 14 75  Bonanno\r\n"
+				+ "4  Allocricetulus 2 282 Colombo\r\n"
+				+ "4  Cansumys       2 4   Lucchese\r\n"
+				+ "20 Cansumys       3 12  Gambino\r\n"
+				+ "5  Mesocricetus   3 289 Gambino\r\n"
+				+ "7  Cansumys       2 202 Bonanno\r\n"
+				+ "3  Roborovskii 12 123 Bonanno\r\n"
+				+ "15  Roborovskii 12 76  Colombo\r\n"
+				+ "4  Mesocricetus   3 122 Colombo\r\n"
+				+ "4  Cansumys       2 65  Genovese\r\n"
+				+ "4  Roborovskii 12 3412  Colombo\r\n"
+				+ "5  Roborovskii 12 1231  Bonanno\r\n"
+				+ "40  Roborovskii 12 1236  Bonanno";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(28, x.fraudDistance("Roborovskii", 12));
+	}
+
+	@Test
+	public void testFraudDistance09A() {
+		String input = "21  Campbelli 8 828 Genovese\r\n"
+				+ "2  Campbelli 8 75  Bonanno\r\n"
+				+ "11  Campbelli 8 76  Colombo\r\n"
+				+ "12 Campbelli 8 3412  Colombo\r\n"
+				+ "11 Campbelli 8 3413  Genovese";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(10, x.fraudDistance("Campbelli", 8));
+	}
+
+	@Test		
+	public void testFraudDistance09B() {
+		String input = "3  Cansumys       2 101 Bonanno\r\n"
+				+ "4  Mesocricetus   3 826 Lucchese\r\n"
+				+ "18 Cansumys       1 83  Gambino\r\n"
+				+ "3  Mesocricetus   3 828 Genovese\r\n"
+				+ "9  Tscherskia     1 74  Genovese\r\n"
+				+ "15  Roborovskii 5 75  Bonanno\r\n"
+				+ "4  Cansumys       2 282 Colombo\r\n"
+				+ "4  Cansumys       2 4   Lucchese\r\n"
+				+ "14  Roborovskii 2 123 Bonanno\r\n"
+				+ "20 Cansumys       3 12  Gambino\r\n"
+				+ "5  Mesocricetus   3 289 Gambino\r\n"
+				+ "7  Cansumys       2 202 Bonanno\r\n"
+				+ "15  Roborovskii 4 76  Colombo\r\n"
+				+ "4  Mesocricetus   3 122 Colombo\r\n"
+				+ "4  Cansumys       2 65  Genovese\r\n"
+				+ "3  Roborovskii 2 77  Colombo";
+		
+		Scanner scanner = new Scanner(input);
+		
+		HamsterAnalysis x = new HamsterAnalysis(scanner);
+		scanner.close();
+		
+		assertEquals(6, x.fraudDistance("Roborovskii", 2));
+	}	
+
+	// ******** Helpers ********
+	
+	static class InternOffer {
+		
+		int price, age, id;
+		String genus, association;
+		
+		public InternOffer(int price, String genus, int age, int id, String association) {
+			this.price = price;
+			this.genus = genus;
+			this.age = age;
+			this.id = id;
+			this.association = association;
+		}
+
+		@Override
+		public String toString() {
+			return "(" + "Price: " + price + ", Genus: " + genus + ", Age: " + age + ", ID: " + id + ", Association: " + association + ")";
+		}
+		
+		@Override
+		public boolean equals(Object other) {
+			
+			if (other instanceof InternOffer) {
+				
+				InternOffer o = (InternOffer) other;
+						
+				return this.price == o.price &&
+						this.genus.equals(o.genus) &&
+						this.age == o.age &&
+						this.id == o.id  &&
+						this.association.equals(o.association);
+				
+			}
+			
+			return false;
+
+		}
+		
+	}
+	
+	public static List<InternOffer> init(Scanner input) {
+		
+		List<InternOffer> res = new LinkedList<InternOffer>();
+		
+		int price;
+		String genus;
+		int age;
+		int id;
+		String association;
+		
+		InternOffer current;
+		
+		while (input.hasNextLine()) {			
+			price = input.nextInt();
+			genus = input.next();
+			age = input.nextInt();
+			id = input.nextInt();
+			association = input.next();
+			
+			current = new InternOffer(price, genus, age, id, association);
+			
+			res.add(current);			
+		}
+		
+		
+		return res;
+	}
+	
+	public static List<InternOffer> convert(List<Offer> input) {
+		
+		List<InternOffer> res = new LinkedList<InternOffer>();
+			
+		int price;
+		String genus;
+		int age;
+		int id;
+		String association;
+		
+		InternOffer curr;
+		
+		for (Offer o : input) {
+			
+			price = o.getPrice();
+			genus = o.getGenus();
+			age = o.getAge();
+			id = o.getID();
+			association = o.getAssociation();
+			
+			curr = new InternOffer(price, genus, age, id, association);
+			
+			res.add(curr);
+		}
+		
+		return res;
+		
+	}
+	
+	public static <T> void testListsContainedBothWays(List<T> l1, List<T> l2) {		
+		assertTrue(l1.containsAll(l2));
+		assertTrue(l2.containsAll(l1));
+	}
+	
+}
