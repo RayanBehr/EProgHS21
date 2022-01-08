@@ -1,0 +1,512 @@
+NETHZ: rabehr
+
+timeout: NO
+
+test01Candidates: PASS
+test02Candidates: PASS
+test03SelectConnection: PASS
+test04SelectConnection: PASS
+test05SelectConnection: PASS
+test06ProcessRouting: PASS
+test07ProcessRouting: PASS
+test08CountingNode: PASS
+test09CountingNode: PASS
+test10ReceiveBasic: PASS
+test11UpdateSelect: PASS
+test12ReceiveCountingNode: PASS
+
+Total Punkte (von 5): 5
+
+
+Folgende Test-Datei wurde für die Bewertung verwendet:
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.jupiter.api.Test;
+
+public class GradingRoutingTest2022 {
+	
+	class GradingTestNode2022 implements Node {
+		public int numberOfReceivedMessages2022 = 0;
+		
+		@Override 
+		public void receive(Message msg) {
+			numberOfReceivedMessages2022 += 1;
+		}
+	}
+	
+	@Test
+	public void test01Candidates() {
+		final GradingTestNode2022 t0 = new GradingTestNode2022();
+		final GradingTestNode2022 t1 = new GradingTestNode2022();
+		
+		final Map<Integer, Node> routingTable = new HashMap<Integer, Node>();
+		routingTable.put(11, t0);
+		routingTable.put(15, t1);
+		RoutingNode rNode = new RoutingNode(routingTable);
+		
+		{
+			List<Set<Integer>> path1 = List.of(Set.of(4,19,15), Set.of(11,18,19,28), Set.of(98,78,21));		
+			assertEquals(Set.of(15), rNode.candidates(path1));
+		}
+	}
+	
+	@Test
+	public void test02Candidates() {
+		final GradingTestNode2022 t1 = new GradingTestNode2022();
+		final GradingTestNode2022 t2 = new GradingTestNode2022();
+		final GradingTestNode2022 t3 = new GradingTestNode2022();
+		
+		final Map<Integer, Node> routingTable = new HashMap<Integer, Node>();		
+		routingTable.put(5, t1);
+		routingTable.put(6, t2);
+		routingTable.put(9, t3);
+		
+		RoutingNode rNode = new RoutingNode(routingTable);
+		
+		{
+			List<Set<Integer>> path1 = List.of(Set.of(1,9,18), Set.of(20), Set.of(20));		
+			assertEquals(Set.of(9), rNode.candidates(path1));
+		}
+		
+		{
+			List<Set<Integer>> path2 = List.of(Set.of(9,200,6,500,700,5), Set.of(20), Set.of(20));		
+			assertEquals(Set.of(5,6,9), rNode.candidates(path2));
+		}
+		
+		{
+			List<Set<Integer>> path3 = List.of(Set.of(6,200,500,700,9), Set.of(20), Set.of(20));		
+			assertEquals(Set.of(6,9), rNode.candidates(path3));
+		}
+	}
+
+	@Test
+	public void test03SelectConnection() {
+		final GradingTestNode2022 t1 = new GradingTestNode2022();
+		final GradingTestNode2022 t2 = new GradingTestNode2022();
+		final GradingTestNode2022 t3 = new GradingTestNode2022();
+		final GradingTestNode2022 t4 = new GradingTestNode2022();
+		final GradingTestNode2022 t5 = new GradingTestNode2022();
+		final GradingTestNode2022 t6 = new GradingTestNode2022();
+
+		{
+			Map<Integer, Node> routingTable = new HashMap<Integer, Node>();		
+			routingTable.put(11, t1);
+			routingTable.put(23, t2);
+			routingTable.put(2, t3);
+			
+			RoutingNode rNode = new RoutingNode(routingTable);
+		
+			assertEquals(2, rNode.selectConnection(Set.of(11,23,2)));
+		}
+		
+		{
+			Map<Integer, Node> routingTable2 = new HashMap<Integer, Node>();		
+			routingTable2.put(79, t1);
+			routingTable2.put(72, t2);
+			routingTable2.put(75, t3);
+			routingTable2.put(67, t4);
+			routingTable2.put(65, t5);
+			routingTable2.put(71, t6);
+
+
+			RoutingNode rNode2 = new RoutingNode(routingTable2);
+		
+			assertEquals(65, rNode2.selectConnection(Set.of(67,65,71,72,75,79)));
+		}
+	}
+	
+	@Test
+	public void test04SelectConnection() {
+		final GradingTestNode2022 t1 = new GradingTestNode2022();
+		final GradingTestNode2022 t2 = new GradingTestNode2022();
+		final GradingTestNode2022 t3 = new GradingTestNode2022();
+		final GradingTestNode2022 t4 = new GradingTestNode2022();
+
+		
+		final Map<Integer, Node> routingTable = new HashMap<Integer, Node>();		
+		routingTable.put(11, t1);
+		routingTable.put(21, t2);
+		routingTable.put(31, t3);
+		routingTable.put(41, t4);
+
+		final RoutingNode rNode = new RoutingNode(routingTable);
+		
+		assertEquals(11, rNode.selectConnection(Set.of(11)));
+		rNode.incrementCount(11);
+		
+		assertEquals(31, rNode.selectConnection(Set.of(31)));
+		rNode.incrementCount(31);
+				
+		assertEquals(21, rNode.selectConnection(Set.of(11,21,31,41)));
+		rNode.incrementCount(21);
+		
+		assertEquals(41, rNode.selectConnection(Set.of(11,21,31,41)));
+		rNode.incrementCount(41);
+		
+		assertEquals(21, rNode.selectConnection(Set.of(21)));
+		rNode.incrementCount(21);
+		
+		assertEquals(11, rNode.selectConnection(Set.of(11)));
+		rNode.incrementCount(11);
+		
+		assertEquals(11, rNode.selectConnection(Set.of(11)));
+		rNode.incrementCount(11);
+		
+		assertEquals(41, rNode.selectConnection(Set.of(11,21,41)));
+	}
+	
+	@Test
+	public void test05SelectConnection() {
+		final GradingTestNode2022 t1 = new GradingTestNode2022();
+		final GradingTestNode2022 t2 = new GradingTestNode2022();
+		final GradingTestNode2022 t3 = new GradingTestNode2022();
+		final GradingTestNode2022 t4 = new GradingTestNode2022();
+
+		
+		final Map<Integer, Node> routingTable = new HashMap<Integer, Node>();		
+		routingTable.put(24, t1);
+		routingTable.put(29, t2);
+		routingTable.put(31, t2);
+		routingTable.put(32, t3);
+		routingTable.put(34, t4);
+		
+		final RoutingNode rNode = new RoutingNode(routingTable);
+		
+		assertEquals(24, rNode.selectConnection(Set.of(24)));
+		rNode.incrementCount(24);
+		
+		assertEquals(29, rNode.selectConnection(Set.of(34,32,31,29,24)));
+		rNode.incrementCount(29);
+		
+		assertEquals(34, rNode.selectConnection(Set.of(24,29,34)));
+		rNode.incrementCount(34);
+		
+		assertEquals(31, rNode.selectConnection(Set.of(24,31,32,29,34)));
+		rNode.incrementCount(31);
+		
+		assertEquals(32, rNode.selectConnection(Set.of(24,31,32,29,34)));
+	}
+	
+	@Test
+	public void test06ProcessRouting() {
+		final RoutingNode r0 = new RoutingNode(new HashMap<Integer, Node>());
+		
+		
+		final List<Integer> ids = List.of(98,214,12,71,901,1005);
+		final Map<Integer, Node> expectedMap = new HashMap<Integer, Node>();
+		
+		for(int id : ids) {
+			GradingTestNode2022 t = new GradingTestNode2022();
+			expectedMap.put(id, t);
+			UpdateMessage msg = new UpdateMessage(id, t, List.of());
+			r0.process(msg);
+			
+			assertEquals(expectedMap, r0.getRoutingTable());
+		}
+	}	
+	@Test
+	public void test07ProcessRouting() {
+		final RoutingNode r0 = new RoutingNode(new HashMap<Integer, Node>());
+		final List<Integer> ids = List.of(99,215,14,-1,73,902,-1,1007);
+		
+		final Map<Integer, Node> expectedMap = new HashMap<Integer, Node>();
+		
+		int count = 0;
+		for(int id : ids) {
+			if(id == -1) {
+				r0.process(new BasicMessage(List.of()));
+				r0.process(new IntMessage(11+count, List.of()));
+				r0.process(new AnotherBasicMessage2022(List.of()));
+				continue;
+			}
+			
+			GradingTestNode2022 t = new GradingTestNode2022();
+			expectedMap.put(id,  t);
+			
+			r0.process(new UpdateMessage(id, t, List.of()));
+			assertEquals(expectedMap, r0.getRoutingTable());
+			
+			count++;
+		}
+	}
+	
+	@Test
+	public void test08CountingNode() {
+		final CountingNode c0 = new CountingNode(new HashMap<Integer, Node>());
+		
+		final List<Integer> payloads = List.of(4,11,89,4001);
+		
+		int expectedSum = 0;
+		for(int payload : payloads) {
+			expectedSum += payload;
+			
+			c0.receive(new IntMessage(payload, List.of()));
+			assertEquals(expectedSum, c0.getSum());
+		}
+	}
+	
+	@Test
+	public void test09CountingNode() {
+		final GradingTestNode2022 t1 = new GradingTestNode2022();
+		final GradingTestNode2022 t2 = new GradingTestNode2022();
+		final GradingTestNode2022 t3 = new GradingTestNode2022();
+		
+		Map<Integer, Node> routingTable = new HashMap<Integer, Node>();		
+		routingTable.put(42, t1);
+		routingTable.put(11, t2);
+		routingTable.put(54, t3);
+
+		CountingNode c0 = new CountingNode(routingTable);
+		
+		final List<Integer> payloads = List.of(99,215,14,-1,73,902,-1,1007);
+		
+		int expectedSum = 0;
+		
+		for(int payload : payloads) {
+			if(payload <= 0) {
+				c0.receive(new BasicMessage(List.of()));
+				c0.receive(new UpdateMessage(10, t1, List.of()));
+				c0.receive(new AnotherBasicMessage2022(List.of()));
+				continue;
+			}
+			
+			expectedSum += payload;
+			
+			c0.receive(new IntMessage(payload, List.of()));
+			assertEquals(expectedSum, c0.getSum());
+		}
+	}
+	
+	@Test
+	public void test10ReceiveBasic() {
+		final GradingTestNode2022 t1A = new GradingTestNode2022();
+		final GradingTestNode2022 t1B = new GradingTestNode2022();
+		final GradingTestNode2022 t2A = new GradingTestNode2022();
+		final GradingTestNode2022 t2B = new GradingTestNode2022();
+		final GradingTestNode2022 t3A = new GradingTestNode2022();
+		final GradingTestNode2022 t3B = new GradingTestNode2022();
+
+		
+		RoutingNode r1;
+		{
+			Map<Integer, Node> r1Table = new HashMap<Integer, Node>();
+			r1Table.put(10, t1A);
+			r1Table.put(11, t1B);
+			r1 = new RoutingNode(r1Table);
+		}
+		
+		RoutingNode r2;
+		{
+			Map<Integer, Node> r2Table = new HashMap<Integer, Node>();
+			r2Table.put(20, t2A);
+			r2Table.put(21, t2B);
+			r2 = new RoutingNode(r2Table);
+		}
+		
+		RoutingNode r3;
+		{
+			Map<Integer, Node> r3Table = new HashMap<Integer, Node>();
+			r3Table.put(40, t3A);
+			r3Table.put(41, t3B);
+			r3 = new RoutingNode(r3Table);
+		}
+		
+		RoutingNode r0;
+		{
+			Map<Integer, Node> r0Table = new HashMap<Integer, Node>();
+			r0Table.put(1, r1);
+			r0Table.put(2, r2);
+			r0Table.put(4, r3);
+			r0 = new RoutingNode(r0Table);
+		}
+		
+		{
+			Message msg1 = new BasicMessage(List.of(Set.of(1,2,4), Set.of(10,11,20,21,40,41)));
+			r0.receive(msg1);
+			assertEquals(1, t1A.numberOfReceivedMessages2022);
+			assertEquals(0, t1B.numberOfReceivedMessages2022);
+			assertEquals(0, t2A.numberOfReceivedMessages2022);
+			assertEquals(0, t2B.numberOfReceivedMessages2022);
+			assertEquals(0, t3A.numberOfReceivedMessages2022);
+			assertEquals(0, t3B.numberOfReceivedMessages2022);			
+		}
+		
+		{
+			Message msg1 = new BasicMessage(List.of(Set.of(1,2,4), Set.of(10,11,20,21,40,41)));
+			r0.receive(msg1);
+			assertEquals(1, t1A.numberOfReceivedMessages2022);
+			assertEquals(0, t1B.numberOfReceivedMessages2022);
+			assertEquals(1, t2A.numberOfReceivedMessages2022);
+			assertEquals(0, t2B.numberOfReceivedMessages2022);
+			assertEquals(0, t3A.numberOfReceivedMessages2022);
+			assertEquals(0, t3B.numberOfReceivedMessages2022);
+		}
+		
+		{
+			Message msg1 = new BasicMessage(List.of(Set.of(1,2,4), Set.of(10,11,20,21,40,41)));
+			r0.receive(msg1);
+			assertEquals(1, t1A.numberOfReceivedMessages2022);
+			assertEquals(0, t1B.numberOfReceivedMessages2022);
+			assertEquals(1, t2A.numberOfReceivedMessages2022);
+			assertEquals(0, t2B.numberOfReceivedMessages2022);
+			assertEquals(1, t3A.numberOfReceivedMessages2022);
+			assertEquals(0, t3B.numberOfReceivedMessages2022);			
+		}
+		
+		{
+			Message msg1 = new BasicMessage(List.of(Set.of(1,2,4), Set.of(10,11,20,21,40,41)));
+			r0.receive(msg1);
+			assertEquals(1, t1A.numberOfReceivedMessages2022);
+			assertEquals(1, t1B.numberOfReceivedMessages2022);
+			assertEquals(1, t2A.numberOfReceivedMessages2022);
+			assertEquals(0, t2B.numberOfReceivedMessages2022);
+			assertEquals(1, t3A.numberOfReceivedMessages2022);
+			assertEquals(0, t3B.numberOfReceivedMessages2022);			
+		}
+		
+		{
+			Message msg1 = new BasicMessage(List.of(Set.of(1,2,4), Set.of(10,11,20,21,40,41)));
+			r0.receive(msg1);
+			assertEquals(1, t1A.numberOfReceivedMessages2022);
+			assertEquals(1, t1B.numberOfReceivedMessages2022);
+			assertEquals(1, t2A.numberOfReceivedMessages2022);
+			assertEquals(1, t2B.numberOfReceivedMessages2022);
+			assertEquals(1, t3A.numberOfReceivedMessages2022);
+			assertEquals(0, t3B.numberOfReceivedMessages2022);			
+		}
+		
+		{
+			Message msg1 = new BasicMessage(List.of(Set.of(1,2,4), Set.of(10,11,20,21,40,41)));
+			r0.receive(msg1);
+			assertEquals(1, t1A.numberOfReceivedMessages2022);
+			assertEquals(1, t1B.numberOfReceivedMessages2022);
+			assertEquals(1, t2A.numberOfReceivedMessages2022);
+			assertEquals(1, t2B.numberOfReceivedMessages2022);
+			assertEquals(1, t3A.numberOfReceivedMessages2022);
+			assertEquals(1, t3B.numberOfReceivedMessages2022);			
+		}
+	}
+	
+	@Test
+	public void test11UpdateSelect() {	
+		List<Integer> ids = List.of(43,98,102,115,200);
+		final Map<Integer, Node> map = new HashMap<Integer, Node>();
+		
+		for(int id : ids) {
+			map.put(id, new GradingTestNode2022());
+		}
+		final RoutingNode r0 = new RoutingNode(map);
+
+		for(int id : ids) {
+			assertEquals(id, r0.selectConnection(Set.of(id)));
+			r0.incrementCount(id);
+		}
+		
+		List<Integer> ids2 = List.of(1,2,3);
+		
+		for(int id : ids2) {
+			r0.process(new UpdateMessage(id, new GradingTestNode2022(), List.of()));
+			assertEquals(id, r0.selectConnection(Set.of(id)));
+			r0.incrementCount(id);
+		}
+		
+		Set<Integer> candidates = new HashSet<Integer>();
+		candidates.addAll(ids);
+		candidates.addAll(ids2);
+		
+		for(int id : ids) {
+			r0.process(new UpdateMessage(id, new GradingTestNode2022(), List.of()));
+			assertEquals(id, r0.selectConnection(candidates));
+			r0.incrementCount(id);
+		} 
+	}
+
+	@Test
+	public void test12ReceiveCountingNode() {
+		final GradingTestNode2022 t0 = new GradingTestNode2022();
+		final GradingTestNode2022 t1 = new GradingTestNode2022();
+		final GradingTestNode2022 t2 = new GradingTestNode2022();
+		
+		final HashMap<Integer, Node> c2Table = new HashMap<Integer, Node>();
+		c2Table.put(300, t1);
+		c2Table.put(400, t2);
+		final CountingNode c2 = new CountingNode(c2Table);
+		
+		final HashMap<Integer, Node> c1Table = new HashMap<Integer, Node>();
+		c1Table.put(100, t0);
+		c1Table.put(200, c2);
+		final CountingNode c1 = new CountingNode(c1Table);
+		
+		
+		c1.receive(new IntMessage(5, List.of(Set.of(100))));
+		
+		assertEquals(1, t0.numberOfReceivedMessages2022);
+		assertEquals(0, t1.numberOfReceivedMessages2022);
+		assertEquals(0, t2.numberOfReceivedMessages2022);
+		
+		assertEquals(0, c1.getSum());
+		assertEquals(0, c2.getSum());
+		
+		c1.receive(new IntMessage(17, List.of(Set.of(200), Set.of(300))));
+		
+		assertEquals(1, t0.numberOfReceivedMessages2022);
+		assertEquals(1, t1.numberOfReceivedMessages2022);
+		assertEquals(0, t2.numberOfReceivedMessages2022);
+		
+		assertEquals(0, c1.getSum());
+		assertEquals(0, c2.getSum());		
+				
+		c1.receive(new IntMessage(17, List.of(Set.of(7,100))));
+
+		assertEquals(2, t0.numberOfReceivedMessages2022);
+		assertEquals(1, t1.numberOfReceivedMessages2022);
+		assertEquals(0, t2.numberOfReceivedMessages2022);
+		
+		assertEquals(0, c1.getSum());
+		assertEquals(0, c2.getSum());
+		
+		c1.receive(new IntMessage(17, List.of(Set.of(200))));
+		
+		assertEquals(0, c1.getSum());
+		assertEquals(17, c2.getSum());
+		
+		c1.receive(new IntMessage(25, List.of()));
+		
+		assertEquals(25, c1.getSum());
+		assertEquals(17, c2.getSum());
+	}
+}
+
+class AnotherBasicMessage2022 implements Message {
+	final private List<Set<Integer>> path;
+	
+	AnotherBasicMessage2022(List<Set<Integer>> path) {
+		this.path = deepCopyPath(path);
+	}
+	
+	public static List<Set<Integer>> deepCopyPath(List<Set<Integer>> path) {
+		List<Set<Integer>> result = new LinkedList<Set<Integer>>();
+		for (Set<Integer> s : path) {
+			result.add(new HashSet<Integer>(s));
+		}
+		return result;
+	}
+	
+	@Override
+	public List<Set<Integer>> getPath() {
+		return deepCopyPath(path);
+	}
+	
+	@Override
+	public Message withPath(List<Set<Integer>> path) {
+		return new AnotherBasicMessage2022(path);
+	}
+}
